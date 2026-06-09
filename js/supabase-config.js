@@ -17,6 +17,6 @@
    ========================================================================= */
 
 window.SUPABASE_CONFIG = {
-  url: "PASTE_YOUR_PROJECT_URL_HERE",
-  anonKey: "PASTE_YOUR_ANON_PUBLISHABLE_KEY_HERE",
+  url: "https://erkvgabptawgrlyoeimw.supabase.co/rest/v1/",
+  anonKey: "sb_publishable_24S6pNGEVa_0dexTHQGSPA_m63SRuvD",
 };
