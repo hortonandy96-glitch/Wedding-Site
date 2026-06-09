@@ -1,5 +1,32 @@
 # Changelog
 
+## v1.1.0 — RSVP tracker Phase 1: admin dashboard (2026-06-09)
+
+### Implemented ✅
+
+- **Research** — confirmed The Knot offers no public API; chose Supabase
+  (free tier) as the backend with user's sign-off.
+- **`admin.html`** — protected admin dashboard: email/password sign-in,
+  summary cards (invited / attending / declined / awaiting reply + meal
+  counts), households with guests in a responsive table (cards on mobile),
+  add/edit/delete for both households and guests via accessible dialogs.
+- **Demo mode** — until Supabase is connected, the dashboard runs on sample
+  data in localStorage so it can be previewed with zero setup. The data layer
+  (`js/admin-store.js`) swaps between demo and live behind one interface.
+- **`supabase/setup.sql`** — heavily commented schema: `households` (with
+  unique invite codes ready for Phase 2 QR links) + `guests`, Row Level
+  Security (admin-only table access), and two security-definer functions
+  (`rsvp_lookup`, `rsvp_submit`) that will power the guest RSVP form.
+- **`SETUP-SUPABASE.md`** — beginner walkthrough: create project, run SQL,
+  create the single admin user, disable signups, paste the two public config
+  values, plus the free-tier pause caveat and what must never go in git.
+
+### Placeholders / next phases 🚧
+
+- Phase 2: per-household QR codes + prefilled guest RSVP form (schema ready).
+- Phase 3: RSVP reminders from the dashboard (email column + reminder_sent_at ready).
+- `js/supabase-config.js` contains placeholders until the user runs setup.
+
 ## v1.0.0 — Initial prototype (2026-06-09)
 
 ### Implemented ✅
