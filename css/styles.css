@@ -1,0 +1,522 @@
+/* =========================================================================
+   Robin & Andy — wedding site styles
+   Palette and type are traced from the draft invitation & save-the-date.
+   Mobile-first; desktop breakpoint at 760px.
+   ========================================================================= */
+
+:root {
+  /* Swatches from the mood board (left column, top to bottom) */
+  --cream: #faf3da;
+  --pink: #f2c2cf;
+  --burgundy: #5a2434;
+  --green: #5b8c5a;       /* invitation background green */
+  --forest: #11301f;      /* save-the-date background green */
+  --ink: #1d3a28;         /* dark green text on the invitation */
+
+  --font-display: "Marcellus", "Times New Roman", serif;
+  --font-body: "Cormorant Garamond", Georgia, serif;
+
+  --radius: 10px;
+  --shadow: 0 2px 14px rgba(17, 48, 31, 0.12);
+  --max-width: 1080px;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 1.2rem;
+  line-height: 1.55;
+  color: var(--ink);
+  background: var(--cream);
+}
+
+img { max-width: 100%; height: auto; }
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  line-height: 1.15;
+  margin: 0 0 0.5em;
+}
+
+h2 {
+  font-size: clamp(2rem, 5vw, 2.8rem);
+  text-transform: uppercase;
+  text-align: center;
+  letter-spacing: 0.08em;
+}
+
+a { color: var(--burgundy); }
+
+/* ---------- a11y helpers ---------- */
+
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px;
+  margin: -1px; padding: 0; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  left: 0.5rem; top: -3rem;
+  background: var(--burgundy); color: var(--cream);
+  padding: 0.5rem 1rem; border-radius: var(--radius);
+  z-index: 100; transition: top 0.15s;
+}
+.skip-link:focus { top: 0.5rem; }
+
+:focus-visible {
+  outline: 3px solid var(--burgundy);
+  outline-offset: 2px;
+}
+.section-green :focus-visible,
+.hero :focus-visible,
+.site-footer :focus-visible {
+  outline-color: var(--pink);
+}
+
+/* ---------- buttons ---------- */
+
+.btn {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 999px;
+  padding: 0.7rem 1.9rem;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: transform 0.12s ease, background 0.15s ease;
+}
+.btn:hover { transform: translateY(-1px); }
+
+.btn-primary {
+  background: var(--burgundy);
+  color: var(--cream);
+  border-color: var(--burgundy);
+}
+.btn-primary:hover { background: #6f2e41; }
+
+.btn-ghost {
+  background: transparent;
+  color: var(--ink);
+  border-color: var(--ink);
+}
+.section-green .btn-ghost { color: var(--cream); border-color: var(--cream); }
+
+.btn-small {
+  font-size: 0.85rem;
+  padding: 0.3rem 0.9rem;
+}
+.btn-danger { background: transparent; color: var(--burgundy); border-color: var(--burgundy); }
+
+/* ---------- nav ---------- */
+
+.site-header {
+  position: sticky; top: 0; z-index: 50;
+  background: var(--forest);
+  color: var(--cream);
+  box-shadow: var(--shadow);
+}
+
+.nav {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0.6rem 1rem;
+}
+
+.nav-brand {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  color: var(--pink);
+  text-decoration: none;
+  letter-spacing: 0.12em;
+}
+
+.nav-toggle {
+  display: flex; flex-direction: column; gap: 5px;
+  background: none; border: 0; padding: 0.6rem; cursor: pointer;
+}
+.nav-toggle-bar { width: 26px; height: 2px; background: var(--cream); }
+
+.nav-menu {
+  display: none;
+  list-style: none;
+  margin: 0; padding: 0 0 1rem;
+  position: absolute; left: 0; right: 0; top: 100%;
+  background: var(--forest);
+  text-align: center;
+}
+.nav-menu.open { display: block; }
+.nav-menu a {
+  display: block;
+  padding: 0.7rem;
+  color: var(--cream);
+  text-decoration: none;
+  font-family: var(--font-display);
+  letter-spacing: 0.08em;
+}
+.nav-menu a:hover { color: var(--pink); }
+.nav-cta { color: var(--pink) !important; }
+
+@media (min-width: 760px) {
+  .nav-toggle { display: none; }
+  .nav-menu {
+    display: flex; gap: 0.5rem;
+    position: static; padding: 0; background: none;
+  }
+}
+
+/* ---------- hero ---------- */
+
+.hero {
+  background: var(--forest);
+  color: var(--cream);
+  padding: 2.5rem 1rem 3rem;
+  text-align: center;
+}
+
+.arch {
+  position: relative;
+  max-width: 480px;
+  margin: 0 auto;
+}
+.arch-frame { display: block; width: 100%; height: auto; }
+
+.arch-content {
+  position: absolute;
+  inset: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: flex-start;
+  gap: clamp(0.1rem, 1.2vw, 0.5rem);
+  /* top padding clears the window-sill line in the arch SVG
+     (all values are % of width, mirroring the SVG's aspect ratio) */
+  padding: 54% 16% 12%;
+  color: var(--ink);
+}
+
+.hero-eyebrow {
+  font-style: italic;
+  font-size: clamp(0.85rem, 2.6vw, 1.15rem);
+  margin: 0;
+}
+
+#hero-heading {
+  font-size: clamp(1.6rem, 6vw, 2.7rem);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0;
+  color: var(--forest);
+}
+.amp { color: var(--burgundy); }
+
+.hero-sub {
+  font-style: italic;
+  font-size: clamp(1rem, 3.4vw, 1.5rem);
+  margin: 0;
+}
+
+.hero-date {
+  font-family: var(--font-display);
+  font-size: clamp(1.05rem, 3.4vw, 1.5rem);
+  letter-spacing: 0.1em;
+  margin: 0.15em 0 0;
+}
+
+.hero-place {
+  font-style: italic;
+  font-size: clamp(0.9rem, 2.8vw, 1.2rem);
+  margin: 0 0 0.5em;
+}
+
+.hero-welcome {
+  max-width: 540px;
+  margin: 2rem auto 0;
+  font-size: 1.25rem;
+  font-style: italic;
+  color: var(--pink);
+}
+
+/* ---------- dividers (stained-glass border) ---------- */
+
+.divider {
+  line-height: 0;
+  background: var(--cream);
+  padding: 1.2rem 0;
+}
+.divider svg {
+  display: block;
+  width: min(620px, 86%);
+  margin: 0 auto;
+  height: auto;
+}
+.divider-footer { background: transparent; }
+
+/* ---------- sections ---------- */
+
+.section {
+  padding: 3rem 1rem 3.5rem;
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+.section-green {
+  background: var(--green);
+  color: var(--cream);
+  max-width: none;
+}
+.section-green > * { max-width: var(--max-width); margin-left: auto; margin-right: auto; }
+.section-green a { color: var(--cream); }
+
+.section-intro {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto 2rem;
+}
+
+.subheading {
+  text-align: center;
+  font-size: 1.5rem;
+  margin-top: 2.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* ---------- cards ---------- */
+
+.card {
+  background: #fffdf2;
+  color: var(--ink);
+  border: 2px solid var(--ink);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1.5rem;
+}
+
+/* ---------- details / venue ---------- */
+
+.details-grid { display: grid; gap: 1.5rem; }
+
+.venue-name {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  margin: 0 0 0.2em;
+}
+address { font-style: normal; margin-bottom: 1rem; }
+
+.timeline { list-style: none; padding: 0; }
+.timeline li { padding: 0.25rem 0; border-bottom: 1px dotted var(--green); }
+
+.map-card { padding: 0.6rem; display: flex; flex-direction: column; gap: 0.6rem; }
+.map-card iframe {
+  width: 100%; min-height: 320px; border: 0; border-radius: calc(var(--radius) - 4px);
+}
+.map-card .btn { align-self: center; }
+
+@media (min-width: 760px) {
+  .details-grid { grid-template-columns: 1.2fr 1fr; align-items: stretch; }
+}
+
+/* ---------- RSVP form ---------- */
+
+.rsvp-form, .rsvp-confirmation {
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+fieldset { border: 0; padding: 0; margin: 0 0 1.2rem; }
+legend {
+  font-family: var(--font-display);
+  letter-spacing: 0.05em;
+  padding: 0;
+  margin-bottom: 0.5rem;
+}
+
+.radio-row { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+.radio-pill {
+  border: 2px solid var(--ink);
+  border-radius: 999px;
+  padding: 0.45rem 1.1rem;
+  cursor: pointer;
+}
+.radio-pill:has(input:checked) {
+  background: var(--burgundy);
+  border-color: var(--burgundy);
+  color: var(--cream);
+}
+.radio-pill input { accent-color: var(--burgundy); margin-right: 0.35rem; }
+
+.form-row { margin-bottom: 1.1rem; display: flex; flex-direction: column; }
+.form-row label { font-family: var(--font-display); letter-spacing: 0.05em; margin-bottom: 0.3rem; }
+.optional { font-family: var(--font-body); font-style: italic; text-transform: none; }
+
+input[type="text"], input[type="email"], select, textarea {
+  font: inherit;
+  color: var(--ink);
+  background: var(--cream);
+  border: 2px solid var(--ink);
+  border-radius: 6px;
+  padding: 0.55rem 0.75rem;
+  width: 100%;
+}
+
+.guest-row {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 0.6rem;
+  align-items: center;
+  margin-bottom: 0.6rem;
+}
+.guest-label { font-style: italic; }
+
+.field-error {
+  color: var(--burgundy);
+  font-weight: 600;
+  min-height: 1.2em;
+  margin: 0.25rem 0 0;
+}
+
+.form-actions { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 1.4rem; align-items: center; }
+.form-actions.center { justify-content: center; }
+
+.rsvp-confirmation h3 { font-size: 1.6rem; }
+
+.rsvp-saved { max-width: 560px; margin: 2rem auto 0; }
+.rsvp-saved h3 { font-size: 1.2rem; text-align: center; }
+.rsvp-saved ul { list-style: none; padding: 0; }
+.rsvp-saved li {
+  display: flex; align-items: center; gap: 0.6rem;
+  background: rgba(250, 243, 218, 0.18);
+  border-radius: var(--radius);
+  padding: 0.5rem 0.9rem;
+  margin-bottom: 0.5rem;
+}
+.rsvp-saved li span { flex: 1; }
+
+.toast { font-style: italic; }
+
+/* ---------- itineraries ---------- */
+
+.itinerary-grid { display: grid; gap: 1.2rem; }
+.itinerary-card ul { padding-left: 1.2rem; margin: 0; }
+.itinerary-card li { margin-bottom: 0.35rem; }
+.itinerary-blurb { font-style: italic; margin-top: -0.4rem; }
+
+@media (min-width: 760px) {
+  .itinerary-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* ---------- hotels ---------- */
+
+.hotel-grid { display: grid; gap: 1rem; max-width: 720px; margin: 0 auto; }
+
+.hotel-card { padding: 0; overflow: hidden; }
+.hotel-card summary {
+  cursor: pointer;
+  padding: 1rem 1.25rem;
+  font-size: 1.15rem;
+  list-style-position: inside;
+}
+.hotel-card summary:hover { background: rgba(91, 140, 90, 0.12); }
+.hotel-body { padding: 0 1.25rem 1.25rem; display: flex; flex-direction: column; gap: 0.7rem; align-items: flex-start; }
+
+.badge {
+  display: inline-block;
+  background: var(--pink);
+  color: var(--burgundy);
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border-radius: 999px;
+  padding: 0.15rem 0.7rem;
+  margin-left: 0.4rem;
+}
+
+/* ---------- registry ---------- */
+
+.registry-grid { display: grid; gap: 1.2rem; margin-bottom: 1.5rem; }
+
+.registry-card {
+  text-decoration: none;
+  display: flex; flex-direction: column; align-items: center;
+  text-align: center;
+  transition: transform 0.12s ease;
+}
+.registry-card:hover { transform: translateY(-3px); }
+
+.registry-logo {
+  display: grid; place-items: center;
+  width: 64px; height: 64px;
+  border-radius: 50%;
+  background: var(--pink);
+  color: var(--burgundy);
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  margin-bottom: 0.6rem;
+}
+.registry-go { font-style: italic; color: var(--burgundy); }
+
+@media (min-width: 760px) {
+  .registry-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* ---------- FAQ accordion ---------- */
+
+.accordion { max-width: 720px; margin: 0 auto; }
+.accordion-item {
+  border: 2px solid var(--ink);
+  border-radius: var(--radius);
+  background: #fffdf2;
+  margin-bottom: 0.8rem;
+  overflow: hidden;
+}
+.accordion-heading { margin: 0; }
+.accordion-trigger {
+  width: 100%;
+  display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  letter-spacing: 0.03em;
+  text-align: left;
+  background: none; border: 0;
+  padding: 1rem 1.25rem;
+  cursor: pointer;
+  color: var(--ink);
+}
+.accordion-trigger:hover { background: rgba(242, 194, 207, 0.25); }
+.accordion-icon { font-size: 1.5rem; line-height: 1; color: var(--burgundy); }
+.accordion-panel { padding: 0 1.25rem 1rem; }
+.accordion-panel p { margin: 0; }
+
+/* ---------- footer ---------- */
+
+.site-footer {
+  background: var(--forest);
+  color: var(--cream);
+  text-align: center;
+  padding: 1rem 1rem 2rem;
+}
+.footer-names {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  letter-spacing: 0.1em;
+  margin: 1rem 0 0.2rem;
+}
+.footer-date { letter-spacing: 0.2em; margin: 0 0 1rem; color: var(--pink); }
+.footer-contact a { color: var(--pink); }
+.footer-social {
+  display: flex; justify-content: center; gap: 1.2rem;
+  margin: 1rem 0;
+}
+.footer-social a { color: var(--cream); }
+.footer-social a:hover { color: var(--pink); }
+.footer-credit { font-style: italic; font-size: 0.95rem; opacity: 0.8; }

@@ -1,0 +1,11 @@
+<!-- PLACEHOLDER social preview image (1200x630).
+     Most platforms prefer PNG/JPG: replace with assets/og-image.png
+     (an engagement photo works great) and update the og:image tag in index.html. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" font-family="Georgia, serif">
+  <rect width="1200" height="630" fill="#11301f"/>
+  <rect x="40" y="40" width="1120" height="550" fill="none" stroke="#faf3da" stroke-width="4"/>
+  <rect x="56" y="56" width="1088" height="518" fill="none" stroke="#5a2434" stroke-width="10"/>
+  <text x="600" y="270" text-anchor="middle" fill="#faf3da" font-size="96" letter-spacing="6">ROBIN &amp; ANDY</text>
+  <text x="600" y="350" text-anchor="middle" fill="#f2c2cf" font-size="40" font-style="italic">are getting married</text>
+  <text x="600" y="440" text-anchor="middle" fill="#faf3da" font-size="36" letter-spacing="4">MAY 21, 2027 · SALVAGE ONE · CHICAGO, IL</text>
+</svg>

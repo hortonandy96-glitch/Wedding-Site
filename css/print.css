@@ -1,0 +1,26 @@
+/* Print styles: when the "Print confirmation" button adds .print-rsvp to
+   <body>, hide everything except the RSVP confirmation card. For ordinary
+   printing (Ctrl+P), just strip the chrome. */
+
+.site-header,
+.nav,
+.divider,
+.site-footer,
+.skip-link,
+.form-actions {
+  display: none !important;
+}
+
+body {
+  background: #fff;
+  color: #000;
+}
+
+body.print-rsvp main > *:not(#rsvp) { display: none !important; }
+body.print-rsvp #rsvp > *:not(.print-area) { display: none !important; }
+
+.print-area {
+  border: 2px solid #000;
+  box-shadow: none;
+  max-width: 100%;
+}
