@@ -1,5 +1,95 @@
 # Changelog
 
+## v1.3.0 — Phase 3 reminders + design feedback round 1 (2026-06-09)
+
+### Implemented ✅
+
+- **Email reminders (Phase 3)** — "✉️ Send reminders" button on the admin
+  dashboard: picks every household with an email and no response, editable
+  subject/message with {{name}} and {{link}} placeholders, live preview of
+  the exact email before sending. Real sending runs through a Supabase Edge
+  Function (`supabase/functions/send-reminders/index.ts`) holding the Resend
+  API key as a server-side secret (never in git); it verifies the admin's
+  session and that each recipient matches the household's email on file.
+  Households show a "reminded <date>" badge. `SETUP-EMAIL.md` walks through
+  Resend + DNS for hortonhearsido.com + dashboard-only deployment.
+- **Food stations rework** — meal choices removed everywhere (stations with
+  guaranteed vegetarian options). Both RSVP forms now collect optional
+  dietary restrictions per guest; admin summary shows a caterer-ready
+  dietary list; schema renamed `meal` → `dietary`
+  (migration provided for existing databases).
+- **Plus ones** — public form: "I'm bringing a plus one" checkbox reveals
+  name + dietary fields. Personal QR page: households the admin marks
+  "+1 invited" can add one plus one (enforced in the database: only if
+  allowed, only once, name required). Admin shows "+1 invited" and "+1"
+  badges.
+- **Hero** — RSVP button now vertically centered between the venue line and
+  the arch's inner border.
+- **Dress code** — jeans politely shown the door.
+- **Itineraries** — Andy's real Logan Square Sunday (farmers market haul,
+  Logan Theatre, Club Lucky), Robin's Night Out starting at Lone Wolf
+  ("to be continued"), architecture cruise promoted to THE tourist pick,
+  plus art fairs & street fests note.
+
+### Notes 🚧
+
+- Robin's Night Out awaits the rest of her research (edit `js/content.js`).
+- If the original setup.sql was already run in Supabase, run
+  `supabase/migration-001-stations.sql`, then re-run section 3 of `setup.sql`.
+
+## v1.2.0 — RSVP tracker Phase 2: QR invite links (2026-06-09)
+
+### Implemented ✅
+
+- **`rsvp.html`** — personal RSVP page guests reach by scanning their QR
+  code. Greets the household by name, one yes/no + dinner choice block per
+  guest, optional note, validation with per-guest errors, confirmation
+  screen. Re-opening the link shows current answers and allows updates.
+  Manual invite-code entry as a fallback for missing/typo'd links.
+- **Admin invite tools** — every household card now shows its personal link
+  with **Copy link** and **Download QR** buttons. QR codes are generated in
+  the browser (vendored MIT library, `js/vendor/qrcode.js`), painted at
+  ~1000px for crisp printing, and verified to decode back to the right URL.
+  Links adapt automatically to wherever the site is hosted.
+- **Shared demo data** (`js/demo-data.js`) — in demo mode the guest page and
+  admin dashboard share the same sample data, so you can RSVP via a demo
+  link and watch the tracker update.
+- **Validation + tests** — new `validateHouseholdResponses()` rules (every
+  guest must decide; attendees need a meal) with 3 new tests (12 total).
+- **Bug fix** — global `[hidden]` CSS rule; previously `display:flex` rows
+  could ignore the `hidden` attribute (affected meal pickers on both forms).
+
+### Phase 3 (next) 🚧
+
+- RSVP reminders from the dashboard with preview before sending.
+
+## v1.1.0 — RSVP tracker Phase 1: admin dashboard (2026-06-09)
+
+### Implemented ✅
+
+- **Research** — confirmed The Knot offers no public API; chose Supabase
+  (free tier) as the backend with user's sign-off.
+- **`admin.html`** — protected admin dashboard: email/password sign-in,
+  summary cards (invited / attending / declined / awaiting reply + meal
+  counts), households with guests in a responsive table (cards on mobile),
+  add/edit/delete for both households and guests via accessible dialogs.
+- **Demo mode** — until Supabase is connected, the dashboard runs on sample
+  data in localStorage so it can be previewed with zero setup. The data layer
+  (`js/admin-store.js`) swaps between demo and live behind one interface.
+- **`supabase/setup.sql`** — heavily commented schema: `households` (with
+  unique invite codes ready for Phase 2 QR links) + `guests`, Row Level
+  Security (admin-only table access), and two security-definer functions
+  (`rsvp_lookup`, `rsvp_submit`) that will power the guest RSVP form.
+- **`SETUP-SUPABASE.md`** — beginner walkthrough: create project, run SQL,
+  create the single admin user, disable signups, paste the two public config
+  values, plus the free-tier pause caveat and what must never go in git.
+
+### Placeholders / next phases 🚧
+
+- Phase 2: per-household QR codes + prefilled guest RSVP form (schema ready).
+- Phase 3: RSVP reminders from the dashboard (email column + reminder_sent_at ready).
+- `js/supabase-config.js` contains placeholders until the user runs setup.
+
 ## v1.0.0 — Initial prototype (2026-06-09)
 
 ### Implemented ✅

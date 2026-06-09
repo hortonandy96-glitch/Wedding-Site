@@ -131,7 +131,9 @@
             <li><strong>11:30 PM</strong> — Last call &amp; send-off</li>
           </ul>
           <h4>Dress code</h4>
-          <p>Cocktail attire. Stained-glass colors — greens, burgundies, pinks, creams — are encouraged but never required.</p>
+          <p>Cocktail attire. Stained-glass colors — greens, burgundies, pinks, creams —
+            are encouraged but never required. We'll be dressed to the nines;
+            your favorite jeans have earned a night off. 😉</p>
           <h4>Getting there &amp; parking</h4>
           <ul>
             <li>Rideshare drop-off right at the door (recommended).</li>
@@ -156,7 +158,9 @@
     <!-- ===================== RSVP ===================== -->
     <section class="section section-green" id="rsvp" aria-labelledby="rsvp-heading">
       <h2 id="rsvp-heading">RSVP</h2>
-      <p class="section-intro">Kindly reply by <strong>April 21, 2027</strong>. Fill this out once per household — you can come back and edit it any time.</p>
+      <p class="section-intro">Kindly reply by <strong>April 21, 2027</strong>.
+        Got an invitation with a QR code? <a href="rsvp.html">Use your personal RSVP link</a> —
+        it already knows your whole party. Otherwise, the form below works too.</p>
 
       <form id="rsvp-form" class="card rsvp-form" novalidate>
         <!-- NOTE FOR DEVELOPERS: this form saves to localStorage only.
@@ -181,22 +185,36 @@
           <p class="field-error" id="err-email" aria-live="polite"></p>
         </div>
 
-        <div class="form-row">
-          <label for="rsvp-party">Party size (including you) <span aria-hidden="true">*</span></label>
-          <select id="rsvp-party" name="partySize" aria-describedby="err-party"></select>
-          <p class="field-error" id="err-party" aria-live="polite"></p>
+        <!-- Dinner is food stations (vegetarian options guaranteed), so we
+             only ask about dietary restrictions — no meal choices. -->
+        <div class="form-row" id="dietary-row">
+          <label for="rsvp-dietary">Any dietary restrictions? <span class="optional">(optional)</span></label>
+          <input type="text" id="rsvp-dietary" name="dietary" placeholder="Allergies, vegan, gluten-free, kosher…" />
         </div>
 
-        <!-- One meal picker per guest is rendered here by js/rsvp.js -->
-        <fieldset id="meal-fieldset">
-          <legend>Dinner choices</legend>
-          <div id="meal-rows"></div>
-          <p class="field-error" id="err-meals" aria-live="polite"></p>
+        <fieldset id="plus-one-fieldset">
+          <legend class="visually-hidden">Plus one</legend>
+          <label class="radio-pill checkbox-pill">
+            <input type="checkbox" id="rsvp-has-plus-one" name="hasPlusOne" />
+            I'm bringing a plus one
+          </label>
+          <!-- Revealed when the box above is checked -->
+          <div id="plus-one-fields" hidden>
+            <div class="form-row">
+              <label for="rsvp-plus-one-name">Plus one's name <span aria-hidden="true">*</span></label>
+              <input type="text" id="rsvp-plus-one-name" name="plusOneName" aria-describedby="err-plus-one" />
+              <p class="field-error" id="err-plus-one" aria-live="polite"></p>
+            </div>
+            <div class="form-row">
+              <label for="rsvp-plus-one-dietary">Their dietary restrictions <span class="optional">(optional)</span></label>
+              <input type="text" id="rsvp-plus-one-dietary" name="plusOneDietary" placeholder="Allergies, vegan, gluten-free…" />
+            </div>
+          </div>
         </fieldset>
 
         <div class="form-row">
           <label for="rsvp-message">A note for us <span class="optional">(optional)</span></label>
-          <textarea id="rsvp-message" name="message" rows="3" placeholder="Song requests, dietary needs, general enthusiasm…"></textarea>
+          <textarea id="rsvp-message" name="message" rows="3" placeholder="Song requests, general enthusiasm…"></textarea>
         </div>
 
         <div class="form-actions">
