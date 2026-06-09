@@ -1,0 +1,82 @@
+/* =========================================================================
+   Personal RSVP page (rsvp.html) — mobile-first; guests arrive via QR
+   codes on their phones, so the single-column card layout is the default.
+   ========================================================================= */
+
+.rsvp-link-body {
+  background: var(--forest);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.rsvp-link-header {
+  text-align: center;
+  color: var(--cream);
+  padding: 2rem 1rem 0.5rem;
+}
+
+.rsvp-link-names {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin: 0;
+}
+.rsvp-link-names .amp { color: var(--pink); }
+
+.rsvp-link-date {
+  font-style: italic;
+  color: var(--pink);
+  margin: 0.3rem 0 0;
+}
+
+.rsvp-link-main {
+  flex: 1;
+  width: min(560px, 100%);
+  margin: 0 auto;
+  padding: 1.5rem 1rem 3rem;
+}
+
+.rsvp-link-main h1 { font-size: 1.6rem; }
+
+.center-note {
+  text-align: center;
+  color: var(--cream);
+  font-style: italic;
+  padding: 3rem 0;
+}
+
+.updated-note {
+  font-style: italic;
+  background: rgba(242, 194, 207, 0.35);
+  border-radius: var(--radius);
+  padding: 0.6rem 0.9rem;
+}
+
+.guest-block {
+  border-top: 1px dotted var(--green);
+  padding: 1rem 0 0.4rem;
+  margin: 0 0 0.6rem;
+}
+.guest-block legend {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  letter-spacing: 0.04em;
+  padding-right: 0.5rem;
+}
+.guest-block .radio-row { margin-bottom: 0.7rem; }
+.guest-block .meal-row { margin-bottom: 0.4rem; }
+
+.code-help { font-style: italic; font-size: 1rem; }
+
+.done-card ul { padding-left: 1.2rem; }
+
+.rsvp-link-footer {
+  text-align: center;
+  padding: 1rem;
+}
+.rsvp-link-footer a {
+  color: var(--pink);
+  font-style: italic;
+}

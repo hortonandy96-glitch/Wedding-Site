@@ -80,6 +80,38 @@ test("validateRsvp flags mismatched party size vs guest rows", () => {
   assert.ok(result.errors.meals);
 });
 
+test("validateHouseholdResponses passes when everyone decided and attendees have meals", () => {
+  const result = V.validateHouseholdResponses(
+    [
+      { id: "g-1", rsvp_status: "yes", meal: MEALS[0] },
+      { id: "g-2", rsvp_status: "no", meal: "" },
+    ],
+    MEALS
+  );
+  assert.equal(result.valid, true);
+  assert.deepEqual(result.errors, {});
+});
+
+test("validateHouseholdResponses flags undecided guests and missing meals per guest", () => {
+  const result = V.validateHouseholdResponses(
+    [
+      { id: "g-1", rsvp_status: "pending", meal: "" },
+      { id: "g-2", rsvp_status: "yes", meal: "" },
+      { id: "g-3", rsvp_status: "no", meal: "" },
+    ],
+    MEALS
+  );
+  assert.equal(result.valid, false);
+  assert.ok(result.errors["g-1"]); // never answered
+  assert.ok(result.errors["g-2"]); // attending but no meal
+  assert.equal(result.errors["g-3"], undefined);
+});
+
+test("validateHouseholdResponses rejects an empty guest list", () => {
+  const result = V.validateHouseholdResponses([], MEALS);
+  assert.equal(result.valid, false);
+});
+
 test("declining guests skip party/meal checks but still need name + email", () => {
   const ok = V.validateRsvp(
     { attending: "no", name: "Busy Cousin", email: "cousin@example.com", guests: [] },

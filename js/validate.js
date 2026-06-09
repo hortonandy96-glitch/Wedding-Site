@@ -86,6 +86,27 @@
     return { valid: Object.keys(errors).length === 0, errors: errors };
   }
 
+  /**
+   * Validate a household's responses from the personal RSVP link (Phase 2):
+   *   guests: [{ id, name, rsvp_status: "yes"|"no", meal }, ...]
+   * Rules: every guest needs a decision (no "pending"), and attending
+   * guests need a meal. Returns { valid, errors: { guestId: "message" } }.
+   */
+  function validateHouseholdResponses(guests, mealOptions) {
+    var errors = {};
+    if (!Array.isArray(guests) || guests.length === 0) {
+      return { valid: false, errors: { form: "No guests to respond for." } };
+    }
+    guests.forEach(function (g) {
+      if (g.rsvp_status !== "yes" && g.rsvp_status !== "no") {
+        errors[g.id] = "Please choose yes or no.";
+      } else if (g.rsvp_status === "yes" && !validateMeal(g.meal, mealOptions)) {
+        errors[g.id] = "Please pick a dinner.";
+      }
+    });
+    return { valid: Object.keys(errors).length === 0, errors: errors };
+  }
+
   var api = {
     MAX_PARTY_SIZE: MAX_PARTY_SIZE,
     validateName: validateName,
@@ -93,6 +114,7 @@
     validatePartySize: validatePartySize,
     validateMeal: validateMeal,
     validateRsvp: validateRsvp,
+    validateHouseholdResponses: validateHouseholdResponses,
   };
 
   // Browser global + Node (CommonJS) export

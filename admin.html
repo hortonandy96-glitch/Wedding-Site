@@ -65,7 +65,7 @@
 
       <div class="admin-toolbar">
         <button type="button" class="btn btn-primary" id="add-household">+ Add household</button>
-        <p class="toolbar-hint">A “household” = one invitation = one QR code (coming in Phase 2).</p>
+        <p class="toolbar-hint">A “household” = one invitation = one QR code. Download each QR below and print it on that household's invitation.</p>
       </div>
 
       <div id="household-list" aria-live="polite">
@@ -135,8 +135,11 @@
   <!-- supabase-js client library (safe to load always; only used when
        js/supabase-config.js is filled in) -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <!-- QR code generator, vendored (MIT) — see js/vendor/qrcode.js header -->
+  <script src="js/vendor/qrcode.js"></script>
   <script src="js/content.js"></script>
   <script src="js/supabase-config.js"></script>
+  <script src="js/demo-data.js"></script>
   <script src="js/admin-store.js"></script>
   <script src="js/admin.js"></script>
 </body>

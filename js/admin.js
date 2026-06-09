@@ -92,6 +92,68 @@
       '</p><p class="summary-detail">' + detail + "</p></div>";
   }
 
+  /* ---------------- invite links & QR codes ------------------------------ */
+
+  // Personal RSVP link for a household, based on where this site is hosted.
+  // Works the same on GitHub Pages, Netlify, or a custom domain.
+  function inviteUrl(code) {
+    return new URL("rsvp.html?code=" + encodeURIComponent(code), window.location.href).href;
+  }
+
+  /**
+   * Render a QR code to a PNG data URL.
+   * The vendored library computes the QR matrix; we paint it onto a canvas
+   * with a 4-module quiet zone (the white border scanners need), sized for
+   * crisp printing (~1000px).
+   */
+  function qrPngDataUrl(text) {
+    var qr = window.qrcode(0, "M"); // type 0 = auto-size, M = 15% error correction
+    qr.addData(text);
+    qr.make();
+    var count = qr.getModuleCount();
+    var quiet = 4;
+    var scale = Math.max(4, Math.round(1000 / (count + quiet * 2)));
+    var size = (count + quiet * 2) * scale;
+
+    var canvas = document.createElement("canvas");
+    canvas.width = canvas.height = size;
+    var ctx = canvas.getContext("2d");
+    ctx.fillStyle = "#ffffff";
+    ctx.fillRect(0, 0, size, size);
+    ctx.fillStyle = "#11301f"; // forest green still scans fine on white
+    for (var r = 0; r < count; r++) {
+      for (var c = 0; c < count; c++) {
+        if (qr.isDark(r, c)) {
+          ctx.fillRect((c + quiet) * scale, (r + quiet) * scale, scale, scale);
+        }
+      }
+    }
+    return canvas.toDataURL("image/png");
+  }
+
+  function downloadQr(household) {
+    var slug = household.name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+    var a = document.createElement("a");
+    a.href = qrPngDataUrl(inviteUrl(household.code));
+    a.download = "qr-" + (slug || "household") + ".png";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+  }
+
+  function copyText(text, btn) {
+    function done(ok) {
+      var original = btn.textContent;
+      btn.textContent = ok ? "Copied!" : "Copy failed";
+      setTimeout(function () { btn.textContent = original; }, 2000);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function () { done(true); }, function () { done(false); });
+    } else {
+      done(false);
+    }
+  }
+
   /* ---------------- household cards -------------------------------------- */
 
   var STATUS_LABEL = { pending: "Pending", yes: "Yes", no: "No" };
@@ -134,6 +196,12 @@
         '<button type="button" class="btn btn-small btn-danger" data-action="delete-household">Delete</button>' +
         "</div></div>" +
         (contact ? '<p class="household-contact">' + contact + "</p>" : "") +
+        '<div class="invite-row">' +
+        '<span class="invite-label">Invite link:</span>' +
+        '<code class="invite-link">' + escapeHtml(inviteUrl(h.code)) + "</code>" +
+        '<button type="button" class="btn btn-small" data-action="copy-link">Copy link</button>' +
+        '<button type="button" class="btn btn-small" data-action="download-qr">Download QR</button>' +
+        "</div>" +
         (h.notes ? '<p class="household-notes">📝 ' + escapeHtml(h.notes) + "</p>" : "") +
         (h.rsvp_message ? '<p class="household-message">💌 “' + escapeHtml(h.rsvp_message) + "”</p>" : "") +
         '<div class="guest-table" role="list">' +
@@ -222,6 +290,8 @@
           store.deleteGuest(guest.id).then(refresh).catch(alertError);
         }
         break;
+      case "copy-link": copyText(inviteUrl(household.code), btn); break;
+      case "download-qr": downloadQr(household); break;
       case "edit-household": openHouseholdDialog(household); break;
       case "delete-household":
         if (confirm("Delete “" + household.name + "” and all its guests? This can't be undone.")) {

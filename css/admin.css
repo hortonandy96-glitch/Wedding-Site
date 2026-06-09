@@ -99,6 +99,27 @@
 
 .badge-green { background: var(--green); color: var(--cream); }
 
+/* ---------- invite link & QR row ---------- */
+
+.invite-row {
+  display: flex; align-items: center; flex-wrap: wrap; gap: 0.5rem;
+  background: rgba(91, 140, 90, 0.1);
+  border-radius: var(--radius);
+  padding: 0.5rem 0.7rem;
+  margin: 0.5rem 0;
+}
+.invite-label {
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.invite-link {
+  font-size: 0.85rem;
+  overflow-wrap: anywhere;
+  flex: 1 1 200px;
+}
+
 /* ---------- guest rows ---------- */
 
 .guest-table { margin-top: 0.8rem; }

@@ -31,49 +31,10 @@
   }
 
   /* ---------------- demo store (localStorage) --------------------------- */
+  /* Sample data lives in js/demo-data.js, shared with the guest RSVP page */
 
-  var DEMO_KEY = "admin-demo-data";
-  var DEMO_SEED = [
-    {
-      id: "hh-1", name: "The Beattie Family", code: "demo123abc",
-      email: "beatties@example.com", phone: "(312) 555-0101",
-      notes: "Robin's parents + brother", rsvp_message: "So excited!!",
-      responded_at: "2026-06-01T12:00:00Z",
-      guests: [
-        { id: "g-1", household_id: "hh-1", name: "Carol Beattie", rsvp_status: "yes", meal: "Herb-Roasted Chicken", notes: "" },
-        { id: "g-2", household_id: "hh-1", name: "Dale Beattie", rsvp_status: "yes", meal: "Braised Short Rib", notes: "" },
-        { id: "g-3", household_id: "hh-1", name: "Sam Beattie", rsvp_status: "no", meal: "", notes: "Studying abroad" },
-      ],
-    },
-    {
-      id: "hh-2", name: "The Horton Household", code: "demo456def",
-      email: "hortons@example.com", phone: "(773) 555-0102",
-      notes: "", rsvp_message: "", responded_at: null,
-      guests: [
-        { id: "g-4", household_id: "hh-2", name: "Maria Horton", rsvp_status: "pending", meal: "", notes: "" },
-        { id: "g-5", household_id: "hh-2", name: "Greg Horton", rsvp_status: "pending", meal: "", notes: "gluten-free" },
-      ],
-    },
-    {
-      id: "hh-3", name: "College Crew — Jess & Theo", code: "demo789ghi",
-      email: "jess@example.com", phone: "",
-      notes: "Flying in from Denver", rsvp_message: "", responded_at: null,
-      guests: [
-        { id: "g-6", household_id: "hh-3", name: "Jess Alvarez", rsvp_status: "pending", meal: "", notes: "" },
-        { id: "g-7", household_id: "hh-3", name: "Theo Park", rsvp_status: "pending", meal: "", notes: "" },
-      ],
-    },
-  ];
-
-  function demoLoad() {
-    try {
-      var data = JSON.parse(localStorage.getItem(DEMO_KEY));
-      if (Array.isArray(data)) return data;
-    } catch (e) { /* fall through to seed */ }
-    localStorage.setItem(DEMO_KEY, JSON.stringify(DEMO_SEED));
-    return JSON.parse(JSON.stringify(DEMO_SEED));
-  }
-  function demoSave(data) { localStorage.setItem(DEMO_KEY, JSON.stringify(data)); }
+  function demoLoad() { return window.DemoData.load(); }
+  function demoSave(data) { window.DemoData.save(data); }
   function newId(prefix) { return prefix + "-" + Date.now() + "-" + Math.floor(Math.random() * 1e4); }
 
   var DemoStore = {

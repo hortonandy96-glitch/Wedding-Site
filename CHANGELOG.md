@@ -1,5 +1,31 @@
 # Changelog
 
+## v1.2.0 — RSVP tracker Phase 2: QR invite links (2026-06-09)
+
+### Implemented ✅
+
+- **`rsvp.html`** — personal RSVP page guests reach by scanning their QR
+  code. Greets the household by name, one yes/no + dinner choice block per
+  guest, optional note, validation with per-guest errors, confirmation
+  screen. Re-opening the link shows current answers and allows updates.
+  Manual invite-code entry as a fallback for missing/typo'd links.
+- **Admin invite tools** — every household card now shows its personal link
+  with **Copy link** and **Download QR** buttons. QR codes are generated in
+  the browser (vendored MIT library, `js/vendor/qrcode.js`), painted at
+  ~1000px for crisp printing, and verified to decode back to the right URL.
+  Links adapt automatically to wherever the site is hosted.
+- **Shared demo data** (`js/demo-data.js`) — in demo mode the guest page and
+  admin dashboard share the same sample data, so you can RSVP via a demo
+  link and watch the tracker update.
+- **Validation + tests** — new `validateHouseholdResponses()` rules (every
+  guest must decide; attendees need a meal) with 3 new tests (12 total).
+- **Bug fix** — global `[hidden]` CSS rule; previously `display:flex` rows
+  could ignore the `hidden` attribute (affected meal pickers on both forms).
+
+### Phase 3 (next) 🚧
+
+- RSVP reminders from the dashboard with preview before sending.
+
 ## v1.1.0 — RSVP tracker Phase 1: admin dashboard (2026-06-09)
 
 ### Implemented ✅
