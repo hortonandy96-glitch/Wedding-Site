@@ -17,6 +17,8 @@
    ========================================================================= */
 
 window.SUPABASE_CONFIG = {
-  url: "https://erkvgabptawgrlyoeimw.supabase.co/rest/v1/",
+  // Base project URL only — the client library adds /rest/v1, /auth/v1,
+  // etc. itself, so don't include any path here.
+  url: "https://erkvgabptawgrlyoeimw.supabase.co",
   anonKey: "sb_publishable_24S6pNGEVa_0dexTHQGSPA_m63SRuvD",
 };
