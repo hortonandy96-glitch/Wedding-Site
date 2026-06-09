@@ -1,5 +1,42 @@
 # Changelog
 
+## v1.3.0 — Phase 3 reminders + design feedback round 1 (2026-06-09)
+
+### Implemented ✅
+
+- **Email reminders (Phase 3)** — "✉️ Send reminders" button on the admin
+  dashboard: picks every household with an email and no response, editable
+  subject/message with {{name}} and {{link}} placeholders, live preview of
+  the exact email before sending. Real sending runs through a Supabase Edge
+  Function (`supabase/functions/send-reminders/index.ts`) holding the Resend
+  API key as a server-side secret (never in git); it verifies the admin's
+  session and that each recipient matches the household's email on file.
+  Households show a "reminded <date>" badge. `SETUP-EMAIL.md` walks through
+  Resend + DNS for hortonhearsido.com + dashboard-only deployment.
+- **Food stations rework** — meal choices removed everywhere (stations with
+  guaranteed vegetarian options). Both RSVP forms now collect optional
+  dietary restrictions per guest; admin summary shows a caterer-ready
+  dietary list; schema renamed `meal` → `dietary`
+  (migration provided for existing databases).
+- **Plus ones** — public form: "I'm bringing a plus one" checkbox reveals
+  name + dietary fields. Personal QR page: households the admin marks
+  "+1 invited" can add one plus one (enforced in the database: only if
+  allowed, only once, name required). Admin shows "+1 invited" and "+1"
+  badges.
+- **Hero** — RSVP button now vertically centered between the venue line and
+  the arch's inner border.
+- **Dress code** — jeans politely shown the door.
+- **Itineraries** — Andy's real Logan Square Sunday (farmers market haul,
+  Logan Theatre, Club Lucky), Robin's Night Out starting at Lone Wolf
+  ("to be continued"), architecture cruise promoted to THE tourist pick,
+  plus art fairs & street fests note.
+
+### Notes 🚧
+
+- Robin's Night Out awaits the rest of her research (edit `js/content.js`).
+- If the original setup.sql was already run in Supabase, run
+  `supabase/migration-001-stations.sql`, then re-run section 3 of `setup.sql`.
+
 ## v1.2.0 — RSVP tracker Phase 2: QR invite links (2026-06-09)
 
 ### Implemented ✅

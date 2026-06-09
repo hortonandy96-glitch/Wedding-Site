@@ -95,6 +95,22 @@
       demoSave(data);
       return Promise.resolve();
     },
+    sendReminders: function (messages) {
+      // Demo mode: pretend the emails went out and stamp reminder_sent_at.
+      var data = demoLoad();
+      var now = new Date().toISOString();
+      messages.forEach(function (m) {
+        data.forEach(function (h) {
+          if (h.id === m.household_id) h.reminder_sent_at = now;
+        });
+      });
+      demoSave(data);
+      return Promise.resolve({
+        sent: messages.length,
+        failed: 0,
+        demo: true,
+      });
+    },
   };
 
   /* ---------------- live store (Supabase) ------------------------------- */
@@ -148,6 +164,7 @@
       saveHousehold: function (obj) {
         var row = {
           name: obj.name, email: obj.email, phone: obj.phone, notes: obj.notes,
+          plus_one_allowed: !!obj.plus_one_allowed,
         };
         if (obj.id) {
           return unwrap(client.from("households").update(row).eq("id", obj.id).select());
@@ -162,7 +179,7 @@
         var row = {
           household_id: obj.household_id, name: obj.name,
           rsvp_status: obj.rsvp_status || "pending",
-          meal: obj.meal || null, notes: obj.notes || null,
+          dietary: obj.dietary || null, notes: obj.notes || null,
         };
         if (obj.id) {
           return unwrap(client.from("guests").update(row).eq("id", obj.id).select());
@@ -171,6 +188,18 @@
       },
       deleteGuest: function (id) {
         return unwrap(client.from("guests").delete().eq("id", id));
+      },
+      sendReminders: function (messages) {
+        // Calls the Supabase Edge Function (supabase/functions/send-reminders),
+        // which holds the Resend API key as a server-side secret. supabase-js
+        // automatically attaches your signed-in session token, which the
+        // function verifies before sending anything.
+        return client.functions
+          .invoke("send-reminders", { body: { messages: messages } })
+          .then(function (res) {
+            if (res.error) throw new Error(res.error.message || "Reminder service failed");
+            return res.data;
+          });
       },
     };
   }

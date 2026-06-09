@@ -5,23 +5,22 @@
    ========================================================================= */
 
 window.SITE_CONTENT = {
-  /* ---- Meal options shown in the RSVP form (exactly 3 per the plan) ---- */
-  mealOptions: [
-    "Herb-Roasted Chicken",
-    "Braised Short Rib",
-    "Wild Mushroom Risotto (vegetarian)",
-  ],
+  /* ---- Dinner ----
+     Food is served from stations (no plated meal choices), with vegetarian
+     options guaranteed. The RSVP forms ask for dietary restrictions only. */
+  dietaryPrompt: "Any dietary restrictions? (optional)",
+  dietaryPlaceholder: "Allergies, vegan, gluten-free, kosher…",
 
   /* ---- Weekend itineraries (Travel section) ---- */
   itineraries: [
     {
       title: "Andy's Ideal Sunday",
-      emoji: "⚾",
-      blurb: "Low-key, outdoorsy, ends at the ballpark.",
+      emoji: "🥖",
+      blurb: "Logan Square, done properly.",
       stops: [
-        "10:30 AM — Brunch (get the hash, trust him)",
-        "12:30 PM — Lakefront Trail walk, Montrose to Belmont",
-        "3:05 PM — Cubs game at Wrigley Field (optional but encouraged)",
+        "10:00 AM — Logan Square Farmers Market: coffee from Anticonquista Café, a baguette from La Boulangerie, pâté from Chef Didier Durand, poblano mustard from Co-op Sauce, and any cheese from J2K Dairy — then claim a spot in the park and call it lunch",
+        "2:00 PM — Catch a movie at the Logan Theatre (locally owned — swing by the bar inside for a bev first)",
+        "7:00 PM — Dinner at Club Lucky: a dirty vodka martini (Tito's preferred) with blue-cheese olives, and any pasta on the menu to share",
       ],
     },
     {
@@ -29,9 +28,8 @@ window.SITE_CONTENT = {
       emoji: "🍸",
       blurb: "Dress up a little. It's worth it.",
       stops: [
-        "7:00 PM — Cocktail hour at a West Loop bar",
-        "9:00 PM — A show: theater downtown or jazz at the Green Mill",
-        "11:30 PM — Late-night deep-dish stop (yes, really)",
+        "5:00 PM — Happy hour at Lone Wolf",
+        "To be continued… Robin is out conducting (very fun) research. Check back soon.",
       ],
     },
     {
@@ -39,10 +37,11 @@ window.SITE_CONTENT = {
       emoji: "🏙️",
       blurb: "First time in Chicago? Do these. No shame.",
       stops: [
+        "⭐ The architecture river cruise — if you do ONE thing in Chicago, make it this one (book ahead!)",
         "Millennium Park & The Bean",
         "The Art Institute of Chicago",
-        "Architecture river cruise (book ahead!)",
         "Navy Pier at sunset",
+        "And check the calendar for neighborhood art fairs & street festivals — summer Chicago's true specialty",
       ],
     },
   ],

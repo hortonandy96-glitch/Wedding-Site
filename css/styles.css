@@ -200,11 +200,16 @@ a { color: var(--burgundy); }
   display: flex; flex-direction: column;
   align-items: center; justify-content: flex-start;
   gap: clamp(0.1rem, 1.2vw, 0.5rem);
-  /* top padding clears the window-sill line in the arch SVG
+  /* top padding clears the window-sill line in the arch SVG; bottom padding
+     ends the content area at the inner frame line so the RSVP button can
+     center itself between the venue text and that line
      (all values are % of width, mirroring the SVG's aspect ratio) */
-  padding: 54% 16% 12%;
+  padding: 54% 16% 20%;
   color: var(--ink);
 }
+
+/* auto margins split the leftover space above and below evenly */
+.arch-content .btn { margin-top: auto; margin-bottom: auto; }
 
 .hero-eyebrow {
   font-style: italic;
@@ -356,6 +361,9 @@ legend {
   color: var(--cream);
 }
 .radio-pill input { accent-color: var(--burgundy); margin-right: 0.35rem; }
+
+.checkbox-pill { display: inline-block; margin-bottom: 0.5rem; }
+#plus-one-fields { margin-top: 0.8rem; }
 
 .form-row { margin-bottom: 1.1rem; display: flex; flex-direction: column; }
 .form-row label { font-family: var(--font-display); letter-spacing: 0.05em; margin-bottom: 0.3rem; }

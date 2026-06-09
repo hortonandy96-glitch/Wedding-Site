@@ -1,11 +1,15 @@
 /* =========================================================================
-   RSVP form behavior: dynamic guest rows, validation, localStorage
-   persistence, confirmation, print & download, saved-RSVP list.
+   Public RSVP form (index.html): attendance, optional plus one, dietary
+   restrictions, localStorage persistence, confirmation, print & download,
+   saved-RSVP list.
 
-   BACKEND INTEGRATION: there is no server. RSVPs live in this browser's
-   localStorage only. To collect RSVPs for real, replace saveRsvp() /
-   loadRsvps() with fetch() calls to your API — they are the only two
-   functions that touch storage.
+   Dinner is served from stations, so there are no meal choices — just an
+   optional dietary-restrictions box (one for you, one for your plus one).
+
+   BACKEND INTEGRATION: this form saves to this browser's localStorage only.
+   Invited guests normally RSVP through their personal QR link (rsvp.html),
+   which writes to the real database. To wire THIS form to the database too,
+   replace saveRsvp() / loadRsvps() below.
    ========================================================================= */
 
 (function () {
@@ -13,7 +17,6 @@
 
   var STORAGE_KEY = "robin-andy-rsvps";
   var V = window.RsvpValidate;
-  var CONTENT = window.SITE_CONTENT;
 
   var form = document.getElementById("rsvp-form");
   if (!form) return;
@@ -21,9 +24,13 @@
   var els = {
     name: document.getElementById("rsvp-name"),
     email: document.getElementById("rsvp-email"),
-    party: document.getElementById("rsvp-party"),
-    mealRows: document.getElementById("meal-rows"),
-    mealFieldset: document.getElementById("meal-fieldset"),
+    dietary: document.getElementById("rsvp-dietary"),
+    dietaryRow: document.getElementById("dietary-row"),
+    hasPlusOne: document.getElementById("rsvp-has-plus-one"),
+    plusOneFieldset: document.getElementById("plus-one-fieldset"),
+    plusOneFields: document.getElementById("plus-one-fields"),
+    plusOneName: document.getElementById("rsvp-plus-one-name"),
+    plusOneDietary: document.getElementById("rsvp-plus-one-dietary"),
     message: document.getElementById("rsvp-message"),
     confirmation: document.getElementById("rsvp-confirmation"),
     confirmationBody: document.getElementById("confirmation-body"),
@@ -62,60 +69,21 @@
     localStorage.setItem(STORAGE_KEY, JSON.stringify(all));
   }
 
-  /* ---------------- dynamic form pieces -------------------------------- */
+  /* ---------------- show/hide follow-up fields -------------------------- */
 
-  function populatePartySelect() {
-    for (var i = 1; i <= V.MAX_PARTY_SIZE; i++) {
-      var opt = document.createElement("option");
-      opt.value = String(i);
-      opt.textContent = i === 1 ? "Just me" : i + " people";
-      els.party.appendChild(opt);
-    }
+  function isAttending() {
+    return form.querySelector('input[name="attending"]:checked').value === "yes";
   }
 
-  function mealSelectHtml(idx, selected) {
-    var opts = CONTENT.mealOptions.map(function (m) {
-      var sel = m === selected ? " selected" : "";
-      return '<option value="' + escapeHtml(m) + '"' + sel + ">" + escapeHtml(m) + "</option>";
-    });
-    return (
-      '<select id="meal-' + idx + '" name="meal-' + idx + '" aria-label="Dinner choice for guest ' + (idx + 1) + '">' +
-      '<option value="">Choose a dinner…</option>' + opts.join("") + "</select>"
-    );
+  function togglePlusOneFields() {
+    els.plusOneFields.hidden = !els.hasPlusOne.checked;
+    if (els.hasPlusOne.checked) els.plusOneName.focus();
   }
 
-  /** Render one name+meal row per guest, keeping any values already typed. */
-  function renderMealRows() {
-    var count = Number(els.party.value) || 1;
-    var previous = readGuestRows();
-    els.mealRows.innerHTML = "";
-
-    for (var i = 0; i < count; i++) {
-      var row = document.createElement("div");
-      row.className = "guest-row";
-      var prev = previous[i] || {};
-      var nameField =
-        i === 0
-          ? '<span class="guest-label">You</span>'
-          : '<input type="text" id="guest-name-' + i + '" placeholder="Guest ' + (i + 1) + " name\" " +
-            'aria-label="Name of guest ' + (i + 1) + '" value="' + escapeHtml(prev.name || "") + '" />';
-      row.innerHTML = nameField + mealSelectHtml(i, prev.meal || "");
-      els.mealRows.appendChild(row);
-    }
-  }
-
-  function readGuestRows() {
-    var guests = [];
-    var rows = els.mealRows.querySelectorAll(".guest-row");
-    rows.forEach(function (row, i) {
-      var nameInput = row.querySelector('input[type="text"]');
-      var meal = row.querySelector("select");
-      guests.push({
-        name: i === 0 ? els.name.value : (nameInput ? nameInput.value : ""),
-        meal: meal ? meal.value : "",
-      });
-    });
-    return guests;
+  function toggleAttendingFields() {
+    var attending = isAttending();
+    els.dietaryRow.hidden = !attending;
+    els.plusOneFieldset.hidden = !attending;
   }
 
   /* ---------------- validation UI -------------------------------------- */
@@ -123,8 +91,7 @@
   function showErrors(errors) {
     setError("err-name", errors.name);
     setError("err-email", errors.email);
-    setError("err-party", errors.partySize);
-    setError("err-meals", errors.meals);
+    setError("err-plus-one", errors.plusOneName);
     var firstError = document.querySelector(".field-error:not(:empty)");
     if (firstError) {
       var field = firstError.parentElement.querySelector("input, select");
@@ -139,6 +106,15 @@
 
   /* ---------------- confirmation / print / download --------------------- */
 
+  function partyLines(rsvp) {
+    var lines = [rsvp.name + (rsvp.dietary ? " — dietary: " + rsvp.dietary : "")];
+    if (rsvp.hasPlusOne && rsvp.plusOneName) {
+      lines.push(rsvp.plusOneName +
+        (rsvp.plusOneDietary ? " — dietary: " + rsvp.plusOneDietary : "") + " (plus one)");
+    }
+    return lines;
+  }
+
   function buildSummaryText(rsvp) {
     var lines = [
       "RSVP — Robin & Andy's Wedding",
@@ -149,10 +125,7 @@
       "Status: " + (rsvp.attending === "yes" ? "Joyfully accepts" : "Regretfully declines"),
     ];
     if (rsvp.attending === "yes") {
-      lines.push("Party:  " + rsvp.partySize);
-      rsvp.guests.forEach(function (g, i) {
-        lines.push("  Guest " + (i + 1) + ": " + (g.name || rsvp.name) + " — " + g.meal);
-      });
+      partyLines(rsvp).forEach(function (line) { lines.push("  " + line); });
     }
     if (rsvp.message) lines.push("Note:   " + rsvp.message);
     lines.push("----------------------------------------");
@@ -164,8 +137,8 @@
     var html = "";
     if (rsvp.attending === "yes") {
       html += "<p>Can't wait to see you, <strong>" + escapeHtml(rsvp.name) + "</strong>! Here's what we have:</p><ul>";
-      rsvp.guests.forEach(function (g, i) {
-        html += "<li>" + escapeHtml(g.name || rsvp.name) + " — " + escapeHtml(g.meal) + "</li>";
+      partyLines(rsvp).forEach(function (line) {
+        html += "<li>" + escapeHtml(line) + "</li>";
       });
       html += "</ul>";
       if (rsvp.message) html += "<p>Your note: “" + escapeHtml(rsvp.message) + "”</p>";
@@ -195,7 +168,10 @@
       var li = document.createElement("li");
       var label = document.createElement("span");
       label.textContent =
-        r.name + " — " + (r.attending === "yes" ? "attending, party of " + r.partySize : "declined");
+        r.name + " — " +
+        (r.attending === "yes"
+          ? "attending" + (r.hasPlusOne && r.plusOneName ? " +1" : "")
+          : "declined");
       var edit = document.createElement("button");
       edit.type = "button";
       edit.className = "btn btn-small";
@@ -226,17 +202,13 @@
     form.querySelector('input[name="attending"][value="' + rsvp.attending + '"]').checked = true;
     els.name.value = rsvp.name;
     els.email.value = rsvp.email;
-    els.party.value = String(rsvp.partySize || 1);
-    renderMealRows();
-    (rsvp.guests || []).forEach(function (g, i) {
-      var row = els.mealRows.querySelectorAll(".guest-row")[i];
-      if (!row) return;
-      var nameInput = row.querySelector('input[type="text"]');
-      if (nameInput) nameInput.value = g.name || "";
-      row.querySelector("select").value = g.meal || "";
-    });
+    els.dietary.value = rsvp.dietary || "";
+    els.hasPlusOne.checked = !!rsvp.hasPlusOne;
+    els.plusOneName.value = rsvp.plusOneName || "";
+    els.plusOneDietary.value = rsvp.plusOneDietary || "";
     els.message.value = rsvp.message || "";
-    toggleMealVisibility();
+    toggleAttendingFields();
+    els.plusOneFields.hidden = !rsvp.hasPlusOne;
     form.scrollIntoView({ behavior: "smooth" });
     els.name.focus();
   }
@@ -244,28 +216,19 @@
   function resetForm() {
     editingId = null;
     form.reset();
-    els.party.value = "1";
-    renderMealRows();
-    toggleMealVisibility();
+    toggleAttendingFields();
+    togglePlusOneFields();
     els.resetBtn.hidden = true;
-    ["err-name", "err-email", "err-party", "err-meals"].forEach(function (id) { setError(id, ""); });
-  }
-
-  function toggleMealVisibility() {
-    var attending = form.querySelector('input[name="attending"]:checked').value === "yes";
-    els.mealFieldset.hidden = !attending;
-    els.party.closest(".form-row").hidden = !attending;
+    ["err-name", "err-email", "err-plus-one"].forEach(function (id) { setError(id, ""); });
   }
 
   /* ---------------- wire it up ------------------------------------------ */
 
-  populatePartySelect();
-  renderMealRows();
   renderSavedList();
 
-  els.party.addEventListener("change", renderMealRows);
+  els.hasPlusOne.addEventListener("change", togglePlusOneFields);
   form.querySelectorAll('input[name="attending"]').forEach(function (radio) {
-    radio.addEventListener("change", toggleMealVisibility);
+    radio.addEventListener("change", toggleAttendingFields);
   });
 
   form.addEventListener("submit", function (e) {
@@ -275,12 +238,14 @@
       attending: form.querySelector('input[name="attending"]:checked').value,
       name: els.name.value,
       email: els.email.value,
-      partySize: Number(els.party.value),
-      guests: readGuestRows(),
+      hasPlusOne: isAttending() && els.hasPlusOne.checked,
+      plusOneName: els.plusOneName.value,
+      dietary: els.dietary.value.trim(),
+      plusOneDietary: els.plusOneDietary.value.trim(),
       message: els.message.value.trim(),
       savedAt: new Date().toISOString(),
     };
-    var result = V.validateRsvp(rsvp, CONTENT.mealOptions);
+    var result = V.validateRsvp(rsvp);
     showErrors(result.errors);
     if (!result.valid) return;
 
@@ -317,5 +282,5 @@
     URL.revokeObjectURL(a.href);
   });
 
-  toggleMealVisibility();
+  toggleAttendingFields();
 })();

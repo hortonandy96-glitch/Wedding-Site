@@ -22,7 +22,7 @@ There is no build step — what's in this folder is exactly what gets published.
 
 | What you want to change | Where |
 |---|---|
-| Itineraries, hotels, registry links, FAQ, meal options | `js/content.js` — one friendly file, instructions at the top |
+| Itineraries, hotels, registry links, FAQ, dietary prompts | `js/content.js` — one friendly file, instructions at the top |
 | Names, date, venue, timeline, dress code, parking, contact email | `index.html` — search for the text you see on the page and retype it |
 | Colors and fonts | top of `css/styles.css` (the `:root` block has the five mood-board swatches) |
 | Photos | drop files in `assets/images/` — see `assets/images/README.txt` |
@@ -55,6 +55,11 @@ js/main.js              nav, accordion, rendering, copy-links button
 tests/validate.test.js  run with `npm test`
 assets/                 favicon, social-preview image, photo drop folder
 DEPLOY-GUIDE.md         step-by-step "put this on the internet" guide
+SETUP-SUPABASE.md       connect the real guest-list database (RSVP tracker)
+SETUP-EMAIL.md          connect reminder emails (domain + Resend)
+supabase/               database setup SQL + the email Edge Function
+admin.html              your private guest-list dashboard
+rsvp.html               personal RSVP page guests reach via QR code
 CHANGELOG.md            what's done vs. what's a placeholder
 ```
 

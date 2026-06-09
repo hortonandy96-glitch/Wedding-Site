@@ -65,6 +65,7 @@
 
       <div class="admin-toolbar">
         <button type="button" class="btn btn-primary" id="add-household">+ Add household</button>
+        <button type="button" class="btn btn-ghost" id="send-reminders">✉️ Send reminders</button>
         <p class="toolbar-hint">A “household” = one invitation = one QR code. Download each QR below and print it on that household's invitation.</p>
       </div>
 
@@ -94,6 +95,12 @@
         <label for="hh-notes">Private notes</label>
         <textarea id="hh-notes" rows="2" placeholder="Only you see these"></textarea>
       </div>
+      <div class="form-row">
+        <label class="radio-pill checkbox-pill">
+          <input type="checkbox" id="hh-plus-one" />
+          Invitation includes a plus one
+        </label>
+      </div>
       <div class="form-actions">
         <button type="submit" class="btn btn-primary" value="save">Save</button>
         <button type="button" class="btn btn-ghost dialog-cancel">Cancel</button>
@@ -118,15 +125,41 @@
         </select>
       </div>
       <div class="form-row">
-        <label for="g-meal">Meal choice</label>
-        <select id="g-meal"><option value="">—</option></select>
+        <label for="g-dietary">Dietary restrictions</label>
+        <input type="text" id="g-dietary" placeholder="Allergies, vegan, gluten-free…" />
       </div>
       <div class="form-row">
-        <label for="g-notes">Notes</label>
-        <input type="text" id="g-notes" placeholder="Dietary needs, etc." />
+        <label for="g-notes">Private notes</label>
+        <input type="text" id="g-notes" placeholder="Only you see these" />
       </div>
       <div class="form-actions">
         <button type="submit" class="btn btn-primary" value="save">Save</button>
+        <button type="button" class="btn btn-ghost dialog-cancel">Cancel</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- ============ SEND REMINDERS DIALOG (Phase 3) ============ -->
+  <dialog id="reminder-dialog" aria-labelledby="reminder-dialog-title">
+    <form id="reminder-form" method="dialog">
+      <h2 id="reminder-dialog-title">Send RSVP reminders</h2>
+      <p class="reminder-intro">Everyone below has an email on file and hasn't
+        responded yet. Untick anyone you'd rather nudge in person.</p>
+      <div id="reminder-recipients" class="reminder-recipients"></div>
+      <div class="form-row">
+        <label for="reminder-subject">Subject</label>
+        <input type="text" id="reminder-subject" />
+      </div>
+      <div class="form-row">
+        <label for="reminder-body">Message
+          <span class="optional">({{name}} and {{link}} are filled in per household)</span></label>
+        <textarea id="reminder-body" rows="7"></textarea>
+      </div>
+      <h3 class="preview-heading">Preview</h3>
+      <div class="reminder-preview" id="reminder-preview" aria-live="polite"></div>
+      <p class="field-error" id="reminder-error" aria-live="polite"></p>
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary" id="reminder-send" value="send">Send</button>
         <button type="button" class="btn btn-ghost dialog-cancel">Cancel</button>
       </div>
     </form>

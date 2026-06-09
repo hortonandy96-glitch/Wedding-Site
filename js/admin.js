@@ -7,7 +7,6 @@
   "use strict";
 
   var store = window.AdminStore.create();
-  var CONTENT = window.SITE_CONTENT;
 
   var els = {
     loginView: document.getElementById("login-view"),
@@ -70,20 +69,21 @@
     var pending = guests.length - yes.length - no.length;
     var respondedHouseholds = households.filter(function (h) { return h.responded_at; }).length;
 
-    var meals = {};
-    yes.forEach(function (g) {
-      if (g.meal) meals[g.meal] = (meals[g.meal] || 0) + 1;
-    });
-    var mealLines = Object.keys(meals).map(function (m) {
-      return escapeHtml(m) + ": <strong>" + meals[m] + "</strong>";
-    }).join("<br>") || "<em>No meals chosen yet</em>";
+    // Dinner is stations, so instead of meal counts we surface every
+    // dietary restriction the caterer needs to know about.
+    var dietaryLines = yes
+      .filter(function (g) { return g.dietary && g.dietary.trim(); })
+      .map(function (g) {
+        return escapeHtml(g.name) + ": <strong>" + escapeHtml(g.dietary) + "</strong>";
+      })
+      .join("<br>") || "<em>No dietary restrictions reported yet</em>";
 
     els.summary.innerHTML =
       summaryCard("Invited", guests.length, households.length + " households") +
       summaryCard("Attending", yes.length, "🎉") +
       summaryCard("Declined", no.length, "") +
       summaryCard("Awaiting reply", pending, respondedHouseholds + "/" + households.length + " households responded") +
-      '<div class="card summary-card summary-meals"><p class="summary-label">Meal counts</p><p class="summary-detail">' + mealLines + "</p></div>";
+      '<div class="card summary-card summary-meals"><p class="summary-label">Dietary restrictions (attending)</p><p class="summary-detail">' + dietaryLines + "</p></div>";
   }
 
   function summaryCard(label, n, detail) {
@@ -172,13 +172,20 @@
       var respondedTag = h.responded_at
         ? '<span class="badge badge-green">responded</span>'
         : '<span class="badge">no reply yet</span>';
+      if (!h.responded_at && h.reminder_sent_at) {
+        respondedTag += ' <span class="badge">reminded ' +
+          new Date(h.reminder_sent_at).toLocaleDateString("en-US", { month: "short", day: "numeric" }) +
+          "</span>";
+      }
+      if (h.plus_one_allowed) respondedTag += ' <span class="badge">+1 invited</span>';
 
       var rows = (h.guests || []).map(function (g) {
         return (
           '<div class="guest-line" data-guest="' + g.id + '">' +
-          '<span class="guest-name">' + escapeHtml(g.name) + "</span>" +
+          '<span class="guest-name">' + escapeHtml(g.name) +
+          (g.is_plus_one ? ' <span class="badge">+1</span>' : "") + "</span>" +
           '<span class="status status-' + g.rsvp_status + '">' + STATUS_LABEL[g.rsvp_status] + "</span>" +
-          '<span class="guest-meal">' + escapeHtml(g.meal || "—") + "</span>" +
+          '<span class="guest-meal">' + escapeHtml(g.dietary || "—") + "</span>" +
           '<span class="guest-notes">' + escapeHtml(g.notes || "") + "</span>" +
           '<span class="guest-actions">' +
           '<button type="button" class="btn btn-small" data-action="edit-guest" aria-label="Edit ' + escapeHtml(g.name) + '">Edit</button>' +
@@ -223,21 +230,16 @@
     document.getElementById("hh-email").value = h ? h.email || "" : "";
     document.getElementById("hh-phone").value = h ? h.phone || "" : "";
     document.getElementById("hh-notes").value = h ? h.notes || "" : "";
+    document.getElementById("hh-plus-one").checked = h ? !!h.plus_one_allowed : false;
     els.hhDialog.showModal();
   }
 
   function openGuestDialog(householdId, g) {
     editingGuest = g ? Object.assign({}, g) : { household_id: householdId };
     document.getElementById("guest-dialog-title").textContent = g ? "Edit guest" : "Add guest";
-    // Meal options come from js/content.js so the admin page and the public
-    // RSVP form always offer the same menu.
-    var mealSel = document.getElementById("g-meal");
-    mealSel.innerHTML = '<option value="">—</option>' + CONTENT.mealOptions.map(function (m) {
-      return '<option value="' + escapeHtml(m) + '">' + escapeHtml(m) + "</option>";
-    }).join("");
     document.getElementById("g-name").value = g ? g.name : "";
     document.getElementById("g-status").value = g ? g.rsvp_status : "pending";
-    mealSel.value = g ? g.meal || "" : "";
+    document.getElementById("g-dietary").value = g ? g.dietary || "" : "";
     document.getElementById("g-notes").value = g ? g.notes || "" : "";
     els.gDialog.showModal();
   }
@@ -249,6 +251,7 @@
       email: document.getElementById("hh-email").value.trim(),
       phone: document.getElementById("hh-phone").value.trim(),
       notes: document.getElementById("hh-notes").value.trim(),
+      plus_one_allowed: document.getElementById("hh-plus-one").checked,
     };
     if (!obj.name) return;
     store.saveHousehold(obj).then(refresh).catch(alertError);
@@ -258,7 +261,7 @@
     var obj = Object.assign({}, editingGuest, {
       name: document.getElementById("g-name").value.trim(),
       rsvp_status: document.getElementById("g-status").value,
-      meal: document.getElementById("g-meal").value,
+      dietary: document.getElementById("g-dietary").value.trim(),
       notes: document.getElementById("g-notes").value.trim(),
     });
     if (!obj.name) return;
@@ -299,6 +302,135 @@
         }
         break;
     }
+  });
+
+  /* ---------------- RSVP reminders (Phase 3) ----------------------------- */
+
+  var DEFAULT_SUBJECT = "Robin & Andy — can you make it? 💌";
+  var DEFAULT_BODY =
+    "Hi {{name}},\n\n" +
+    "Just a friendly nudge from Robin & Andy — we're finalizing numbers for\n" +
+    "May 21, 2027 at Salvage One in Chicago, and we'd love to know if you can\n" +
+    "make it. It takes about a minute:\n\n" +
+    "{{link}}\n\n" +
+    "(That's your household's personal link — it already knows your party.)\n\n" +
+    "Can't wait to celebrate,\n" +
+    "Robin & Andy";
+
+  function fillTemplate(template, h) {
+    return template
+      .replace(/\{\{name\}\}/g, h.name)
+      .replace(/\{\{link\}\}/g, inviteUrl(h.code));
+  }
+
+  function reminderCandidates() {
+    return households.filter(function (h) {
+      return !h.responded_at && h.email && h.email.trim();
+    });
+  }
+
+  function openReminderDialog() {
+    var candidates = reminderCandidates();
+    var wrap = document.getElementById("reminder-recipients");
+    if (candidates.length === 0) {
+      wrap.innerHTML = "<p><em>Everyone with an email on file has already responded — nothing to send! 🎉</em></p>";
+    } else {
+      wrap.innerHTML = candidates.map(function (h) {
+        var reminded = h.reminder_sent_at
+          ? ' <span class="badge">last reminded ' +
+            new Date(h.reminder_sent_at).toLocaleDateString("en-US", { month: "short", day: "numeric" }) + "</span>"
+          : "";
+        return '<label class="reminder-recipient">' +
+          '<input type="checkbox" checked value="' + escapeHtml(h.id) + '" /> ' +
+          escapeHtml(h.name) + " &lt;" + escapeHtml(h.email) + "&gt;" + reminded +
+          "</label>";
+      }).join("");
+    }
+    document.getElementById("reminder-subject").value = DEFAULT_SUBJECT;
+    document.getElementById("reminder-body").value = DEFAULT_BODY;
+    document.getElementById("reminder-error").textContent = "";
+    document.getElementById("reminder-send").disabled = candidates.length === 0;
+    updateReminderPreview();
+    document.getElementById("reminder-dialog").showModal();
+  }
+
+  function selectedReminderHouseholds() {
+    var ids = Array.prototype.map.call(
+      document.querySelectorAll("#reminder-recipients input:checked"),
+      function (cb) { return cb.value; }
+    );
+    return households.filter(function (h) { return ids.indexOf(h.id) !== -1; });
+  }
+
+  // Preview always shows the email exactly as the FIRST selected household
+  // will receive it, so you see real names and a real link before sending.
+  function updateReminderPreview() {
+    var selected = selectedReminderHouseholds();
+    var preview = document.getElementById("reminder-preview");
+    if (selected.length === 0) {
+      preview.innerHTML = "<em>No recipients selected.</em>";
+      document.getElementById("reminder-send").disabled = true;
+      return;
+    }
+    document.getElementById("reminder-send").disabled = false;
+    var h = selected[0];
+    preview.innerHTML =
+      "<p><strong>To:</strong> " + escapeHtml(h.name) + " &lt;" + escapeHtml(h.email) + "&gt;" +
+      (selected.length > 1 ? " <em>(+" + (selected.length - 1) + " more, each with their own link)</em>" : "") + "</p>" +
+      "<p><strong>Subject:</strong> " + escapeHtml(document.getElementById("reminder-subject").value) + "</p>" +
+      "<pre>" + escapeHtml(fillTemplate(document.getElementById("reminder-body").value, h)) + "</pre>";
+  }
+
+  document.getElementById("send-reminders").addEventListener("click", openReminderDialog);
+  document.getElementById("reminder-recipients").addEventListener("change", updateReminderPreview);
+  document.getElementById("reminder-subject").addEventListener("input", updateReminderPreview);
+  document.getElementById("reminder-body").addEventListener("input", updateReminderPreview);
+
+  document.getElementById("reminder-form").addEventListener("submit", function (e) {
+    var selected = selectedReminderHouseholds();
+    if (selected.length === 0) return;
+
+    var subject = document.getElementById("reminder-subject").value.trim();
+    var bodyTemplate = document.getElementById("reminder-body").value;
+    if (!subject || !bodyTemplate.trim()) {
+      e.preventDefault();
+      document.getElementById("reminder-error").textContent = "Subject and message can't be empty.";
+      return;
+    }
+
+    var messages = selected.map(function (h) {
+      var text = fillTemplate(bodyTemplate, h);
+      return {
+        household_id: h.id,
+        to: h.email,
+        subject: subject,
+        text: text,
+        // Simple HTML version: same text with clickable link + line breaks
+        html: escapeHtml(text)
+          .replace(new RegExp(escapeHtml(inviteUrl(h.code)).replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "g"),
+            '<a href="' + escapeHtml(inviteUrl(h.code)) + '">' + escapeHtml(inviteUrl(h.code)) + "</a>")
+          .replace(/\n/g, "<br>"),
+      };
+    });
+
+    var btn = document.getElementById("reminder-send");
+    btn.disabled = true;
+    btn.textContent = "Sending…";
+    store.sendReminders(messages)
+      .then(function (result) {
+        refresh();
+        var note = result.demo
+          ? "Demo mode: pretended to send " + result.sent + " reminder(s) — with Supabase + Resend connected these would be real emails."
+          : "Sent " + result.sent + " reminder(s)" + (result.failed ? ", " + result.failed + " failed — check the dashboard badges." : ".");
+        alert(note);
+      })
+      .catch(function (err) {
+        alert("Couldn't send reminders: " + err.message);
+      })
+      .then(function () {
+        btn.disabled = false;
+        btn.textContent = "Send";
+      });
   });
 
   /* ---------------- auth ------------------------------------------------- */

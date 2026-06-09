@@ -2,7 +2,10 @@
    Personal RSVP page (rsvp.html?code=XXXX).
 
    Flow: read the invite code from the link → look up the household →
-   show one yes/no + meal block per guest → submit → done.
+   show one yes/no block per guest (with optional dietary restrictions) →
+   optional plus one if the household is allowed one → submit → done.
+
+   Dinner is served from stations, so there are no meal choices.
 
    Like the admin page, this talks to a small "guest store" with two
    interchangeable implementations:
@@ -37,12 +40,17 @@
         household_name: hh.name,
         responded_at: hh.responded_at,
         rsvp_message: hh.rsvp_message,
+        plus_one_allowed: !!hh.plus_one_allowed,
+        has_plus_one: (hh.guests || []).some(function (g) { return g.is_plus_one; }),
         guests: hh.guests.map(function (g) {
-          return { id: g.id, name: g.name, rsvp_status: g.rsvp_status, meal: g.meal };
+          return {
+            id: g.id, name: g.name, rsvp_status: g.rsvp_status,
+            dietary: g.dietary || "", is_plus_one: !!g.is_plus_one,
+          };
         }),
       });
     },
-    submit: function (code, responses, message) {
+    submit: function (code, responses, message, plusOne) {
       var data = window.DemoData.load();
       var hh = data.find(function (h) { return h.code === code; });
       if (!hh) return Promise.resolve(false);
@@ -50,10 +58,18 @@
         hh.guests.forEach(function (g) {
           if (g.id === r.id) {
             g.rsvp_status = r.rsvp_status;
-            g.meal = r.meal || "";
+            g.dietary = r.dietary || "";
           }
         });
       });
+      var alreadyHasPlusOne = hh.guests.some(function (g) { return g.is_plus_one; });
+      if (plusOne && hh.plus_one_allowed && !alreadyHasPlusOne) {
+        hh.guests.push({
+          id: "g-" + Date.now(), household_id: hh.id, name: plusOne.name,
+          rsvp_status: "yes", dietary: plusOne.dietary || "",
+          notes: "", is_plus_one: true,
+        });
+      }
       hh.responded_at = new Date().toISOString();
       if (message) hh.rsvp_message = message;
       window.DemoData.save(data);
@@ -74,12 +90,13 @@
           return res.data; // null when the code doesn't match anything
         });
       },
-      submit: function (code, responses, message) {
+      submit: function (code, responses, message, plusOne) {
         return client
           .rpc("rsvp_submit", {
             invite_code: code,
             responses: responses,
             message: message || null,
+            plus_one: plusOne || null,
           })
           .then(function (res) {
             if (res.error) throw new Error(res.error.message);
@@ -111,13 +128,6 @@
 
   /* ---------------- form rendering --------------------------------------- */
 
-  function mealOptionsHtml(selected) {
-    return CONTENT.mealOptions.map(function (m) {
-      return '<option value="' + escapeHtml(m) + '"' + (m === selected ? " selected" : "") + ">" +
-        escapeHtml(m) + "</option>";
-    }).join("");
-  }
-
   function renderForm(hh) {
     currentHousehold = hh;
     document.getElementById("household-name").textContent = hh.household_name;
@@ -138,32 +148,47 @@
       var block = document.createElement("fieldset");
       block.className = "guest-block";
       block.dataset.guest = g.id;
-      var yesId = "yes-" + i, noId = "no-" + i, mealId = "meal-" + i;
+      var yesId = "yes-" + i, noId = "no-" + i, dietId = "diet-" + i;
       block.innerHTML =
-        "<legend>" + escapeHtml(g.name) + "</legend>" +
+        "<legend>" + escapeHtml(g.name) + (g.is_plus_one ? " <em>(plus one)</em>" : "") + "</legend>" +
         '<div class="radio-row">' +
         '<label class="radio-pill"><input type="radio" name="att-' + i + '" id="' + yesId + '" value="yes"' +
         (g.rsvp_status === "yes" ? " checked" : "") + " /> Joyfully accepts</label>" +
         '<label class="radio-pill"><input type="radio" name="att-' + i + '" id="' + noId + '" value="no"' +
         (g.rsvp_status === "no" ? " checked" : "") + " /> Regretfully declines</label>" +
         "</div>" +
-        '<div class="form-row meal-row"' + (g.rsvp_status === "yes" ? "" : " hidden") + ">" +
-        '<label for="' + mealId + '">Dinner choice</label>' +
-        '<select id="' + mealId + '"><option value="">Choose a dinner…</option>' +
-        mealOptionsHtml(g.meal) + "</select></div>" +
+        '<div class="form-row dietary-row"' + (g.rsvp_status === "yes" ? "" : " hidden") + ">" +
+        '<label for="' + dietId + '">' + escapeHtml(CONTENT.dietaryPrompt) + "</label>" +
+        '<input type="text" id="' + dietId + '" value="' + escapeHtml(g.dietary || "") +
+        '" placeholder="' + escapeHtml(CONTENT.dietaryPlaceholder) + '" />' +
+        "</div>" +
         '<p class="field-error" aria-live="polite"></p>';
       rows.appendChild(block);
     });
+
+    // Plus one: offered only when the admin allowed it for this household
+    // and one hasn't been added yet (added plus ones show as normal guests).
+    var plusOneWrap = document.getElementById("plus-one-wrap");
+    plusOneWrap.hidden = !(hh.plus_one_allowed && !hh.has_plus_one);
+    document.getElementById("link-has-plus-one").checked = false;
+    document.getElementById("link-plus-one-fields").hidden = true;
+    document.getElementById("link-plus-one-name").value = "";
+    document.getElementById("link-plus-one-dietary").value = "";
 
     document.getElementById("party-message").value = hh.rsvp_message || "";
     show("form-view");
   }
 
-  // Show/hide the meal picker as guests toggle yes/no
+  // Show/hide each guest's dietary box as they toggle yes/no
   document.getElementById("party-rows").addEventListener("change", function (e) {
     if (e.target.type !== "radio") return;
     var block = e.target.closest(".guest-block");
-    block.querySelector(".meal-row").hidden = e.target.value !== "yes";
+    block.querySelector(".dietary-row").hidden = e.target.value !== "yes";
+  });
+
+  document.getElementById("link-has-plus-one").addEventListener("change", function (e) {
+    document.getElementById("link-plus-one-fields").hidden = !e.target.checked;
+    if (e.target.checked) document.getElementById("link-plus-one-name").focus();
   });
 
   /* ---------------- submit ----------------------------------------------- */
@@ -175,25 +200,38 @@
       responses.push({
         id: block.dataset.guest,
         rsvp_status: checked ? checked.value : "pending",
-        meal: checked && checked.value === "yes" ? block.querySelector("select").value : "",
+        dietary: checked && checked.value === "yes"
+          ? block.querySelector(".dietary-row input").value.trim()
+          : "",
       });
     });
     return responses;
   }
 
+  function readPlusOne() {
+    if (document.getElementById("plus-one-wrap").hidden) return null;
+    if (!document.getElementById("link-has-plus-one").checked) return null;
+    return {
+      name: document.getElementById("link-plus-one-name").value.trim(),
+      dietary: document.getElementById("link-plus-one-dietary").value.trim(),
+    };
+  }
+
   document.getElementById("party-form").addEventListener("submit", function (e) {
     e.preventDefault();
     var responses = readResponses();
-    var result = V.validateHouseholdResponses(responses, CONTENT.mealOptions);
+    var plusOne = readPlusOne();
+    var result = V.validateHouseholdResponses(responses, plusOne);
 
     // Show per-guest errors next to the guest they belong to
     document.querySelectorAll(".guest-block").forEach(function (block) {
       block.querySelector(".field-error").textContent =
         result.errors[block.dataset.guest] || "";
     });
+    document.getElementById("plus-one-error").textContent = result.errors.plusOne || "";
     if (!result.valid) {
       document.getElementById("party-error").textContent =
-        "Almost there — check the highlighted guests above.";
+        "Almost there — check the highlighted spots above.";
       return;
     }
     document.getElementById("party-error").textContent = "";
@@ -203,10 +241,10 @@
     btn.textContent = "Sending…";
 
     store
-      .submit(currentCode, responses, document.getElementById("party-message").value.trim())
+      .submit(currentCode, responses, document.getElementById("party-message").value.trim(), plusOne)
       .then(function (ok) {
         if (!ok) throw new Error("That invite code stopped working — try the link again?");
-        renderDone(responses);
+        renderDone(responses, plusOne);
       })
       .catch(function (err) {
         document.getElementById("party-error").textContent =
@@ -218,10 +256,10 @@
       });
   });
 
-  function renderDone(responses) {
+  function renderDone(responses, plusOne) {
     var byId = {};
     currentHousehold.guests.forEach(function (g) { byId[g.id] = g.name; });
-    var anyYes = responses.some(function (r) { return r.rsvp_status === "yes"; });
+    var anyYes = plusOne || responses.some(function (r) { return r.rsvp_status === "yes"; });
 
     var html = anyYes
       ? "<p>We can't wait to see you on <strong>May 21, 2027</strong>! Here's what we have:</p>"
@@ -229,9 +267,16 @@
     html += "<ul>";
     responses.forEach(function (r) {
       html += "<li><strong>" + escapeHtml(byId[r.id]) + "</strong> — " +
-        (r.rsvp_status === "yes" ? "attending · " + escapeHtml(r.meal) : "declined") + "</li>";
+        (r.rsvp_status === "yes"
+          ? "attending" + (r.dietary ? " · " + escapeHtml(r.dietary) : "")
+          : "declined") + "</li>";
     });
-    html += "</ul><p>Plans change? Scan your QR code again any time before April 21, 2027 to update this.</p>";
+    if (plusOne) {
+      html += "<li><strong>" + escapeHtml(plusOne.name) + "</strong> — attending (plus one)" +
+        (plusOne.dietary ? " · " + escapeHtml(plusOne.dietary) : "") + "</li>";
+    }
+    html += "</ul><p>Dinner is served from food stations — there will be plenty for everyone, vegetarians very much included.</p>" +
+      "<p>Plans change? Scan your QR code again any time before April 21, 2027 to update this.</p>";
 
     document.getElementById("done-body").innerHTML = html;
     show("done-view");

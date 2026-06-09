@@ -57,6 +57,27 @@
         <p class="updated-note" id="updated-note" hidden></p>
         <form id="party-form" novalidate>
           <div id="party-rows"><!-- one block per guest, rendered by JS --></div>
+
+          <!-- Shown only for households whose invitation includes a plus one -->
+          <fieldset id="plus-one-wrap" hidden>
+            <legend class="visually-hidden">Plus one</legend>
+            <label class="radio-pill checkbox-pill">
+              <input type="checkbox" id="link-has-plus-one" />
+              I'm bringing a plus one
+            </label>
+            <div id="link-plus-one-fields" hidden>
+              <div class="form-row">
+                <label for="link-plus-one-name">Plus one's name <span aria-hidden="true">*</span></label>
+                <input type="text" id="link-plus-one-name" aria-describedby="plus-one-error" />
+              </div>
+              <div class="form-row">
+                <label for="link-plus-one-dietary">Their dietary restrictions <span class="optional">(optional)</span></label>
+                <input type="text" id="link-plus-one-dietary" placeholder="Allergies, vegan, gluten-free…" />
+              </div>
+            </div>
+            <p class="field-error" id="plus-one-error" aria-live="polite"></p>
+          </fieldset>
+
           <div class="form-row">
             <label for="party-message">A note for Robin &amp; Andy <span class="optional">(optional)</span></label>
             <textarea id="party-message" rows="3"

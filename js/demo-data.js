@@ -18,9 +18,9 @@
       notes: "Robin's parents + brother", rsvp_message: "So excited!!",
       responded_at: "2026-06-01T12:00:00Z",
       guests: [
-        { id: "g-1", household_id: "hh-1", name: "Carol Beattie", rsvp_status: "yes", meal: "Herb-Roasted Chicken", notes: "" },
-        { id: "g-2", household_id: "hh-1", name: "Dale Beattie", rsvp_status: "yes", meal: "Braised Short Rib", notes: "" },
-        { id: "g-3", household_id: "hh-1", name: "Sam Beattie", rsvp_status: "no", meal: "", notes: "Studying abroad" },
+        { id: "g-1", household_id: "hh-1", name: "Carol Beattie", rsvp_status: "yes", dietary: "", notes: "" },
+        { id: "g-2", household_id: "hh-1", name: "Dale Beattie", rsvp_status: "yes", dietary: "", notes: "" },
+        { id: "g-3", household_id: "hh-1", name: "Sam Beattie", rsvp_status: "no", dietary: "", notes: "Studying abroad" },
       ],
     },
     {
@@ -28,17 +28,18 @@
       email: "hortons@example.com", phone: "(773) 555-0102",
       notes: "", rsvp_message: "", responded_at: null,
       guests: [
-        { id: "g-4", household_id: "hh-2", name: "Maria Horton", rsvp_status: "pending", meal: "", notes: "" },
-        { id: "g-5", household_id: "hh-2", name: "Greg Horton", rsvp_status: "pending", meal: "", notes: "gluten-free" },
+        { id: "g-4", household_id: "hh-2", name: "Maria Horton", rsvp_status: "pending", dietary: "", notes: "" },
+        { id: "g-5", household_id: "hh-2", name: "Greg Horton", rsvp_status: "pending", dietary: "gluten-free", notes: "" },
       ],
     },
     {
       id: "hh-3", name: "College Crew — Jess & Theo", code: "demo789ghi",
       email: "jess@example.com", phone: "",
       notes: "Flying in from Denver", rsvp_message: "", responded_at: null,
+      plus_one_allowed: true,
       guests: [
-        { id: "g-6", household_id: "hh-3", name: "Jess Alvarez", rsvp_status: "pending", meal: "", notes: "" },
-        { id: "g-7", household_id: "hh-3", name: "Theo Park", rsvp_status: "pending", meal: "", notes: "" },
+        { id: "g-6", household_id: "hh-3", name: "Jess Alvarez", rsvp_status: "pending", dietary: "", notes: "" },
+        { id: "g-7", household_id: "hh-3", name: "Theo Park", rsvp_status: "pending", dietary: "", notes: "" },
       ],
     },
   ];
