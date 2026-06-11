@@ -1,0 +1,38 @@
+# Keeps the free Supabase project awake.
+#
+# Supabase pauses free projects after 7 days with zero DATABASE activity.
+# This workflow runs a tiny real query (the same rsvp_search the RSVP page
+# uses) twice a week, which resets that timer — so the guest list never
+# goes to sleep between bursts of RSVPs.
+#
+# The key below is the publishable anon key (already public in
+# js/supabase-config.js); it can only do what the database's security
+# rules allow, which for this call is a name search.
+#
+# Heads-up: GitHub pauses *scheduled workflows* in repos with no commits
+# for 60 days — if that ever happens, the Actions tab shows a yellow
+# banner with a one-click "Enable" button.
+
+name: Keep Supabase awake
+
+on:
+  schedule:
+    - cron: "17 12 * * 1,4" # Mondays & Thursdays, 12:17 UTC
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run a real database query
+        env:
+          SUPABASE_URL: https://erkvgabptawgrlyoeimw.supabase.co
+          ANON_KEY: sb_publishable_24S6pNGEVa_0dexTHQGSPA_m63SRuvD
+        run: |
+          response=$(curl -sf -X POST "$SUPABASE_URL/rest/v1/rpc/rsvp_search" \
+            -H "apikey: $ANON_KEY" \
+            -H "Authorization: Bearer $ANON_KEY" \
+            -H "Content-Type: application/json" \
+            -d '{"query": "keep-alive ping"}')
+          echo "Database answered: $response"
+          echo "Pause timer reset. 😴❌"

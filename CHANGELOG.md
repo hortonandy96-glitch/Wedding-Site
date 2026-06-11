@@ -170,3 +170,16 @@
 - Palette hex values eyeballed from the mood-board swatches.
 - RSVP deadline assumed as April 21, 2027 (one month out) — edit in `index.html` & `js/content.js`.
 - Dress code, parking tips, and FAQ answers are drafted copy in Robin & Andy's voice — review and tweak.
+
+## v1.4.1 — Keep-alive + polish round (2026-06-11)
+
+- Scheduled GitHub Action pings the database twice weekly so the free
+  Supabase project never pauses (.github/workflows/keep-alive.yml).
+- Admin: "General RSVP QR" download — one QR for all invitations, pointing
+  at the name-search RSVP page (fallback if per-household QRs aren't printed).
+- Admin dashboard column renamed "Meal" → "Dietary restrictions" (it always
+  held dietary notes; the report already said Dietary).
+- Hero RSVP button now sits ~0.25in above the arch's inner frame line
+  (deterministic: pinned to a content area that ends 5% of width above it).
+- Registry descriptions now burgundy.
+- Chicago Tourist Classics rewritten as a timed itinerary like Andy's.

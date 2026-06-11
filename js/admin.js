@@ -141,6 +141,17 @@
     a.remove();
   }
 
+  // General-purpose QR: points at the RSVP page with no code, where guests
+  // find themselves by name. Same code printable on every invitation.
+  document.getElementById("download-generic-qr").addEventListener("click", function () {
+    var a = document.createElement("a");
+    a.href = qrPngDataUrl(new URL("rsvp.html", window.location.href).href);
+    a.download = "qr-rsvp-general.png";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+  });
+
   function copyText(text, btn) {
     function done(ok) {
       var original = btn.textContent;
@@ -213,7 +224,7 @@
         (h.rsvp_message ? '<p class="household-message">💌 “' + escapeHtml(h.rsvp_message) + "”</p>" : "") +
         '<div class="guest-table" role="list">' +
         '<div class="guest-line guest-line-head" aria-hidden="true">' +
-        "<span>Name</span><span>RSVP</span><span>Meal</span><span>Notes</span><span></span></div>" +
+        "<span>Name</span><span>RSVP</span><span>Dietary restrictions</span><span>Notes</span><span></span></div>" +
         rows + "</div>";
 
       card.dataset.household = h.id;
