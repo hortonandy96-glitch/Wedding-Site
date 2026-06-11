@@ -24,6 +24,15 @@
     </div>
   </header>
 
+  <!-- Section tabs (shown after sign-in) -->
+  <nav class="admin-tabs no-print" id="admin-tabs" hidden aria-label="Admin sections">
+    <button type="button" class="tab active" data-tab="rsvps">RSVPs</button>
+    <button type="button" class="tab" data-tab="guestlist">Guest List</button>
+    <button type="button" class="tab" data-tab="budget">Budget</button>
+    <button type="button" class="tab" data-tab="vendors">Vendors</button>
+    <button type="button" class="tab" data-tab="planning">Planning</button>
+  </nav>
+
   <main id="admin-main" class="admin-main">
 
     <!-- ============ LOGIN VIEW ============ -->
@@ -87,6 +96,91 @@
       <h1 id="report-heading">RSVP Report</h1>
       <p class="report-date" id="report-date"></p>
       <div id="report-body"><!-- rendered by js/admin.js --></div>
+    </section>
+
+    <!-- ============ GUEST LIST TAB ============ -->
+    <section id="guestlist-view" hidden aria-labelledby="guestlist-heading">
+      <h1 id="guestlist-heading" class="visually-hidden">Guest list</h1>
+      <div class="admin-toolbar">
+        <input type="search" id="guestlist-filter" class="filter-input"
+               placeholder="Filter by name, household, status…"
+               aria-label="Filter guest list" />
+        <button type="button" class="btn btn-ghost" id="guestlist-csv">⬇ Download CSV</button>
+        <p class="toolbar-hint" id="guestlist-count"></p>
+      </div>
+      <div class="table-scroll">
+        <table class="report-table" id="guestlist-table">
+          <thead><tr>
+            <th>Guest</th><th>Household</th><th>RSVP</th><th>Dietary</th>
+            <th>Email</th><th>Phone</th><th>Address</th><th>Notes</th>
+          </tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <p class="toolbar-hint">Edits happen on the RSVPs tab (guests belong to households there).</p>
+    </section>
+
+    <!-- ============ BUDGET TAB ============ -->
+    <section id="budget-view" hidden aria-labelledby="budget-heading">
+      <h1 id="budget-heading" class="visually-hidden">Budget</h1>
+      <div id="budget-error" class="field-error"></div>
+
+      <div class="card funds-card">
+        <h2>Wedding funds</h2>
+        <div class="funds-grid" id="funds-grid"><!-- inputs rendered by JS --></div>
+      </div>
+
+      <div class="summary-grid" id="budget-summary"><!-- totals rendered by JS --></div>
+
+      <div class="admin-toolbar">
+        <button type="button" class="btn btn-primary" id="add-budget-item">+ Budget item</button>
+        <button type="button" class="btn btn-primary" id="log-expense">+ Log expense</button>
+      </div>
+
+      <div class="report-section">
+        <h2>Upcoming payments</h2>
+        <div id="upcoming-payments"></div>
+      </div>
+
+      <div class="report-section">
+        <h2>Budget items</h2>
+        <div class="table-scroll"><table class="report-table" id="budget-items-table">
+          <thead><tr><th>Item</th><th class="num">Estimated</th><th class="num">Paid</th>
+            <th class="num">Planned</th><th class="num">Left</th><th>Notes</th><th></th></tr></thead>
+          <tbody></tbody>
+        </table></div>
+      </div>
+
+      <div class="report-section">
+        <h2>Expense log</h2>
+        <div class="table-scroll"><table class="report-table" id="expenses-table">
+          <thead><tr><th>Description</th><th>Budget item</th><th>Vendor</th>
+            <th class="num">Amount</th><th>Status</th><th>Paid by</th><th></th></tr></thead>
+          <tbody></tbody>
+        </table></div>
+      </div>
+    </section>
+
+    <!-- ============ VENDORS TAB (generic sheet) ============ -->
+    <section id="vendors-view" hidden aria-labelledby="vendors-heading">
+      <h1 id="vendors-heading" class="visually-hidden">Vendors</h1>
+      <div id="vendors-sheet"><!-- rendered by js/admin-planning.js --></div>
+    </section>
+
+    <!-- ============ PLANNING TAB (generic sheets) ============ -->
+    <section id="planning-view" hidden aria-labelledby="planning-heading">
+      <h1 id="planning-heading" class="visually-hidden">Planning lists</h1>
+      <div class="admin-toolbar">
+        <label for="planning-sheet-select" class="visually-hidden">Choose a planning list</label>
+        <select id="planning-sheet-select">
+          <option value="checklist">Planning Checklist</option>
+          <option value="priorities">Priorities</option>
+          <option value="wedding_party">Wedding Party</option>
+          <option value="timeline">Rough Timeline</option>
+          <option value="packing">Packing List</option>
+        </select>
+      </div>
+      <div id="planning-sheet"><!-- rendered by js/admin-planning.js --></div>
     </section>
   </main>
 
@@ -180,6 +274,94 @@
     </form>
   </dialog>
 
+  <!-- ============ BUDGET ITEM DIALOG ============ -->
+  <dialog id="budget-item-dialog" aria-labelledby="budget-item-dialog-title">
+    <form id="budget-item-form" method="dialog">
+      <h2 id="budget-item-dialog-title">Budget item</h2>
+      <div class="form-row">
+        <label for="bi-name">Item <span aria-hidden="true">*</span></label>
+        <input type="text" id="bi-name" required placeholder="e.g. Florals" />
+      </div>
+      <div class="form-row">
+        <label for="bi-estimated">Estimated cost ($)</label>
+        <input type="number" id="bi-estimated" min="0" step="0.01" />
+      </div>
+      <div class="form-row">
+        <label for="bi-notes">Notes</label>
+        <input type="text" id="bi-notes" />
+      </div>
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary" value="save">Save</button>
+        <button type="button" class="btn btn-ghost dialog-cancel">Cancel</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- ============ EXPENSE DIALOG ============ -->
+  <dialog id="expense-dialog" aria-labelledby="expense-dialog-title">
+    <form id="expense-form" method="dialog">
+      <h2 id="expense-dialog-title">Log expense</h2>
+      <div class="form-row">
+        <label for="ex-description">Description <span aria-hidden="true">*</span></label>
+        <input type="text" id="ex-description" required placeholder="e.g. Venue deposit" />
+      </div>
+      <div class="form-row">
+        <label for="ex-item">Budget item</label>
+        <select id="ex-item"><option value="">— none —</option></select>
+      </div>
+      <div class="form-row">
+        <label for="ex-vendor">Vendor</label>
+        <input type="text" id="ex-vendor" />
+      </div>
+      <div class="form-row">
+        <label for="ex-amount">Amount ($) <span aria-hidden="true">*</span></label>
+        <input type="number" id="ex-amount" min="0" step="0.01" required />
+      </div>
+      <fieldset>
+        <legend>Status</legend>
+        <div class="radio-row">
+          <label class="radio-pill"><input type="radio" name="ex-status" value="paid" checked /> Paid</label>
+          <label class="radio-pill"><input type="radio" name="ex-status" value="planned" /> Planned (upcoming)</label>
+        </div>
+      </fieldset>
+      <div class="form-row" id="ex-paid-date-row">
+        <label for="ex-paid-date">Paid on</label>
+        <input type="date" id="ex-paid-date" />
+      </div>
+      <div class="form-row" id="ex-due-date-row" hidden>
+        <label for="ex-due-date">Due date</label>
+        <input type="date" id="ex-due-date" />
+      </div>
+      <div class="form-row">
+        <label for="ex-paid-by">Paid by</label>
+        <input type="text" id="ex-paid-by" placeholder="e.g. Us / Parents" list="paid-by-options" />
+        <datalist id="paid-by-options">
+          <option value="Us"></option><option value="Parents"></option>
+        </datalist>
+      </div>
+      <div class="form-row">
+        <label for="ex-notes">Notes</label>
+        <input type="text" id="ex-notes" />
+      </div>
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary" value="save">Save</button>
+        <button type="button" class="btn btn-ghost dialog-cancel">Cancel</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- ============ GENERIC PLANNING ROW DIALOG (fields built by JS) ===== -->
+  <dialog id="row-dialog" aria-labelledby="row-dialog-title">
+    <form id="row-form" method="dialog">
+      <h2 id="row-dialog-title">Row</h2>
+      <div id="row-fields"></div>
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary" value="save">Save</button>
+        <button type="button" class="btn btn-ghost dialog-cancel">Cancel</button>
+      </div>
+    </form>
+  </dialog>
+
   <!-- supabase-js client library (safe to load always; only used when
        js/supabase-config.js is filled in) -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
@@ -190,5 +372,7 @@
   <script src="js/demo-data.js"></script>
   <script src="js/admin-store.js"></script>
   <script src="js/admin.js"></script>
+  <script src="js/admin-planning.js"></script>
+  <script src="js/admin-budget.js"></script>
 </body>
 </html>

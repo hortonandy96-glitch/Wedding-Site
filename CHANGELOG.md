@@ -1,5 +1,24 @@
 # Changelog
 
+## v1.5.0 — Admin planning suite (2026-06-11)
+
+- **Tabbed admin**: RSVPs · Guest List · Budget · Vendors · Planning.
+- **Guest List** — flat sheet of all guests (name, household, RSVP, dietary,
+  contact, mailing address) with live filter and CSV download.
+- **Budget** — wedding funds (goal + contributions), budget items with
+  estimates, and an expense log. Actual spend is always computed from
+  logged expenses. "Planned" expenses with due dates form the payment
+  schedule (Upcoming payments + one-click Mark paid).
+- **Vendors** — contact sheet matching the workbook's columns.
+- **Planning** — checklist (123 tasks by phase, with progress), priorities
+  (103 ranked items with notes), wedding party, rough timeline, packing
+  list (111 items) — one generic editable-sheet engine for all of them.
+- **Imports from the Ultimate Wedding Planning Spreadsheet**:
+  `supabase/migration-003-planning.sql` (tables, admin-only RLS) and
+  `supabase/import-planning.sql` (393 planning rows + 27 budget items with
+  real estimates + budget settings). All planning data is admin-only —
+  no anonymous access paths exist.
+
 ## v1.4.0 — Guided-fill RSVP + report + guest list import (2026-06-11)
 
 ### Implemented ✅

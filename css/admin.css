@@ -245,6 +245,75 @@ dialog h2 { margin-top: 0; }
   letter-spacing: 0.06em;
 }
 
+/* ---------- section tabs ---------- */
+
+.admin-tabs {
+  display: flex; flex-wrap: wrap; gap: 0.2rem;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 0.8rem 1rem 0;
+}
+.admin-tabs .tab {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: none;
+  border: 2px solid transparent;
+  border-bottom: 3px solid transparent;
+  border-radius: 8px 8px 0 0;
+  padding: 0.5rem 1rem;
+  color: var(--ink);
+  cursor: pointer;
+}
+.admin-tabs .tab:hover { background: rgba(242, 194, 207, 0.4); }
+.admin-tabs .tab.active {
+  border-bottom-color: var(--burgundy);
+  color: var(--burgundy);
+  font-weight: 600;
+}
+
+/* ---------- shared table bits ---------- */
+
+.table-scroll { overflow-x: auto; }
+.report-table .num { text-align: right; white-space: nowrap; }
+.report-table .num.over { color: var(--burgundy); font-weight: 700; }
+.row-actions { display: flex; gap: 0.3rem; justify-content: flex-end; }
+.filter-input {
+  flex: 1 1 220px;
+  max-width: 320px;
+  font: inherit;
+  border: 2px solid var(--ink);
+  border-radius: 999px;
+  padding: 0.45rem 1rem;
+  background: #fffdf2;
+}
+
+.sheet-title { font-size: 1.25rem; margin: 0; }
+.sheet-group td {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.85rem;
+  background: rgba(91, 140, 90, 0.15);
+}
+.check-cell { text-align: center; }
+.check-cell input { width: 1.1rem; height: 1.1rem; accent-color: var(--green); }
+
+/* ---------- budget ---------- */
+
+.funds-card { margin-bottom: 1.2rem; }
+.funds-card h2 { font-size: 1.25rem; margin-top: 0; }
+.funds-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 0.8rem;
+  align-items: end;
+}
+.funds-grid .form-row { margin-bottom: 0; }
+.funds-grid label { font-size: 0.8rem; }
+.funds-total { grid-column: 1 / -1; margin: 0.2rem 0 0; font-size: 1.1rem; }
+
 /* Printing the report: hide the app chrome, keep clean black-on-white */
 @media print {
   .admin-header, .no-print { display: none !important; }

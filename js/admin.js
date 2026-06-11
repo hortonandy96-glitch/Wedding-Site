@@ -8,6 +8,15 @@
 
   var store = window.AdminStore.create();
 
+  // Shared surface for the other admin modules (admin-planning.js,
+  // admin-budget.js): the store, helpers, and per-tab render hooks.
+  window.AdminApp = {
+    store: store,
+    tabHooks: {},          // { tabName: renderFn } registered by modules
+    getHouseholds: function () { return households; },
+    escapeHtml: function (s) { return escapeHtml(s); },
+  };
+
   var els = {
     loginView: document.getElementById("login-view"),
     dashView: document.getElementById("dashboard-view"),
@@ -40,15 +49,47 @@
     els.loginView.hidden = false;
     els.dashView.hidden = true;
     els.signOut.hidden = true;
+    document.getElementById("admin-tabs").hidden = true;
     document.getElementById("login-email").focus();
   }
 
   function showDashboard() {
     els.loginView.hidden = true;
-    els.dashView.hidden = false;
     els.signOut.hidden = false;
+    document.getElementById("admin-tabs").hidden = false;
+    switchTab(currentTab);
     refresh();
   }
+
+  /* ---------------- section tabs ----------------------------------------- */
+
+  var TAB_PANELS = {
+    rsvps: "dashboard-view",
+    guestlist: "guestlist-view",
+    budget: "budget-view",
+    vendors: "vendors-view",
+    planning: "planning-view",
+  };
+  var currentTab = "rsvps";
+
+  function switchTab(tab) {
+    currentTab = tab;
+    Object.keys(TAB_PANELS).forEach(function (t) {
+      document.getElementById(TAB_PANELS[t]).hidden = t !== tab;
+    });
+    document.getElementById("report-view").hidden = true; // sub-view of RSVPs
+    document.querySelectorAll("#admin-tabs .tab").forEach(function (btn) {
+      btn.classList.toggle("active", btn.dataset.tab === tab);
+      btn.setAttribute("aria-current", btn.dataset.tab === tab ? "page" : "false");
+    });
+    var hook = window.AdminApp.tabHooks[tab];
+    if (hook) hook();
+  }
+
+  document.getElementById("admin-tabs").addEventListener("click", function (e) {
+    var btn = e.target.closest(".tab");
+    if (btn) switchTab(btn.dataset.tab);
+  });
 
   function refresh() {
     store.fetchAll().then(function (data) {
