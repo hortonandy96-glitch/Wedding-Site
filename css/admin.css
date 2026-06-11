@@ -211,3 +211,44 @@ dialog h2 { margin-top: 0; }
   font-family: inherit;
   margin: 0.4rem 0 0;
 }
+
+/* ---------- report ---------- */
+
+.report-toolbar {
+  display: flex; gap: 0.8rem; flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+.report-date { font-style: italic; opacity: 0.75; margin-top: -0.5rem; }
+.report-section { margin-bottom: 2rem; }
+.report-section h2 {
+  font-size: 1.25rem;
+  border-bottom: 2px solid var(--green);
+  padding-bottom: 0.25rem;
+}
+
+.report-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+  background: #fffdf2;
+}
+.report-table th, .report-table td {
+  text-align: left;
+  padding: 0.45rem 0.6rem;
+  border-bottom: 1px solid rgba(91, 140, 90, 0.4);
+  vertical-align: top;
+}
+.report-table th {
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* Printing the report: hide the app chrome, keep clean black-on-white */
+@media print {
+  .admin-header, .no-print { display: none !important; }
+  body { background: #fff; color: #000; font-size: 11pt; }
+  .report-table { background: #fff; }
+  .report-section { break-inside: avoid-page; }
+}

@@ -70,7 +70,7 @@
         <li><a href="#travel">Travel</a></li>
         <li><a href="#registry">Registry</a></li>
         <li><a href="#faq">FAQ</a></li>
-        <li><a class="nav-cta" href="#rsvp">RSVP</a></li>
+        <li><a class="nav-cta" href="rsvp.html">RSVP</a></li>
       </ul>
     </nav>
   </header>
@@ -104,7 +104,7 @@
           <p class="hero-sub">are getting married</p>
           <p class="hero-date">May 21, 2027</p>
           <p class="hero-place">Salvage One &nbsp;·&nbsp; Chicago, IL</p>
-          <a class="btn btn-primary" href="#rsvp">RSVP</a>
+          <a class="btn btn-primary" href="rsvp.html">RSVP</a>
         </div>
       </div>
       <p class="hero-welcome">
@@ -159,85 +159,10 @@
     <section class="section section-green" id="rsvp" aria-labelledby="rsvp-heading">
       <h2 id="rsvp-heading">RSVP</h2>
       <p class="section-intro">Kindly reply by <strong>April 21, 2027</strong>.
-        Got an invitation with a QR code? <a href="rsvp.html">Use your personal RSVP link</a> —
-        it already knows your whole party. Otherwise, the form below works too.</p>
-
-      <form id="rsvp-form" class="card rsvp-form" novalidate>
-        <!-- NOTE FOR DEVELOPERS: this form saves to localStorage only.
-             To hook up a real backend, see saveRsvp() in js/rsvp.js -->
-        <fieldset>
-          <legend>Will you be joining us?</legend>
-          <div class="radio-row" role="radiogroup" aria-label="Attendance">
-            <label class="radio-pill"><input type="radio" name="attending" value="yes" checked /> Joyfully accepts</label>
-            <label class="radio-pill"><input type="radio" name="attending" value="no" /> Regretfully declines</label>
-          </div>
-        </fieldset>
-
-        <div class="form-row">
-          <label for="rsvp-name">Your full name <span aria-hidden="true">*</span></label>
-          <input type="text" id="rsvp-name" name="name" autocomplete="name" required aria-describedby="err-name" />
-          <p class="field-error" id="err-name" aria-live="polite"></p>
-        </div>
-
-        <div class="form-row">
-          <label for="rsvp-email">Email <span aria-hidden="true">*</span></label>
-          <input type="email" id="rsvp-email" name="email" autocomplete="email" required aria-describedby="err-email" />
-          <p class="field-error" id="err-email" aria-live="polite"></p>
-        </div>
-
-        <!-- Dinner is food stations (vegetarian options guaranteed), so we
-             only ask about dietary restrictions — no meal choices. -->
-        <div class="form-row" id="dietary-row">
-          <label for="rsvp-dietary">Any dietary restrictions? <span class="optional">(optional)</span></label>
-          <input type="text" id="rsvp-dietary" name="dietary" placeholder="Allergies, vegan, gluten-free, kosher…" />
-        </div>
-
-        <fieldset id="plus-one-fieldset">
-          <legend class="visually-hidden">Plus one</legend>
-          <label class="radio-pill checkbox-pill">
-            <input type="checkbox" id="rsvp-has-plus-one" name="hasPlusOne" />
-            I'm bringing a plus one
-          </label>
-          <!-- Revealed when the box above is checked -->
-          <div id="plus-one-fields" hidden>
-            <div class="form-row">
-              <label for="rsvp-plus-one-name">Plus one's name <span aria-hidden="true">*</span></label>
-              <input type="text" id="rsvp-plus-one-name" name="plusOneName" aria-describedby="err-plus-one" />
-              <p class="field-error" id="err-plus-one" aria-live="polite"></p>
-            </div>
-            <div class="form-row">
-              <label for="rsvp-plus-one-dietary">Their dietary restrictions <span class="optional">(optional)</span></label>
-              <input type="text" id="rsvp-plus-one-dietary" name="plusOneDietary" placeholder="Allergies, vegan, gluten-free…" />
-            </div>
-          </div>
-        </fieldset>
-
-        <div class="form-row">
-          <label for="rsvp-message">A note for us <span class="optional">(optional)</span></label>
-          <textarea id="rsvp-message" name="message" rows="3" placeholder="Song requests, general enthusiasm…"></textarea>
-        </div>
-
-        <div class="form-actions">
-          <button type="submit" class="btn btn-primary" id="rsvp-submit">Send our RSVP</button>
-          <button type="button" class="btn btn-ghost" id="rsvp-reset" hidden>Start over</button>
-        </div>
-      </form>
-
-      <!-- Confirmation, shown after a successful save -->
-      <div class="card rsvp-confirmation print-area" id="rsvp-confirmation" hidden tabindex="-1" aria-live="polite">
-        <h3>You're on the list! 🎉</h3>
-        <div id="confirmation-body"></div>
-        <div class="form-actions">
-          <button type="button" class="btn btn-primary" id="rsvp-print">Print confirmation</button>
-          <button type="button" class="btn btn-ghost" id="rsvp-download">Download summary</button>
-          <button type="button" class="btn btn-ghost" id="rsvp-edit">Edit RSVP</button>
-        </div>
-      </div>
-
-      <!-- Saved RSVPs on this device -->
-      <div class="rsvp-saved" id="rsvp-saved" hidden>
-        <h3>RSVPs saved on this device</h3>
-        <ul id="rsvp-saved-list"></ul>
+        Scan the QR code on your invitation, or just look yourself up by name —
+        the form already knows your whole party.</p>
+      <div class="form-actions center">
+        <a class="btn btn-primary" href="rsvp.html">Find my invitation</a>
       </div>
     </section>
 
@@ -321,7 +246,6 @@
   <!-- Plain scripts (no build step) loaded in dependency order -->
   <script src="js/content.js"></script>
   <script src="js/validate.js"></script>
-  <script src="js/rsvp.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>

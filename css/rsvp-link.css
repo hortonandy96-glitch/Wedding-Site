@@ -70,6 +70,46 @@
 
 .code-help { font-style: italic; font-size: 1rem; }
 
+.linklike {
+  background: none; border: 0; padding: 0;
+  font: inherit; color: var(--burgundy);
+  text-decoration: underline; cursor: pointer;
+}
+
+/* ---------- guided fill box ---------- */
+
+.search-box { position: relative; }
+
+.search-results {
+  position: absolute;
+  top: 100%; left: 0; right: 0;
+  z-index: 10;
+  margin: 0.2rem 0 0; padding: 0.3rem;
+  list-style: none;
+  background: #fffdf2;
+  border: 2px solid var(--ink);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  max-height: 18rem;
+  overflow-y: auto;
+}
+
+.search-results [role="option"] {
+  display: flex; flex-direction: column;
+  padding: 0.55rem 0.8rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.search-results [role="option"]:hover,
+.search-results [role="option"].active {
+  background: var(--pink);
+}
+.search-household {
+  font-size: 0.85rem;
+  font-style: italic;
+  opacity: 0.75;
+}
+
 .done-card ul { padding-left: 1.2rem; }
 
 .rsvp-link-footer {

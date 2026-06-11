@@ -1,5 +1,38 @@
 # Changelog
 
+## v1.4.0 — Guided-fill RSVP + report + guest list import (2026-06-11)
+
+### Implemented ✅
+
+- **Guided fill box** — the RSVP screen now opens with "Find your invitation":
+  type a few letters of your name and matching guests appear (accessible
+  combobox: keyboard arrows/Enter, mobile-friendly). Picking yourself opens
+  your household's RSVP form. Search runs through a new scoped database
+  function (`rsvp_search`): 2+ characters required, max 8 results, wildcards
+  stripped — the guest list can't be bulk-downloaded.
+- **Unmatched RSVP fallback** — "Can't find your name?" leads to a short
+  form (name, email, attending, party, dietary, note) stored in a new
+  `unmatched_rsvps` table for manual reconciliation.
+- **Public RSVP form removed** — the homepage RSVP section is now a single
+  "Find my invitation" button; nav and hero CTAs link straight to the RSVP
+  screen. Old localStorage form, `js/rsvp.js`, and its validation removed.
+- **Admin report** (📊 Report) — printable report with totals (households/
+  guests, response rate), every household not yet RSVPed (with contacts and
+  reminder dates), all RSVPs received (per guest, with dietary + notes), and
+  unmatched RSVPs with a "Resolved" button.
+- **Guest list import** — `supabase/import-guest-list.sql` generated from
+  The Knot export: 127 households, 201 named guests, 39 plus-ones, with
+  phones/emails/mailing addresses (addresses kept in household notes).
+- `supabase/migration-002-search-unmatched.sql` for existing databases;
+  setup.sql updated for fresh installs.
+
+### To do / notes 🚧
+
+- Run migration-002 and the import SQL in Supabase (see README/chat).
+- "Ashley Evers & Curtis" — Curtis has no last name in the source list.
+- Guest list updates will arrive later; re-import strategy: edit in admin
+  or wipe and re-run a regenerated import.
+
 ## v1.3.0 — Phase 3 reminders + design feedback round 1 (2026-06-09)
 
 ### Implemented ✅

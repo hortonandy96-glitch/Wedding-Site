@@ -111,6 +111,23 @@
         demo: true,
       });
     },
+    // Unmatched RSVPs share storage with the guest page's demo mode
+    fetchUnmatched: function () {
+      try {
+        return Promise.resolve(JSON.parse(localStorage.getItem("demo-unmatched-rsvps")) || []);
+      } catch (e) {
+        return Promise.resolve([]);
+      }
+    },
+    deleteUnmatched: function (id) {
+      var all = [];
+      try { all = JSON.parse(localStorage.getItem("demo-unmatched-rsvps")) || []; } catch (e) {}
+      localStorage.setItem(
+        "demo-unmatched-rsvps",
+        JSON.stringify(all.filter(function (u) { return u.id !== id; }))
+      );
+      return Promise.resolve();
+    },
   };
 
   /* ---------------- live store (Supabase) ------------------------------- */
@@ -200,6 +217,14 @@
             if (res.error) throw new Error(res.error.message || "Reminder service failed");
             return res.data;
           });
+      },
+      fetchUnmatched: function () {
+        return unwrap(
+          client.from("unmatched_rsvps").select("*").order("created_at", { ascending: false })
+        );
+      },
+      deleteUnmatched: function (id) {
+        return unwrap(client.from("unmatched_rsvps").delete().eq("id", id));
       },
     };
   }

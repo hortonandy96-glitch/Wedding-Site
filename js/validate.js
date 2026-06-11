@@ -2,6 +2,8 @@
    RSVP validation — pure functions, no DOM.
    Loaded in the browser as a plain script AND testable in Node
    (see tests/validate.test.js). Don't add DOM code here.
+   Used by the RSVP screen (rsvp.html): household responses and the
+   unmatched-name fallback form.
 
    Dinner is served from stations (no meal choices); the forms collect
    optional dietary restrictions instead, which need no validation.
@@ -23,39 +25,6 @@
   function validateEmail(email) {
     if (!isNonEmptyString(email)) return false;
     return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email.trim());
-  }
-
-  /**
-   * Validate the public RSVP form (index.html):
-   * {
-   *   attending: "yes" | "no",
-   *   name: string,
-   *   email: string,
-   *   hasPlusOne: boolean,        // only meaningful when attending
-   *   plusOneName: string,        // required when hasPlusOne
-   *   dietary: string (optional),
-   *   plusOneDietary: string (optional),
-   *   message: string (optional)
-   * }
-   * Returns { valid: boolean, errors: { fieldName: "message", ... } }.
-   */
-  function validateRsvp(rsvp) {
-    var errors = {};
-    if (!rsvp || typeof rsvp !== "object") {
-      return { valid: false, errors: { form: "Missing RSVP data." } };
-    }
-
-    if (!validateName(rsvp.name)) {
-      errors.name = "Please enter your full name.";
-    }
-    if (!validateEmail(rsvp.email)) {
-      errors.email = "That email doesn't look right — mind double-checking?";
-    }
-    if (rsvp.attending === "yes" && rsvp.hasPlusOne && !validateName(rsvp.plusOneName)) {
-      errors.plusOneName = "Please add your plus one's name.";
-    }
-
-    return { valid: Object.keys(errors).length === 0, errors: errors };
   }
 
   /**
@@ -85,7 +54,6 @@
   var api = {
     validateName: validateName,
     validateEmail: validateEmail,
-    validateRsvp: validateRsvp,
     validateHouseholdResponses: validateHouseholdResponses,
   };
 

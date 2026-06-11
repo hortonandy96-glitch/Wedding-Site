@@ -66,12 +66,24 @@
       <div class="admin-toolbar">
         <button type="button" class="btn btn-primary" id="add-household">+ Add household</button>
         <button type="button" class="btn btn-ghost" id="send-reminders">✉️ Send reminders</button>
+        <button type="button" class="btn btn-ghost" id="open-report">📊 Report</button>
         <p class="toolbar-hint">A “household” = one invitation = one QR code. Download each QR below and print it on that household's invitation.</p>
       </div>
 
       <div id="household-list" aria-live="polite">
         <!-- household cards render here -->
       </div>
+    </section>
+
+    <!-- ============ REPORT VIEW ============ -->
+    <section id="report-view" hidden aria-labelledby="report-heading">
+      <div class="report-toolbar no-print">
+        <button type="button" class="btn btn-ghost" id="report-back">← Back to dashboard</button>
+        <button type="button" class="btn btn-primary" id="report-print">🖨 Print report</button>
+      </div>
+      <h1 id="report-heading">RSVP Report</h1>
+      <p class="report-date" id="report-date"></p>
+      <div id="report-body"><!-- rendered by js/admin.js --></div>
     </section>
   </main>
 

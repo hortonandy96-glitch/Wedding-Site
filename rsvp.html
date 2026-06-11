@@ -27,24 +27,72 @@
     <!-- ============ LOADING ============ -->
     <p id="loading-view" class="center-note">Finding your invitation…</p>
 
-    <!-- ============ CODE ENTRY (no/bad code in the link) ============ -->
-    <section id="code-view" hidden aria-labelledby="code-heading">
+    <!-- ============ NAME SEARCH (guided fill box) ============ -->
+    <section id="search-view" hidden aria-labelledby="search-heading">
       <div class="card">
-        <h1 id="code-heading">Find your invitation</h1>
-        <p id="code-message">Enter the invite code printed on your invitation
-          (it's also part of the QR-code link).</p>
-        <form id="code-form">
+        <h1 id="search-heading">Find your invitation</h1>
+        <p id="search-message">Start typing your name and pick yourself from the list.</p>
+        <div class="form-row search-box">
+          <label for="search-input">Your name</label>
+          <input type="text" id="search-input"
+                 role="combobox" aria-expanded="false" aria-autocomplete="list"
+                 aria-controls="search-results" autocomplete="off"
+                 autocapitalize="words" spellcheck="false"
+                 placeholder="e.g. Andy" />
+          <ul id="search-results" class="search-results" role="listbox"
+              aria-label="Matching guests" hidden></ul>
+        </div>
+        <p class="field-error" id="search-error" aria-live="polite"></p>
+        <p class="code-help">
+          <button type="button" class="linklike" id="show-unmatched">
+            Can't find your name? RSVP here anyway →
+          </button>
+        </p>
+      </div>
+    </section>
+
+    <!-- ============ UNMATCHED RSVP (name not on the list) ============ -->
+    <section id="unmatched-view" hidden aria-labelledby="unmatched-heading">
+      <div class="card">
+        <h1 id="unmatched-heading">Tell us who you are</h1>
+        <p>No match — no problem. Leave your details and Robin &amp; Andy will
+          connect the dots.</p>
+        <form id="unmatched-form" novalidate>
           <div class="form-row">
-            <label for="code-input">Invite code</label>
-            <input type="text" id="code-input" autocomplete="off"
-                   autocapitalize="off" spellcheck="false" placeholder="e.g. a1b2c3d4e5" />
+            <label for="um-name">Your full name <span aria-hidden="true">*</span></label>
+            <input type="text" id="um-name" autocomplete="name" aria-describedby="um-name-error" />
+            <p class="field-error" id="um-name-error" aria-live="polite"></p>
           </div>
-          <p class="field-error" id="code-error" aria-live="polite"></p>
-          <button type="submit" class="btn btn-primary">Find my invite</button>
+          <div class="form-row">
+            <label for="um-email">Email <span class="optional">(so we can confirm)</span></label>
+            <input type="email" id="um-email" autocomplete="email" aria-describedby="um-email-error" />
+            <p class="field-error" id="um-email-error" aria-live="polite"></p>
+          </div>
+          <fieldset>
+            <legend>Will you be joining us?</legend>
+            <div class="radio-row">
+              <label class="radio-pill"><input type="radio" name="um-attending" value="yes" checked /> Joyfully accepts</label>
+              <label class="radio-pill"><input type="radio" name="um-attending" value="no" /> Regretfully declines</label>
+            </div>
+          </fieldset>
+          <div class="form-row">
+            <label for="um-party">Anyone else in your party? <span class="optional">(optional)</span></label>
+            <input type="text" id="um-party" placeholder="Names of who's coming with you" />
+          </div>
+          <div class="form-row">
+            <label for="um-dietary">Any dietary restrictions? <span class="optional">(optional)</span></label>
+            <input type="text" id="um-dietary" placeholder="Allergies, vegan, gluten-free, kosher…" />
+          </div>
+          <div class="form-row">
+            <label for="um-message">A note for Robin &amp; Andy <span class="optional">(optional)</span></label>
+            <textarea id="um-message" rows="2"></textarea>
+          </div>
+          <p class="field-error" id="um-error" aria-live="polite"></p>
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary" id="um-submit">Send RSVP</button>
+            <button type="button" class="btn btn-ghost" id="um-back">Back to search</button>
+          </div>
         </form>
-        <p class="code-help">No code handy? No problem — email us at
-          <a href="mailto:horton.andy96@gmail.com">horton.andy96@gmail.com</a>
-          and we'll sort you out.</p>
       </div>
     </section>
 

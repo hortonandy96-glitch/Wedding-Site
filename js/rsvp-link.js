@@ -29,8 +29,32 @@
     return c.url && c.url.indexOf("supabase.co") !== -1 && c.anonKey && c.anonKey.length > 40;
   }
 
+  var UNMATCHED_KEY = "demo-unmatched-rsvps";
+
   var DemoGuestStore = {
     mode: "demo",
+    search: function (query) {
+      var q = String(query || "").trim().toLowerCase();
+      if (q.length < 2) return Promise.resolve([]);
+      var results = [];
+      window.DemoData.load().forEach(function (h) {
+        (h.guests || []).forEach(function (g) {
+          if (results.length < 8 && g.name.toLowerCase().indexOf(q) !== -1) {
+            results.push({ guest_name: g.name, household_name: h.name, code: h.code });
+          }
+        });
+      });
+      return Promise.resolve(results);
+    },
+    submitUnmatched: function (data) {
+      var all = [];
+      try { all = JSON.parse(localStorage.getItem(UNMATCHED_KEY)) || []; } catch (e) {}
+      data.id = "um-" + Date.now();
+      data.created_at = new Date().toISOString();
+      all.push(data);
+      localStorage.setItem(UNMATCHED_KEY, JSON.stringify(all));
+      return Promise.resolve(true);
+    },
     lookup: function (code) {
       var hh = window.DemoData.load().find(function (h) {
         return h.code === String(code).trim().toLowerCase();
@@ -84,6 +108,27 @@
     );
     return {
       mode: "live",
+      search: function (query) {
+        return client.rpc("rsvp_search", { query: query }).then(function (res) {
+          if (res.error) throw new Error(res.error.message);
+          return res.data || [];
+        });
+      },
+      submitUnmatched: function (data) {
+        return client
+          .rpc("rsvp_submit_unmatched", {
+            guest_name: data.name,
+            email: data.email || null,
+            attending: data.attending,
+            party_names: data.party_names || null,
+            dietary: data.dietary || null,
+            message: data.message || null,
+          })
+          .then(function (res) {
+            if (res.error) throw new Error(res.error.message);
+            return res.data === true;
+          });
+      },
       lookup: function (code) {
         return client.rpc("rsvp_lookup", { invite_code: code }).then(function (res) {
           if (res.error) throw new Error(res.error.message);
@@ -110,7 +155,7 @@
 
   /* ---------------- view helpers ----------------------------------------- */
 
-  var views = ["loading-view", "code-view", "form-view", "done-view"];
+  var views = ["loading-view", "search-view", "unmatched-view", "form-view", "done-view"];
   function show(id) {
     views.forEach(function (v) {
       document.getElementById(v).hidden = v !== id;
@@ -287,7 +332,172 @@
     loadCode(currentCode);
   });
 
-  /* ---------------- boot: read code from the link ------------------------ */
+  /* ---------------- guided fill box (name search) ------------------------ */
+  /* An accessible combobox: as the guest types, store.search() suggests
+     matching names from the guest list; choosing one opens that
+     household's RSVP form. */
+
+  var searchInput = document.getElementById("search-input");
+  var resultsList = document.getElementById("search-results");
+  var searchTimer = null;
+  var activeIndex = -1;
+  var currentResults = [];
+
+  function renderResults(results) {
+    currentResults = results;
+    activeIndex = -1;
+    resultsList.innerHTML = "";
+    if (results.length === 0) {
+      closeResults();
+      if (searchInput.value.trim().length >= 2) {
+        document.getElementById("search-error").textContent =
+          "No match yet — check the spelling, or use the link below.";
+      }
+      return;
+    }
+    document.getElementById("search-error").textContent = "";
+    results.forEach(function (r, i) {
+      var li = document.createElement("li");
+      li.id = "search-option-" + i;
+      li.setAttribute("role", "option");
+      li.setAttribute("aria-selected", "false");
+      li.innerHTML =
+        "<strong>" + escapeHtml(r.guest_name) + "</strong>" +
+        '<span class="search-household">' + escapeHtml(r.household_name) + "</span>";
+      li.addEventListener("mousedown", function (e) {
+        e.preventDefault(); // fires before the input loses focus
+        pickResult(i);
+      });
+      resultsList.appendChild(li);
+    });
+    resultsList.hidden = false;
+    searchInput.setAttribute("aria-expanded", "true");
+  }
+
+  function closeResults() {
+    resultsList.hidden = true;
+    searchInput.setAttribute("aria-expanded", "false");
+    searchInput.removeAttribute("aria-activedescendant");
+  }
+
+  function pickResult(i) {
+    var r = currentResults[i];
+    if (!r) return;
+    closeResults();
+    searchInput.value = r.guest_name;
+    loadCode(r.code);
+  }
+
+  function setActive(i) {
+    var options = resultsList.querySelectorAll("[role=option]");
+    if (options.length === 0) return;
+    activeIndex = (i + options.length) % options.length;
+    options.forEach(function (opt, idx) {
+      var active = idx === activeIndex;
+      opt.setAttribute("aria-selected", String(active));
+      opt.classList.toggle("active", active);
+    });
+    searchInput.setAttribute("aria-activedescendant", "search-option-" + activeIndex);
+  }
+
+  searchInput.addEventListener("input", function () {
+    clearTimeout(searchTimer);
+    var q = searchInput.value;
+    if (q.trim().length < 2) {
+      closeResults();
+      document.getElementById("search-error").textContent = "";
+      return;
+    }
+    // Debounce: wait until the guest pauses typing before searching
+    searchTimer = setTimeout(function () {
+      store.search(q).then(renderResults).catch(function (err) {
+        document.getElementById("search-error").textContent =
+          "Search hiccup: " + err.message;
+      });
+    }, 250);
+  });
+
+  searchInput.addEventListener("keydown", function (e) {
+    if (resultsList.hidden) return;
+    if (e.key === "ArrowDown") { e.preventDefault(); setActive(activeIndex + 1); }
+    else if (e.key === "ArrowUp") { e.preventDefault(); setActive(activeIndex - 1); }
+    else if (e.key === "Enter") {
+      e.preventDefault();
+      pickResult(activeIndex === -1 ? 0 : activeIndex);
+    }
+    else if (e.key === "Escape") { closeResults(); }
+  });
+
+  searchInput.addEventListener("blur", function () {
+    setTimeout(closeResults, 150);
+  });
+
+  /* ---------------- unmatched RSVP fallback ------------------------------ */
+
+  document.getElementById("show-unmatched").addEventListener("click", function () {
+    document.getElementById("um-name").value = searchInput.value.trim();
+    show("unmatched-view");
+    document.getElementById("um-name").focus();
+  });
+
+  document.getElementById("um-back").addEventListener("click", function () {
+    show("search-view");
+    searchInput.focus();
+  });
+
+  document.getElementById("unmatched-form").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var data = {
+      name: document.getElementById("um-name").value.trim(),
+      email: document.getElementById("um-email").value.trim(),
+      attending: document.querySelector('input[name="um-attending"]:checked').value,
+      party_names: document.getElementById("um-party").value.trim(),
+      dietary: document.getElementById("um-dietary").value.trim(),
+      message: document.getElementById("um-message").value.trim(),
+    };
+    var ok = true;
+    if (!V.validateName(data.name)) {
+      document.getElementById("um-name-error").textContent = "Please enter your full name.";
+      ok = false;
+    } else {
+      document.getElementById("um-name-error").textContent = "";
+    }
+    if (data.email && !V.validateEmail(data.email)) {
+      document.getElementById("um-email-error").textContent =
+        "That email doesn't look right — mind double-checking?";
+      ok = false;
+    } else {
+      document.getElementById("um-email-error").textContent = "";
+    }
+    if (!ok) return;
+
+    var btn = document.getElementById("um-submit");
+    btn.disabled = true;
+    btn.textContent = "Sending…";
+    store
+      .submitUnmatched(data)
+      .then(function (sent) {
+        if (!sent) throw new Error("the server said no — try once more?");
+        document.getElementById("done-body").innerHTML =
+          data.attending === "yes"
+            ? "<p>Thank you, <strong>" + escapeHtml(data.name) + "</strong>! Robin &amp; Andy " +
+              "got your RSVP and will match it to the guest list — if anything needs " +
+              "clarifying they'll reach out" + (data.email ? " at " + escapeHtml(data.email) : "") + ".</p>"
+            : "<p>We'll miss you, <strong>" + escapeHtml(data.name) + "</strong> — thank you for letting us know.</p>";
+        show("done-view");
+        document.getElementById("done-view").focus();
+      })
+      .catch(function (err) {
+        document.getElementById("um-error").textContent =
+          "Couldn't send your RSVP: " + err.message;
+      })
+      .then(function () {
+        btn.disabled = false;
+        btn.textContent = "Send RSVP";
+      });
+  });
+
+  /* ---------------- boot: QR links carry ?code=, others search by name --- */
 
   function loadCode(code) {
     currentCode = String(code || "").trim().toLowerCase();
@@ -298,34 +508,23 @@
         if (hh) {
           renderForm(hh);
         } else {
-          document.getElementById("code-message").textContent =
-            "Hmm, we couldn't find that invite. Double-check the code on your invitation and try again.";
-          show("code-view");
-          document.getElementById("code-input").focus();
+          document.getElementById("search-message").textContent =
+            "That invite link didn't match — but no worries, just type your name instead.";
+          show("search-view");
+          searchInput.focus();
         }
       })
       .catch(function (err) {
-        document.getElementById("code-error").textContent =
+        document.getElementById("search-error").textContent =
           "Something went wrong: " + err.message;
-        show("code-view");
+        show("search-view");
       });
   }
-
-  document.getElementById("code-form").addEventListener("submit", function (e) {
-    e.preventDefault();
-    var code = document.getElementById("code-input").value;
-    if (!code.trim()) {
-      document.getElementById("code-error").textContent = "Please enter your invite code.";
-      return;
-    }
-    document.getElementById("code-error").textContent = "";
-    loadCode(code);
-  });
 
   var params = new URLSearchParams(window.location.search);
   if (params.get("code")) {
     loadCode(params.get("code"));
   } else {
-    show("code-view");
+    show("search-view");
   }
 })();

@@ -433,6 +433,135 @@
       });
   });
 
+  /* ---------------- RSVP report ------------------------------------------ */
+
+  var STATUS_WORD = { yes: "Yes", no: "No", pending: "Awaiting" };
+
+  function openReport() {
+    store.fetchUnmatched().then(function (unmatched) {
+      renderReport(unmatched || []);
+      els.dashView.hidden = true;
+      document.getElementById("report-view").hidden = false;
+      window.scrollTo(0, 0);
+    }).catch(function (err) {
+      // Table missing (migration not run yet)? Still show the rest.
+      renderReport([], "Couldn't load unmatched RSVPs: " + err.message);
+      els.dashView.hidden = true;
+      document.getElementById("report-view").hidden = false;
+    });
+  }
+
+  function renderReport(unmatched, unmatchedError) {
+    var guests = households.flatMap(function (h) { return h.guests || []; });
+    var yes = guests.filter(function (g) { return g.rsvp_status === "yes"; });
+    var no = guests.filter(function (g) { return g.rsvp_status === "no"; });
+    var pending = guests.filter(function (g) { return g.rsvp_status === "pending"; });
+    var responded = households.filter(function (h) { return h.responded_at; });
+    var awaiting = households.filter(function (h) { return !h.responded_at; });
+
+    document.getElementById("report-date").textContent =
+      "Generated " + new Date().toLocaleString("en-US", {
+        dateStyle: "long", timeStyle: "short",
+      });
+
+    var html = "";
+
+    /* --- totals --- */
+    html += '<div class="report-section"><h2>Totals</h2><table class="report-table"><tbody>' +
+      reportRow("Households invited", households.length) +
+      reportRow("Households responded", responded.length + " (" +
+        (households.length ? Math.round((responded.length / households.length) * 100) : 0) + "%)") +
+      reportRow("Households awaiting reply", awaiting.length) +
+      reportRow("Guests invited", guests.length) +
+      reportRow("Guests attending", yes.length) +
+      reportRow("Guests declined", no.length) +
+      reportRow("Guests undecided", pending.length) +
+      reportRow("Unmatched RSVPs", unmatched.length) +
+      "</tbody></table></div>";
+
+    /* --- who hasn't RSVPed --- */
+    html += '<div class="report-section"><h2>Not yet RSVPed (' + awaiting.length + " households)</h2>";
+    if (awaiting.length === 0) {
+      html += "<p><em>Everyone has responded! 🎉</em></p>";
+    } else {
+      html += '<table class="report-table"><thead><tr><th>Household</th><th>Guests</th><th>Contact</th><th>Reminded</th></tr></thead><tbody>';
+      awaiting.forEach(function (h) {
+        html += "<tr><td>" + escapeHtml(h.name) + "</td><td>" +
+          (h.guests || []).map(function (g) { return escapeHtml(g.name); }).join(", ") +
+          "</td><td>" + escapeHtml([h.email, h.phone].filter(Boolean).join(" · ") || "—") +
+          "</td><td>" + (h.reminder_sent_at
+            ? new Date(h.reminder_sent_at).toLocaleDateString("en-US", { month: "short", day: "numeric" })
+            : "—") + "</td></tr>";
+      });
+      html += "</tbody></table></div>";
+    }
+
+    /* --- RSVPs received --- */
+    html += '<div class="report-section"><h2>RSVPs received (' + responded.length + " households)</h2>";
+    if (responded.length === 0) {
+      html += "<p><em>No responses yet.</em></p>";
+    } else {
+      html += '<table class="report-table"><thead><tr><th>Household</th><th>Guest</th><th>RSVP</th><th>Dietary</th><th>Note</th></tr></thead><tbody>';
+      responded.forEach(function (h) {
+        (h.guests || []).forEach(function (g, i) {
+          html += "<tr><td>" + (i === 0 ? escapeHtml(h.name) : "") + "</td><td>" +
+            escapeHtml(g.name) + (g.is_plus_one ? " (+1)" : "") + "</td><td>" +
+            STATUS_WORD[g.rsvp_status] + "</td><td>" + escapeHtml(g.dietary || "—") +
+            "</td><td>" + (i === 0 && h.rsvp_message ? "“" + escapeHtml(h.rsvp_message) + "”" : "") +
+            "</td></tr>";
+        });
+      });
+      html += "</tbody></table></div>";
+    }
+
+    /* --- unmatched RSVPs --- */
+    html += '<div class="report-section"><h2>Unmatched RSVPs (' + unmatched.length + ")</h2>" +
+      "<p>People who RSVPed under a name the guest list didn't recognize. " +
+      "Match them to a household by hand (edit the guest's name in the dashboard " +
+      "or add them), then delete the entry here.</p>";
+    if (unmatchedError) {
+      html += '<p class="field-error">' + escapeHtml(unmatchedError) + "</p>";
+    } else if (unmatched.length === 0) {
+      html += "<p><em>None — every RSVP matched the guest list.</em></p>";
+    } else {
+      html += '<table class="report-table"><thead><tr><th>Name</th><th>Attending</th><th>Party</th><th>Email</th><th>Dietary</th><th>Note</th><th>When</th><th class="no-print"></th></tr></thead><tbody>';
+      unmatched.forEach(function (u) {
+        html += '<tr><td>' + escapeHtml(u.name) + "</td><td>" + escapeHtml(u.attending) +
+          "</td><td>" + escapeHtml(u.party_names || "—") +
+          "</td><td>" + escapeHtml(u.email || "—") +
+          "</td><td>" + escapeHtml(u.dietary || "—") +
+          "</td><td>" + escapeHtml(u.message || "—") +
+          "</td><td>" + new Date(u.created_at).toLocaleDateString("en-US", { month: "short", day: "numeric" }) +
+          '</td><td class="no-print"><button type="button" class="btn btn-small btn-danger" data-unmatched="' +
+          escapeHtml(u.id) + '">Resolved</button></td></tr>';
+      });
+      html += "</tbody></table>";
+    }
+    html += "</div>";
+
+    document.getElementById("report-body").innerHTML = html;
+  }
+
+  function reportRow(label, value) {
+    return "<tr><td>" + label + "</td><td><strong>" + value + "</strong></td></tr>";
+  }
+
+  document.getElementById("open-report").addEventListener("click", openReport);
+  document.getElementById("report-back").addEventListener("click", function () {
+    document.getElementById("report-view").hidden = true;
+    els.dashView.hidden = false;
+  });
+  document.getElementById("report-print").addEventListener("click", function () {
+    window.print();
+  });
+  document.getElementById("report-body").addEventListener("click", function (e) {
+    var btn = e.target.closest("button[data-unmatched]");
+    if (!btn) return;
+    if (confirm("Mark this unmatched RSVP as resolved and remove it?")) {
+      store.deleteUnmatched(btn.dataset.unmatched).then(openReport).catch(alertError);
+    }
+  });
+
   /* ---------------- auth ------------------------------------------------- */
 
   document.getElementById("add-household").addEventListener("click", function () {
