@@ -1,5 +1,13 @@
 # Changelog
 
+## v1.5.1 — Typography: Sorts Mill Goudy + Crimson Pro (2026-06-12)
+
+- Site typefaces changed: headings/buttons/labels now Sorts Mill Goudy
+  (free Goudy Oldstyle revival, stand-in for LTC Powell); body text now
+  Crimson Pro. Replaces Marcellus + Cormorant Garamond on all three pages.
+- Verified with real font files: hero arch spacing holds (25px desktop /
+  19px mobile button clearance).
+
 ## v1.5.0 — Admin planning suite (2026-06-11)
 
 - **Tabbed admin**: RSVPs · Guest List · Budget · Vendors · Planning.

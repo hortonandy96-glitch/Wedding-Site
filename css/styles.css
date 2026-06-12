@@ -13,8 +13,12 @@
   --forest: #11301f;      /* save-the-date background green */
   --ink: #1d3a28;         /* dark green text on the invitation */
 
-  --font-display: "Marcellus", "Times New Roman", serif;
-  --font-body: "Cormorant Garamond", Georgia, serif;
+  /* Sorts Mill Goudy (free revival of Goudy Oldstyle, stands in for LTC
+     Powell) carries headings/buttons; Crimson Pro carries body text.
+     Georgia, then generic `serif`, are the fallbacks while the webfonts
+     load or if they ever fail. */
+  --font-display: "Sorts Mill Goudy", Georgia, serif;
+  --font-body: "Crimson Pro", Georgia, serif;
 
   --radius: 10px;
   --shadow: 0 2px 14px rgba(17, 48, 31, 0.12);
