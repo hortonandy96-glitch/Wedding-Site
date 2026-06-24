@@ -7,7 +7,28 @@
 (function () {
   "use strict";
 
-  var CONTENT = window.SITE_CONTENT;
+  // Owner-editable content lives in js/content.js. If it's missing or has a
+  // typo, we don't want the whole page to go blank — so read defensively.
+  var CONTENT = window.SITE_CONTENT || {};
+  if (!window.SITE_CONTENT) {
+    console.warn(
+      "SITE_CONTENT is missing — check js/content.js for a typo. " +
+      "The page will still load; content-driven sections are skipped."
+    );
+  }
+
+  // Returns CONTENT[key] if it's a usable array, else logs which key is bad
+  // and returns an empty array so the rest of the page keeps rendering.
+  function contentList(key) {
+    if (!Array.isArray(CONTENT[key])) {
+      console.warn(
+        'SITE_CONTENT.' + key + ' is missing or not a list — skipping that ' +
+        'section. Check js/content.js.'
+      );
+      return [];
+    }
+    return CONTENT[key];
+  }
 
   function escapeHtml(str) {
     return String(str).replace(/[&<>"']/g, function (c) {
@@ -52,7 +73,7 @@
   /* ---------------- itineraries ----------------------------------------- */
 
   var itGrid = document.getElementById("itinerary-grid");
-  CONTENT.itineraries.forEach(function (it) {
+  contentList("itineraries").forEach(function (it) {
     var card = document.createElement("article");
     card.className = "card itinerary-card";
     card.innerHTML =
@@ -65,7 +86,7 @@
   /* ---------------- hotels ---------------------------------------------- */
 
   var hotelGrid = document.getElementById("hotel-grid");
-  CONTENT.hotels.forEach(function (h) {
+  contentList("hotels").forEach(function (h) {
     var details = document.createElement("details");
     details.className = "card hotel-card";
     var badge = h.confirmed ? "" : ' <span class="badge">details coming soon</span>';
@@ -84,7 +105,7 @@
   /* ---------------- registry -------------------------------------------- */
 
   var regGrid = document.getElementById("registry-grid");
-  CONTENT.registries.forEach(function (r) {
+  contentList("registries").forEach(function (r) {
     var card = document.createElement("a");
     card.className = "card registry-card";
     card.href = r.url;
@@ -101,7 +122,7 @@
   var copyBtn = document.getElementById("copy-registry");
   var toast = document.getElementById("copy-toast");
   copyBtn.addEventListener("click", function () {
-    var text = CONTENT.registries
+    var text = contentList("registries")
       .map(function (r) { return r.store + ": " + r.url; })
       .join("\n");
     function done(ok) {
@@ -118,7 +139,7 @@
   /* ---------------- FAQ accordion ---------------------------------------- */
 
   var acc = document.getElementById("faq-accordion");
-  CONTENT.faqs.forEach(function (f, i) {
+  contentList("faqs").forEach(function (f, i) {
     var item = document.createElement("div");
     item.className = "accordion-item";
     var btnId = "faq-btn-" + i;
