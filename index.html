@@ -174,12 +174,17 @@
           </ul>
         </div>
         <div class="card map-card">
-          <iframe
-            title="Map to Salvage One, 1840 W Hubbard St, Chicago"
-            src="https://www.google.com/maps?q=Salvage+One,+1840+W+Hubbard+St,+Chicago,+IL+60622&output=embed"
-            loading="lazy"
-            allowfullscreen
-            referrerpolicy="no-referrer-when-downgrade"></iframe>
+          <!-- Privacy/perf: the real Google Maps iframe loads only on click
+               (see js/main.js). The src lives here; JS builds the iframe. -->
+          <button type="button" class="map-placeholder" id="map-loader"
+            data-map-src="https://www.google.com/maps?q=Salvage+One,+1840+W+Hubbard+St,+Chicago,+IL+60622&output=embed"
+            aria-label="Show the Google map of Salvage One, 1840 W Hubbard St, Chicago">
+            <span class="map-placeholder-inner">
+              <span class="map-pin" aria-hidden="true">📍</span>
+              <span class="map-placeholder-text">Show map</span>
+              <span class="map-placeholder-sub">Loads Google Maps</span>
+            </span>
+          </button>
           <a class="btn btn-ghost" href="https://www.google.com/maps/search/?api=1&query=Salvage+One+1840+W+Hubbard+St+Chicago+IL" target="_blank" rel="noopener">Open in Google Maps</a>
         </div>
       </div>

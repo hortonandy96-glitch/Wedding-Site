@@ -337,6 +337,25 @@ address { font-style: normal; margin-bottom: 1rem; }
 }
 .map-card .btn { align-self: center; }
 
+/* Click-to-load map placeholder — same footprint as the iframe it replaces */
+.map-placeholder {
+  width: 100%; min-height: 320px;
+  border: 2px dashed var(--green);
+  border-radius: calc(var(--radius) - 4px);
+  background: var(--cream);
+  color: var(--ink);
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+}
+.map-placeholder:hover { background: #f3eccf; }
+.map-placeholder-inner { display: flex; flex-direction: column; align-items: center; gap: 0.3rem; }
+.map-pin { font-size: 2rem; }
+.map-placeholder-text {
+  font-family: var(--font-display);
+  font-size: 1.2rem; letter-spacing: 0.06em; text-transform: uppercase;
+}
+.map-placeholder-sub { font-style: italic; font-size: 0.95rem; opacity: 0.8; }
+
 @media (min-width: 760px) {
   .details-grid { grid-template-columns: 1.2fr 1fr; align-items: stretch; }
 }
