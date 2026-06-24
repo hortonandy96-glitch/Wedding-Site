@@ -1,0 +1,54 @@
+<!-- Editable source for the 1200x630 social/link-preview image.
+     Render to assets/og-image.png with: node scripts render (see repo history)
+     or any SVG->PNG tool at exactly 1200x630. Palette + Sorts Mill Goudy match
+     the site. Stained-glass flower border traced from the invitation. -->
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <!-- background -->
+  <rect width="1200" height="630" fill="#11301f"/>
+
+  <!-- double frame: thin cream outer, thick burgundy inner -->
+  <rect x="28" y="28" width="1144" height="574" fill="none" stroke="#faf3da" stroke-width="3"/>
+  <rect x="44" y="44" width="1112" height="542" fill="none" stroke="#5a2434" stroke-width="9"/>
+
+  <!-- ===== stained-glass flower border, top ===== -->
+  <g transform="translate(600,118)">
+    <g transform="translate(-275,-34)">
+      <rect x="0" y="0" width="550" height="68" fill="#faf3da" stroke="#11301f" stroke-width="5"/>
+      <ellipse cx="275" cy="34" rx="82" ry="24" fill="#5a2434" stroke="#1d3a28" stroke-width="1.6"/>
+      <g stroke="#1d3a28" stroke-width="1.6" fill="none">
+        <path d="M70 34 Q108 6 146 34 Q108 62 70 34 Z"/>
+        <path d="M146 34 Q184 6 222 34 Q184 62 146 34 Z"/>
+        <path d="M404 34 Q442 6 480 34 Q442 62 404 34 Z"/>
+        <path d="M480 34 Q518 6 556 34 Q518 62 480 34 Z" transform="translate(-76,0)"/>
+      </g>
+      <circle cx="146" cy="34" r="15" fill="#f2c2cf" stroke="#1d3a28" stroke-width="1.6"/>
+      <circle cx="404" cy="34" r="15" fill="#f2c2cf" stroke="#1d3a28" stroke-width="1.6"/>
+    </g>
+  </g>
+
+  <!-- ===== text ===== -->
+  <text x="600" y="312" text-anchor="middle" fill="#faf3da"
+        font-family="Sorts Mill Goudy, Georgia, serif" font-size="124" letter-spacing="4">Robin <tspan fill="#f2c2cf">&amp;</tspan> Andy</text>
+  <text x="600" y="372" text-anchor="middle" fill="#f2c2cf"
+        font-family="Sorts Mill Goudy, Georgia, serif" font-style="italic" font-size="44">are getting married</text>
+  <text x="600" y="452" text-anchor="middle" fill="#faf3da"
+        font-family="Sorts Mill Goudy, Georgia, serif" font-size="46" letter-spacing="3">May 21, 2027</text>
+  <text x="600" y="498" text-anchor="middle" fill="#faf3da"
+        font-family="Sorts Mill Goudy, Georgia, serif" font-size="30" letter-spacing="2">Salvage One · Chicago, IL</text>
+
+  <!-- ===== stained-glass flower border, bottom ===== -->
+  <g transform="translate(600,548)">
+    <g transform="translate(-275,-34)">
+      <rect x="0" y="0" width="550" height="68" fill="#faf3da" stroke="#11301f" stroke-width="5"/>
+      <ellipse cx="275" cy="34" rx="82" ry="24" fill="#5a2434" stroke="#1d3a28" stroke-width="1.6"/>
+      <g stroke="#1d3a28" stroke-width="1.6" fill="none">
+        <path d="M70 34 Q108 6 146 34 Q108 62 70 34 Z"/>
+        <path d="M146 34 Q184 6 222 34 Q184 62 146 34 Z"/>
+        <path d="M328 34 Q366 6 404 34 Q366 62 328 34 Z"/>
+        <path d="M404 34 Q442 6 480 34 Q442 62 404 34 Z"/>
+      </g>
+      <circle cx="146" cy="34" r="15" fill="#f2c2cf" stroke="#1d3a28" stroke-width="1.6"/>
+      <circle cx="404" cy="34" r="15" fill="#f2c2cf" stroke="#1d3a28" stroke-width="1.6"/>
+    </g>
+  </g>
+</svg>
