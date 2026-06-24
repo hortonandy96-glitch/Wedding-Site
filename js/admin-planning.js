@@ -37,14 +37,18 @@
     return rows;
   }
 
-  function renderGuestlist() {
+  function filteredGuests() {
     var filter = document.getElementById("guestlist-filter").value.trim().toLowerCase();
-    var rows = flatGuests().filter(function (r) {
+    return flatGuests().filter(function (r) {
       if (!filter) return true;
       return Object.keys(r).some(function (k) {
         return String(r[k]).toLowerCase().indexOf(filter) !== -1;
       });
     });
+  }
+
+  function renderGuestlist() {
+    var rows = filteredGuests();
     var tbody = document.querySelector("#guestlist-table tbody");
     tbody.innerHTML = rows.map(function (r) {
       return "<tr><td>" + [r.guest, r.household, r.rsvp, r.dietary, r.email,
@@ -57,18 +61,20 @@
   document.getElementById("guestlist-filter").addEventListener("input", renderGuestlist);
 
   document.getElementById("guestlist-csv").addEventListener("click", function () {
+    // Exports the rows currently shown (all of them when no filter is set).
     var head = ["Guest", "Household", "RSVP", "Dietary", "Email", "Phone", "Address", "Notes"];
-    var lines = [head].concat(flatGuests().map(function (r) {
+    var lines = [head].concat(filteredGuests().map(function (r) {
       return [r.guest, r.household, r.rsvp, r.dietary, r.email, r.phone, r.address, r.notes];
     })).map(function (cells) {
       return cells.map(function (c) {
         return '"' + String(c).replace(/"/g, '""') + '"';
       }).join(",");
     });
-    var blob = new Blob([lines.join("\n")], { type: "text/csv" });
+    // Leading ﻿ (UTF-8 BOM) tells Excel to read accents/em-dashes correctly.
+    var blob = new Blob(["﻿" + lines.join("\r\n")], { type: "text/csv;charset=utf-8;" });
     var a = document.createElement("a");
     a.href = URL.createObjectURL(blob);
-    a.download = "guest-list.csv";
+    a.download = "guest-list-" + new Date().toISOString().slice(0, 10) + ".csv";
     document.body.appendChild(a);
     a.click();
     a.remove();
