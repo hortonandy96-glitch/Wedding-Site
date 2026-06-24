@@ -540,3 +540,12 @@ input[type="text"], input[type="email"], select, textarea {
 .footer-social a { color: var(--cream); }
 .footer-social a:hover { color: var(--pink); }
 .footer-credit { font-style: italic; font-size: 0.95rem; opacity: 0.8; }
+
+/* ---------- reduced motion ----------
+   Respect the OS "reduce motion" setting: turn off smooth scrolling and the
+   button/card hover movement. Default (motion-on) behavior is unchanged. */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .btn, .registry-card, .skip-link { transition: none; }
+  .btn:hover, .registry-card:hover { transform: none; }
+}
