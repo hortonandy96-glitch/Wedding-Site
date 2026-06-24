@@ -285,12 +285,20 @@ a { color: var(--burgundy); }
 }
 
 .section-green {
-  background: var(--green);
+  /* Slightly deeper than --green so cream body text clears WCAG AA (4.5:1).
+     Only this section background is darkened; the --green token used for
+     borders/accents/admin is unchanged. */
+  background: #4d774d;
   color: var(--cream);
   max-width: none;
 }
 .section-green > * { max-width: var(--max-width); margin-left: auto; margin-right: auto; }
 .section-green a { color: var(--cream); }
+/* Registry cards are white <a> tiles: keep their text dark & readable
+   (the store name <h4> would otherwise inherit cream from .section-green a). */
+.section-green .registry-card h4,
+.section-green .registry-card p,
+.section-green .registry-card .registry-go { color: var(--burgundy); }
 
 .section-intro {
   text-align: center;
