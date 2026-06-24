@@ -20,6 +20,33 @@
   <meta name="twitter:image" content="https://hortonhearsido.com/assets/og-image.png" />
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
 
+  <!-- Structured data (invisible): helps search engines & shared links show
+       the event date and venue. Nothing renders on the page. -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Event",
+    "name": "Robin & Andy's Wedding",
+    "startDate": "2027-05-21T16:30:00-05:00",
+    "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+    "eventStatus": "https://schema.org/EventScheduled",
+    "url": "https://hortonhearsido.com/",
+    "image": "https://hortonhearsido.com/assets/og-image.png",
+    "location": {
+      "@type": "Place",
+      "name": "Salvage One",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "1840 W Hubbard St",
+        "addressLocality": "Chicago",
+        "addressRegion": "IL",
+        "postalCode": "60622",
+        "addressCountry": "US"
+      }
+    }
+  }
+  </script>
+
   <!-- Fonts: closest open-source matches to the draft invitations.
        Marcellus  -> the wide roman caps ("YOU'RE CORDIALLY INVITED")
        Cormorant Garamond -> the italic serif ("to the wedding of") and body text -->
