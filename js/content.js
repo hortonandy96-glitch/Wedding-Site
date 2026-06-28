@@ -69,25 +69,25 @@ window.SITE_CONTENT = {
   ],
 
   /* ---- Registry links (Registry section) ----
-     PLACEHOLDERS: swap example.com URLs for your real registry pages. */
+     Two options only: buy a gift, or contribute to the honeymoon fund.
+     >>> PLACEHOLDER URLs <<< — replace both `url` values with your real
+     registry links once your registry is created (e.g. on Zola, these can be
+     the two tabs of one registry, or two separate links). `cta` is the button
+     wording; `initials` accepts letters or an emoji. */
   registries: [
     {
-      store: "Bed + Bath",
-      initials: "BB",
-      url: "https://example.com/registry/bed-and-bath",
-      note: "For the home we're building together (mostly cookware, honestly).",
+      store: "Buy Us Something",
+      initials: "🎁",
+      url: "https://www.zola.com/registry/REPLACE-WITH-YOUR-REGISTRY",
+      note: "Pick something off our registry — for the home we're building together.",
+      cta: "Shop our registry →",
     },
     {
       store: "Honeymoon Fund",
-      initials: "HF",
-      url: "https://example.com/registry/honeymoon",
-      note: "Help send us somewhere warm with questionable Wi-Fi.",
-    },
-    {
-      store: "Charity: One Tail at a Time",
-      initials: "🐾",
-      url: "https://example.com/registry/charity",
-      note: "In lieu of gifts, support Chicago shelter dogs in our names.",
+      initials: "✈️",
+      url: "https://www.zola.com/registry/REPLACE-WITH-YOUR-FUND",
+      note: "Or chip in on the honeymoon and send us somewhere warm with questionable Wi-Fi.",
+      cta: "Contribute →",
     },
   ],
 

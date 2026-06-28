@@ -115,7 +115,7 @@
       '<span class="registry-logo" aria-hidden="true">' + escapeHtml(r.initials) + "</span>" +
       "<h4>" + escapeHtml(r.store) + "</h4>" +
       "<p>" + escapeHtml(r.note) + "</p>" +
-      '<span class="registry-go">Visit registry →</span>';
+      '<span class="registry-go">' + escapeHtml(r.cta || "Visit registry →") + "</span>";
     regGrid.appendChild(card);
   });
 
