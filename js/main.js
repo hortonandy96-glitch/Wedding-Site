@@ -106,18 +106,59 @@
 
   var regGrid = document.getElementById("registry-grid");
   contentList("registries").forEach(function (r) {
-    var card = document.createElement("a");
-    card.className = "card registry-card";
-    card.href = r.url;
-    card.target = "_blank";
-    card.rel = "noopener";
+    // The joke item is a <button> that opens the "agreement" dialog instead
+    // of linking straight out; regular items stay plain links.
+    var card = document.createElement(r.joke ? "button" : "a");
+    card.className = "card registry-card" + (r.joke ? " registry-joke" : "");
+    if (r.joke) {
+      card.type = "button";
+      card.addEventListener("click", function () { openNamingRights(r); });
+    } else {
+      card.href = r.url;
+      card.target = "_blank";
+      card.rel = "noopener";
+    }
     card.innerHTML =
       '<span class="registry-logo" aria-hidden="true">' + escapeHtml(r.initials) + "</span>" +
       "<h4>" + escapeHtml(r.store) + "</h4>" +
+      (r.price ? '<span class="registry-price">' + escapeHtml(r.price) + "</span>" : "") +
       "<p>" + escapeHtml(r.note) + "</p>" +
       '<span class="registry-go">' + escapeHtml(r.cta || "Visit registry →") + "</span>";
     regGrid.appendChild(card);
   });
+
+  /* ---- the naming-rights "agreement" (joke item) ---- */
+
+  var nrDialog = document.getElementById("naming-rights-dialog");
+  var nrUrl = "";
+
+  function openNamingRights(item) {
+    nrUrl = item.url;
+    document.getElementById("nr-ack-joke").checked = false;
+    document.getElementById("nr-ack-refund").checked = false;
+    document.getElementById("nr-signature").value = "";
+    updateNrAgree();
+    nrDialog.showModal();
+  }
+
+  // "Take my money" unlocks only after both acknowledgements + a signature.
+  function updateNrAgree() {
+    var signed = document.getElementById("nr-signature").value.trim().length >= 2;
+    var acked = document.getElementById("nr-ack-joke").checked &&
+      document.getElementById("nr-ack-refund").checked;
+    document.getElementById("nr-agree").disabled = !(signed && acked);
+  }
+
+  if (nrDialog) {
+    nrDialog.addEventListener("input", updateNrAgree);
+    nrDialog.addEventListener("change", updateNrAgree);
+    document.getElementById("nr-cancel").addEventListener("click", function () {
+      nrDialog.close();
+    });
+    document.getElementById("naming-rights-form").addEventListener("submit", function () {
+      window.open(nrUrl, "_blank", "noopener");
+    });
+  }
 
   var copyBtn = document.getElementById("copy-registry");
   var toast = document.getElementById("copy-toast");

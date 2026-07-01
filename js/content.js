@@ -89,6 +89,19 @@ window.SITE_CONTENT = {
       note: "Or chip in on the honeymoon and send us somewhere warm with questionable Wi-Fi.",
       cta: "Contribute →",
     },
+    {
+      /* The joke item. Clicking it opens the "naming-rights agreement"
+         dialog (see index.html) before sending anyone to the payment link.
+         >>> PLACEHOLDER URL <<< — point at a real cash fund (e.g. a second
+         Zola fund with a $100,000 goal) so bold guests can actually pay. */
+      store: "Naming Rights: Our Firstborn",
+      initials: "👶",
+      price: "$100,000",
+      url: "https://www.zola.com/registry/REPLACE-WITH-YOUR-JOKE-FUND",
+      note: "One (1) opportunity to name our first child. Serious inquiries only. Agreement required.",
+      cta: "Inquire →",
+      joke: true,
+    },
   ],
 
   /* ---- FAQ (accordion) ---- */
