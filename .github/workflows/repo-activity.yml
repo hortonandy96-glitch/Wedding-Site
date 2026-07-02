@@ -1,0 +1,36 @@
+# Keeps the repository "active" in GitHub's eyes.
+#
+# Why: GitHub pauses SCHEDULED workflows (our Supabase keep-alive, and this
+# one's siblings) after 60 days with no commits pushed, and stale-looking
+# projects can trigger other inactivity warnings. This workflow pushes one
+# EMPTY commit ("a nothing change" — no files touched) on the 1st of every
+# month, which resets every inactivity clock.
+#
+# Notes:
+# - The commit is truly empty: the site, code, and history content don't
+#   change; it's just a timestamped marker.
+# - Pushes made by this bot do NOT trigger the deploy workflow (GitHub
+#   blocks bot pushes from starting other workflows), so no deploys happen.
+# - Test it any time: Actions tab -> "Monthly repo keep-alive" -> Run workflow.
+
+name: Monthly repo keep-alive
+
+on:
+  schedule:
+    - cron: "23 9 1 * *" # 1st of each month, 09:23 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  touch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Push an empty keep-alive commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git commit --allow-empty -m "chore: monthly keep-alive (no changes)"
+          git push
