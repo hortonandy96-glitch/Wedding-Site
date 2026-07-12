@@ -69,35 +69,32 @@ window.SITE_CONTENT = {
   ],
 
   /* ---- Registry links (Registry section) ----
-     Two options only: buy a gift, or contribute to the honeymoon fund.
-     >>> PLACEHOLDER URLs <<< — replace both `url` values with your real
-     registry links once your registry is created (e.g. on Zola, these can be
-     the two tabs of one registry, or two separate links). `cta` is the button
+     All three cards point at the real Zola registry (one page holds the
+     gifts, the honeymoon fund, and the naming-rights joke fund). To deep-link
+     a card to a specific fund later, replace its `url`. `cta` is the button
      wording; `initials` accepts letters or an emoji. */
   registries: [
     {
       store: "Buy Us Something",
       initials: "🎁",
-      url: "https://www.zola.com/registry/REPLACE-WITH-YOUR-REGISTRY",
+      url: "https://www.zola.com/registry/andyandrobin2027",
       note: "Pick something off our registry — for the home we're building together.",
       cta: "Shop our registry →",
     },
     {
       store: "Honeymoon Fund",
       initials: "✈️",
-      url: "https://www.zola.com/registry/REPLACE-WITH-YOUR-FUND",
+      url: "https://www.zola.com/registry/andyandrobin2027",
       note: "Or chip in on the honeymoon and send us somewhere warm with questionable Wi-Fi.",
       cta: "Contribute →",
     },
     {
       /* The joke item. Clicking it opens the "naming-rights agreement"
-         dialog (see index.html) before sending anyone to the payment link.
-         >>> PLACEHOLDER URL <<< — point at a real cash fund (e.g. a second
-         Zola fund with a $100,000 goal) so bold guests can actually pay. */
+         dialog (see index.html) before sending anyone to the payment link. */
       store: "Naming Rights: Our Firstborn",
       initials: "👶",
       price: "$100,000",
-      url: "https://www.zola.com/registry/REPLACE-WITH-YOUR-JOKE-FUND",
+      url: "https://www.zola.com/registry/andyandrobin2027",
       note: "One (1) opportunity to name our first child. Serious inquiries only. Agreement required.",
       cta: "Inquire →",
       joke: true,
