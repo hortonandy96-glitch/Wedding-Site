@@ -30,6 +30,7 @@
     <button type="button" class="tab" data-tab="guestlist">Guest List</button>
     <button type="button" class="tab" data-tab="budget">Budget</button>
     <button type="button" class="tab" data-tab="vendors">Vendors</button>
+    <button type="button" class="tab" data-tab="vendorhq">Vendor HQ</button>
     <button type="button" class="tab" data-tab="planning">Planning</button>
   </nav>
 
@@ -165,6 +166,12 @@
     <section id="vendors-view" hidden aria-labelledby="vendors-heading">
       <h1 id="vendors-heading" class="visually-hidden">Vendors</h1>
       <div id="vendors-sheet"><!-- rendered by js/admin-planning.js --></div>
+    </section>
+
+    <!-- ============ VENDOR HQ TAB ============ -->
+    <section id="vendorhq-view" hidden aria-labelledby="vendorhq-heading">
+      <h1 id="vendorhq-heading" class="visually-hidden">Vendor HQ</h1>
+      <div id="vendorhq-sheet"><!-- rendered by js/vendor-hq.js --></div>
     </section>
 
     <!-- ============ PLANNING TAB (generic sheets) ============ -->
@@ -374,5 +381,6 @@
   <script src="js/admin.js"></script>
   <script src="js/admin-planning.js"></script>
   <script src="js/admin-budget.js"></script>
+  <script src="js/vendor-hq.js"></script>
 </body>
 </html>

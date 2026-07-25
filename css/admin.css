@@ -321,3 +321,84 @@ dialog h2 { margin-top: 0; }
   .report-table { background: #fff; }
   .report-section { break-inside: avoid-page; }
 }
+
+/* ---------- Vendor HQ ---------- */
+
+.vhq-sub { font-style: italic; color: var(--burgundy); margin: 0 0 1rem; font-size: 0.95rem; }
+.vhq-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 0.8rem;
+  margin-bottom: 1.4rem;
+}
+.vhq-card {
+  background: #fffdf2;
+  border: 1px solid rgba(29, 58, 40, 0.15);
+  border-radius: 10px;
+  padding: 0.7rem 0.9rem;
+}
+.vhq-n { font-family: var(--font-display); font-size: 1.5rem; color: var(--forest); line-height: 1.1; }
+.vhq-l { font-size: 0.8rem; color: var(--ink); margin-top: 0.2rem; }
+
+.vhq-table td { vertical-align: top; }
+.vhq-who { display: block; font-size: 0.78rem; color: #7a7360; }
+.vhq-row-green  td:first-child { border-left: 5px solid var(--green); }
+.vhq-row-yellow td:first-child { border-left: 5px solid #d9a441; }
+.vhq-row-red    td:first-child { border-left: 5px solid var(--burgundy); }
+
+.vhq-tag {
+  display: inline-block;
+  font-size: 0.72rem;
+  padding: 0.05rem 0.5rem;
+  border-radius: 20px;
+  font-family: var(--font-body);
+}
+.vhq-green  { background: #d8ecd6; color: #2f6b34; }
+.vhq-yellow { background: #f7e9c2; color: #7d5f14; }
+.vhq-red    { background: #f3d2d8; color: #9a2439; }
+.vhq-grey   { background: #e7e2d2; color: #5b6b5f; }
+
+.vhq-action {
+  background: #fffdf2;
+  border: 1px solid rgba(29, 58, 40, 0.15);
+  border-left: 5px solid var(--burgundy);
+  border-radius: 8px;
+  padding: 0.7rem 0.9rem;
+  margin-bottom: 0.7rem;
+}
+.vhq-action-yellow { border-left-color: #d9a441; }
+.vhq-action h3 { margin: 0 0 0.25rem; font-size: 1rem; color: var(--forest); }
+.vhq-do { font-size: 0.9rem; margin: 0 0 0.4rem; }
+.vhq-draft {
+  background: #faf6e6;
+  border: 1px dashed #cdb98a;
+  border-radius: 6px;
+  padding: 0.5rem 0.7rem;
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  white-space: pre-wrap;
+}
+.vhq-risk {
+  background: #fffdf2;
+  border: 1px solid rgba(29, 58, 40, 0.15);
+  border-radius: 8px;
+  padding: 0.6rem 0.9rem;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+}
+.vhq-risk strong { color: var(--burgundy); }
+
+.vhq-frontrunner td { background: #fbf3dd; }
+.vhq-frontrunner td:first-child { border-left: 5px solid #d9a441; }
+.vhq-star {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: 0.68rem;
+  letter-spacing: 0.5px;
+  background: var(--burgundy);
+  color: var(--cream);
+  padding: 1px 7px;
+  border-radius: 20px;
+  margin-left: 6px;
+  vertical-align: middle;
+}

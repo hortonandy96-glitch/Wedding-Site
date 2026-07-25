@@ -68,6 +68,7 @@
     guestlist: "guestlist-view",
     budget: "budget-view",
     vendors: "vendors-view",
+    vendorhq: "vendorhq-view",
     planning: "planning-view",
   };
   var currentTab = "rsvps";
