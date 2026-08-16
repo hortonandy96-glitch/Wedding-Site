@@ -13,12 +13,12 @@
    ========================================================================= */
 
 window.VENDOR_HQ = {
-  updated: "July 25, 2026 — caterer contract requested (Matt OOO til Mon); hotel + DJ outreach started",
+  updated: "August 2, 2026 — 3 photographers confirmed available; Palmer House hotel offer in hand (expires Aug 3); Engine proposals now flowing; Kimpton Gray declined",
   summary: [
     { n: "2", label: "Vendors fully locked (signed + deposit paid)" },
-    { n: "2", label: "Deposits paid (venue + coordinator)" },
-    { n: "$2,000", label: "Caterer deposit on hold until the contract is signed (Matt OOO until Mon)" },
-    { n: "Reply to Lula", label: "Biggest thing to do this week" },
+    { n: "3", label: "Photographers replied — all 3 confirmed available for your date" },
+    { n: "$2,000", label: "Caterer deposit on hold until the contract is signed (Matt back Mon)" },
+    { n: "Palmer House", label: "Hotel offer in hand — $329 rate expires Aug 3" },
   ],
   vendors: [
     {
@@ -47,8 +47,8 @@ window.VENDOR_HQ = {
       contract: "Requested", contractClass: "yellow",
       deposit: "$2,000 — hold until signed", depositClass: "yellow",
       balance: "Full catering TBD",
-      last: "Jul 20, 2026 (Matt OOO until Mon)", court: "Them",
-      action: "Waiting on the contract — follow up Monday when Matt's back, then sign & pay the deposit",
+      last: "Jul 28, 2026 (auto-reply; Matt back Jul 27)", court: "Them",
+      action: "Waiting on the contract — follow up now that Matt's back, then sign & pay the deposit",
       flag: "Awaiting contract",
     },
     {
@@ -58,18 +58,38 @@ window.VENDOR_HQ = {
       deposit: "Not yet due", depositClass: "grey",
       balance: "Proposal on file",
       last: "Jul 1, 2026", court: "You",
-      action: "Reply to Anna — book a tasting or politely pass (silent 24 days)",
+      action: "Reply to Anna — book a tasting or politely pass (silent 32 days)",
       flag: "Going cold",
     },
     {
-      status: "red",
-      name: "Photographer", who: "none contacted yet", category: "Photographer",
-      contract: "Not started", contractClass: "grey",
+      status: "yellow",
+      name: "Afterglow Studio", who: "Hanako", category: "Photographer",
+      contract: "Not sent", contractClass: "grey",
       deposit: "—", depositClass: "grey",
-      balance: "—",
-      last: "—", court: "You",
-      action: "Start outreach now — most overdue vendor on your timeline",
-      flag: "Missing",
+      balance: "Pricing guide sent",
+      last: "Jul 27, 2026", court: "You",
+      action: "Confirmed available 5/21/27 & loves Salvage One. Review her pricing guide + book the intro call she offered",
+      flag: "Available",
+    },
+    {
+      status: "yellow",
+      name: "Allie Idrac", who: "hello@allieidrac.com", category: "Photographer",
+      contract: "Not sent", contractClass: "grey",
+      deposit: "—", depositClass: "grey",
+      balance: "Package guide sent",
+      last: "Jul 27, 2026", court: "You",
+      action: "Confirmed available & sent 2 sample galleries + package guide. Review and reply",
+      flag: "Available",
+    },
+    {
+      status: "yellow",
+      name: "Genuinely Jo Photography", who: "Jordan McDonnell", category: "Photographer",
+      contract: "Not sent", contractClass: "grey",
+      deposit: "—", depositClass: "grey",
+      balance: "2027 Wedding Handbook",
+      last: "Jul 29, 2026", court: "You",
+      action: "Confirmed available 5/21/27. Sent handbook + offers a free engagement session & discovery call. Review and book the call",
+      flag: "Available",
     },
     {
       status: "yellow",
@@ -85,7 +105,8 @@ window.VENDOR_HQ = {
   dormant:
     "Dormant / closed catering bids on file: True Cuisine–SBR (quote expired Mar 12), " +
     "Beyond Catering, J&L / JFOD, Maison Cuisine, Cocina Fusion, Blue Plate. " +
-    "Declined: The Wellsley (Boka). Alt venue closed: Ignite Glass Studios.",
+    "Declined: The Wellsley (Boka). Alt venue closed: Ignite Glass Studios. " +
+    "Hotel declined: Kimpton Gray (citywide event on your dates — no reply planned).",
   actions: [
     {
       level: "red",
@@ -99,49 +120,55 @@ window.VENDOR_HQ = {
     },
     {
       level: "yellow",
-      title: "2 · Follow up with Catered by Design on Monday",
-      note: "You've asked for the full contract before paying the $2,000 deposit — good. Matt is out until Monday, so this is on hold with the ball in their court. Nudge him Monday if you haven't heard back, then sign and pay.",
+      title: "2 · Decide on Palmer House before Aug 3",
+      note: "Palmer House Hilton replied with a real offer: 19 rooms at $329/night (+ 1 suite at $659) for Thu 5/20–Sun 5/23/27, as a courtesy block with no financial liability on you (3-night minimum). The rate is only held through Aug 3, so reply to Jordan Samson to accept, ask a question, or request an extension. Kimpton Gray declined (citywide event) and needs no reply.",
       draft: "",
     },
     {
       level: "yellow",
-      title: "3 · Send Elegante what Lisa is waiting on",
+      title: "3 · Compare your three available photographers",
+      note: "All three confirmed 5/21/27 is open and each has the ball in your court: Afterglow Studio (Hanako) sent a pricing guide + intro-call link, Allie Idrac sent a package guide + two sample galleries, and Genuinely Jo (Jordan McDonnell) sent her 2027 Wedding Handbook plus a free engagement session and discovery call offer. Compare against budget and book a call with your favorite.",
+      draft: "",
+    },
+    {
+      level: "yellow",
+      title: "4 · Follow up with Catered by Design",
+      note: "You've asked for the full contract before paying the $2,000 deposit — good. Matt was out until Jul 27, so nudge him this week, then sign and pay.",
+      draft: "",
+    },
+    {
+      level: "yellow",
+      title: "5 · Send Elegante what Lisa is waiting on",
       note: "You're booked with Lisa; she's expecting your guest list and copies of signed vendor contracts to start coordinating. Not urgent, but clears the ball out of your court.",
-      draft: "",
-    },
-    {
-      level: "yellow",
-      title: "4 · Kick off photographer outreach",
-      note: "No photographer contacted yet and you're ~10 months out. Pull Robin's top-5 list and send the same quote request you used for caterers. Most time-sensitive gap.",
       draft: "",
     },
   ],
   risks: [
-    { head: "Catered by Design — waiting on the contract.", body: "You've rightly held the $2,000 deposit until you can sign a full contract; Matt is OOO until Monday, so keep this warm and close it out early next week." },
-    { head: "Lula Cafe — your best alternative is cooling.", body: "They've waited 24 days for a reply; warm caterers move on and you lose both a great option and negotiating leverage." },
-    { head: "Photographer — nothing booked.", body: "With ~10 months to go this is your most overdue category, and the affordable-but-excellent photographers fill their weekends first." },
+    { head: "Palmer House — the offer expires Aug 3.", body: "A no-liability courtesy block at $329/night is a strong result; if you like it, reply before the rate lapses or ask Jordan to extend it." },
+    { head: "Catered by Design — waiting on the contract.", body: "You've rightly held the $2,000 deposit until you can sign a full contract; Matt is back from leave, so keep this warm and close it out this week." },
+    { head: "Lula Cafe — your best alternative is cooling.", body: "They've waited 32 days for a reply; warm caterers move on and you lose both a great option and negotiating leverage." },
   ],
   hotels: [
-    { name: "Palmer House Hilton", area: "The Loop", rate: "~$180–260", status: "Draft ready to send", statusClass: "yellow", contact: "CHIPH-salesadm@hilton.com", note: "Outreach drafted 7/25 — hit send (Tue–Thu)" },
-    { name: "Kimpton Gray Hotel", area: "The Loop", rate: "~$220–300", status: "Draft ready to send", statusClass: "yellow", contact: "sales@grayhotelchicago.com", note: "Outreach drafted 7/25 — hit send (Tue–Thu)" },
-    { name: "Hyatt House West Loop", area: "Fulton Mkt (closest to venue)", rate: "~$180–250", status: "Needs recipient", statusClass: "red", contact: "group sales 1-800-906-2871", note: "Draft ready; get sales email, then send" },
-    { name: "Westin River North", area: "River North", rate: "~$200–300", status: "Needs recipient", statusClass: "red", contact: "call hotel — catering sales", note: "Draft ready; vet block terms (a review flagged their handling)" },
-    { name: "Crowne Plaza West Loop", area: "Greektown", rate: "~$160–220", status: "Needs recipient", statusClass: "red", contact: "group sales 1-800-906-2871", note: "Draft ready; get sales email, then send" },
+    { name: "Palmer House Hilton", area: "The Loop", rate: "$329 (suite $659) + tax/fees", status: "Offer received", statusClass: "green", contact: "Jordan Samson · Jordan.Samson@hilton.com", note: "Courtesy block, no liability, 3-night min. Reply to accept — rate held through Aug 3" },
+    { name: "Hyatt House West Loop", area: "Fulton Mkt (closest to venue)", rate: "~$180–250", status: "Needs recipient", statusClass: "red", contact: "group sales 1-800-906-2871", note: "Draft ready; get sales email, then send (Engine hasn't sourced this one)" },
+    { name: "Westin River North", area: "River North", rate: "from $312 (via Engine)", status: "Engine proposal", statusClass: "yellow", contact: "Engine account HE-258133", note: "Engine already sourced this — review in Engine; manual draft likely redundant. Expires Aug 13" },
+    { name: "Crowne Plaza West Loop", area: "Greektown", rate: "from $259 (via Engine)", status: "Engine proposal", statusClass: "yellow", contact: "Engine account HE-258133", note: "Engine already sourced this — review in Engine; expires Aug 3" },
   ],
   hotelsNote:
-    "Engine (Groups) — signed up 7/25 to source hotel-block proposals. Account not finished yet; " +
-    "complete it at engine.com to start receiving hand-picked proposals. Manage/support: groups@engine.com. " +
-    "No proposals received yet — watch for them.",
+    "Engine (Groups) — account is now finished and proposals are flowing (rep: Peter Fanous, account HE-258133). " +
+    "Received so far: Hotel Chicago Downtown/Autograph (from $199), Crowne Plaza West Loop ($259), Royal Sonesta River North ($269), " +
+    "Westin River North ($312), The Gwen ($339), Godfrey ($399). Several expire Aug 3–4 — review at engine.com. " +
+    "Kimpton Gray removed: declined due to a citywide event on your dates (offered sister properties voco Downtown / InterContinental Mag Mile); you're not replying.",
   djs: [
-    { name: "Toast & Jam", frontrunner: true, skill: "Curator / seamless transitions", rate: "from ~$2,850", status: "Draft ready to send", statusClass: "yellow", contact: "info@toastandjamdjs.com", next: "Front-runner. Ready to send — press on how much they mix LIVE vs. preset playlist" },
-    { name: "Hot Mix Entertainment", skill: "Live mixing (Hot Mix 5 pedigree)", rate: "~$1,995+ (photobooth add-on)", status: "Draft ready to send", statusClass: "yellow", contact: "scott@hotmixentertainment.com", next: "Ready to send — confirm Scott is your DJ + real print booth cost" },
+    { name: "Hot Mix Entertainment", frontrunner: true, skill: "Live mixing (Hot Mix 5 pedigree)", rate: "$3,500 DJ + $1,295 photo booth + $550 ceremony", status: "Quoted — your reply due", statusClass: "yellow", contact: "scott@hotmixentertainment.com", next: "Scott confirmed available & sent pricing 7/27. Decide on photo booth / ceremony add-ons and reply" },
+    { name: "Toast & Jam", skill: "Curator / seamless transitions", rate: "from ~$2,850", status: "Email bounced", statusClass: "red", contact: "info@toastandjamdjs.com (invalid)", next: "Address not found — find a working email or contact form on their site" },
     { name: "Love Ent by Milk Majer", skill: "Open-format touring artist", rate: "~$1,995+", status: "Needs recipient", statusClass: "red", contact: "773-206-8513 / loveentweddings.com", next: "Get email from site, then send" },
     { name: "DJ-Chicago", skill: "Seamless mixes + song edits", rate: "$$ (reasonable)", status: "Needs recipient", statusClass: "red", contact: "dj-chicago.com contact form", next: "Submit form; ask who's assigned + a mix demo" },
     { name: "Fig Media", skill: "Premium, reads the room", rate: "premium (top of budget)", status: "Needs recipient", statusClass: "red", contact: "figmedia.com contact form", next: "Submit form; confirm price + whether booth is enclosed/print" },
   ],
   djsNote:
     "Budget ~$3,500. Priority is real live mixing, not playlist DJs; an enclosed print photobooth is a nice-to-have, not required. " +
-    "All five drafted 7/25 — Toast & Jam and Hot Mix are ready to send; Milk Majer, DJ-Chicago and Fig Media need a recipient.",
+    "Hot Mix (Scott) confirmed available and quoted 7/27. Toast & Jam's email bounced. Milk Majer, DJ-Chicago and Fig Media still need a recipient.",
 };
 
 (function () {
