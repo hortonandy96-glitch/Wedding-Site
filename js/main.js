@@ -85,21 +85,28 @@
 
   /* ---------------- hotels ---------------------------------------------- */
 
+  // Hotel cards deliberately mirror the registry cards below: same circular
+  // logo, heading, and centred body. They stay open (no <details>) because
+  // there are only three and each carries a link or two.
   var hotelGrid = document.getElementById("hotel-grid");
   contentList("hotels").forEach(function (h) {
-    var details = document.createElement("details");
-    details.className = "card hotel-card";
-    var badge = h.confirmed ? "" : ' <span class="badge">details coming soon</span>';
+    var card = document.createElement("div");
+    card.className = "card hotel-card" + (h.confirmed ? "" : " hotel-soon");
+    var badge = h.confirmed ? "" : '<span class="badge">details coming soon</span>';
     var booking = h.url
       ? '<a class="btn btn-ghost" href="' + escapeHtml(h.url) + '" target="_blank" rel="noopener">Book a room</a>'
-      : "";
-    details.innerHTML =
-      "<summary><strong>" + escapeHtml(h.name) + "</strong> · " + escapeHtml(h.area) + badge + "</summary>" +
-      '<div class="hotel-body"><p>' + escapeHtml(h.note) + "</p>" +
+      : (h.cta ? '<span class="hotel-cta">' + escapeHtml(h.cta) + "</span>" : "");
+    card.innerHTML =
+      '<span class="hotel-logo" aria-hidden="true">' + escapeHtml(h.initials || "🏨") + "</span>" +
+      "<h4>" + escapeHtml(h.name) + "</h4>" +
+      '<span class="hotel-area">' + escapeHtml(h.area) + "</span>" +
+      (h.rate ? '<span class="hotel-rate">' + escapeHtml(h.rate) + "</span>" : "") +
+      badge +
+      "<p>" + escapeHtml(h.note) + "</p>" +
       '<a class="btn btn-ghost" href="https://www.google.com/maps/search/?api=1&query=' +
       encodeURIComponent(h.mapQuery) + '" target="_blank" rel="noopener">View area on map</a>' +
-      booking + "</div>";
-    hotelGrid.appendChild(details);
+      booking;
+    hotelGrid.appendChild(card);
   });
 
   /* ---------------- registry -------------------------------------------- */

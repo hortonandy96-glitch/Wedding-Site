@@ -460,19 +460,42 @@ input[type="text"], input[type="email"], select, textarea {
   .itinerary-grid { grid-template-columns: repeat(3, 1fr); }
 }
 
-/* ---------- hotels ---------- */
+/* ---------- hotels ----------
+   Same card language as the registry cards further down, so the two
+   three-across grids line up visually. */
 
-.hotel-grid { display: grid; gap: 1rem; max-width: 720px; margin: 0 auto; }
+.hotel-grid { display: grid; gap: 1.2rem; margin-bottom: 1.5rem; }
 
-.hotel-card { padding: 0; overflow: hidden; }
-.hotel-card summary {
-  cursor: pointer;
-  padding: 1rem 1.25rem;
-  font-size: 1.15rem;
-  list-style-position: inside;
+.hotel-card {
+  display: flex; flex-direction: column; align-items: center;
+  text-align: center;
+  gap: 0.45rem;
 }
-.hotel-card summary:hover { background: rgba(91, 140, 90, 0.12); }
-.hotel-body { padding: 0 1.25rem 1.25rem; display: flex; flex-direction: column; gap: 0.7rem; align-items: flex-start; }
+.hotel-logo {
+  display: grid; place-items: center;
+  width: 64px; height: 64px;
+  border-radius: 50%;
+  background: var(--pink);
+  color: var(--burgundy);
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  margin-bottom: 0.2rem;
+}
+.hotel-area { font-style: italic; }
+.hotel-rate {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  letter-spacing: 0.04em;
+}
+.hotel-cta { font-style: italic; opacity: 0.75; }
+.hotel-card .badge { margin-left: 0; }
+.hotel-card p { margin: 0.2rem 0 0; }
+.hotel-card .btn { margin-top: 0.4rem; }
+.hotel-soon { opacity: 0.9; }
+
+@media (min-width: 760px) {
+  .hotel-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
 
 .badge {
   display: inline-block;

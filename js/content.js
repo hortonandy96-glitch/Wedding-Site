@@ -47,23 +47,44 @@ window.SITE_CONTENT = {
   ],
 
   /* ---- Hotels (Travel section) ----
-     PLACEHOLDERS: replace name/note/url/mapQuery when room blocks are booked.
-     Set `confirmed: true` to remove the "coming soon" badge. */
+     One card per room block. These use the same card layout as the registry
+     cards below, so keep them to three.
+     Set `confirmed: true` to drop the "coming soon" badge. Paste the hotel's
+     booking link into `url` when it arrives — the card then shows a real
+     "Book a room" button instead of the `cta` text.
+     `initials` accepts letters or an emoji. */
   hotels: [
     {
-      name: "Hotel Block #1 — Coming Soon",
-      area: "West Loop",
-      note: "We're negotiating a group rate near the venue. Details will appear here.",
-      url: "",            // booking link goes here later
-      mapQuery: "West Loop, Chicago, IL",
-      confirmed: false,
+      name: "Residence Inn Chicago Downtown/Loop",
+      initials: "🏨",
+      area: "Downtown / The Loop",
+      rate: "From $304/night",
+      note: "Our main room block — 20 rooms held for Thursday, May 20 through Sunday, May 23, 2027. Suites come with kitchens, so it works well for families and longer stays.",
+      url: "",            // booking link goes here when the hotel issues it
+      mapQuery: "Residence Inn Chicago Downtown Loop, Chicago, IL",
+      cta: "Booking link coming soon",
+      confirmed: true,
     },
     {
       name: "Hotel Block #2 — Coming Soon",
-      area: "Downtown / The Loop",
-      note: "A downtown option near the trains for guests who want to sightsee.",
+      initials: "🏨",
+      area: "West Loop",
+      rate: "",
+      note: "We're sourcing a second block closer to the venue, for guests who'd rather walk than ride. Details will appear here.",
       url: "",
-      mapQuery: "The Loop, Chicago, IL",
+      mapQuery: "West Loop, Chicago, IL",
+      cta: "",
+      confirmed: false,
+    },
+    {
+      name: "Hotel Block #3 — Coming Soon",
+      initials: "🏨",
+      area: "River North",
+      rate: "",
+      note: "A third option near the restaurants and the river, for anyone making a proper weekend of it. Details will appear here.",
+      url: "",
+      mapQuery: "River North, Chicago, IL",
+      cta: "",
       confirmed: false,
     },
   ],
