@@ -1,262 +1,212 @@
 -- =========================================================================
--- Guest list import — generated from The Knot export (2026-06-09)
--- Paste into Supabase -> SQL Editor -> Run. RUN THIS ONLY ONCE on an empty
--- guest list: running it twice creates duplicates. (To start over:
---   delete from guests; delete from households;  then run this again.)
--- Mailing addresses are kept in each household's private notes.
+-- AUTHORITATIVE guest list — generated from guest-list-2026-06-24.xlsx
+-- Applied to the live database 2026-08-02. 117 households, 192 guests.
+-- Singles default to plus-one = yes (per owner). Michael/Elizabeth Brown
+-- merged (source had a 'Mikchawl' typo). This REPLACES all households
+-- (cascading to guests); it does NOT touch budget/planning/unmatched.
 -- =========================================================================
 
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Carol Beattie & Mike Beattie', null, '+12813814708', '326 Lagrange Dr., Fredericksburg, TX 78624', false) returning id)
-insert into guests (household_id, name) select id, unnest(array['Carol Beattie', 'Mike Beattie']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Robin Beattie', 'robinb.0021@gmail.com', '+1 (281) 731-6464', null, true) returning id)
-insert into guests (household_id, name) select id, unnest(array['Robin Beattie']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Jake Beattie & Lyndsi Beattie', null, '+12816364281', '372 Walnut Creek, New Braunfels, TX 78130', false) returning id)
-insert into guests (household_id, name) select id, unnest(array['Jake Beattie', 'Lyndsi Beattie']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Cynthia Stevenson', null, null, '104 Bella Toscana Ave, Unit 2111, Lakeway, TX 78734', false) returning id)
-insert into guests (household_id, name) select id, unnest(array['Cynthia Stevenson']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Sharon Brydon', null, null, '50 Beethoven St, Binghamton, NY 13905', false) returning id)
-insert into guests (household_id, name) select id, unnest(array['Sharon Brydon']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Stanley Beattie', null, null, '41120 Fox Fun Rd, Apartment MG 507, Novi, MI 48337', false) returning id)
-insert into guests (household_id, name) select id, unnest(array['Stanley Beattie']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Martha Graham & Larry Graham', null, null, '185 Prospect Place, Brooklyn, NY 11238', false) returning id)
-insert into guests (household_id, name) select id, unnest(array['Martha Graham', 'Larry Graham']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Robert Beattie & Joan Beattie', null, null, '4577 Sperryville Pike, Woodville, VA 22746', false) returning id)
-insert into guests (household_id, name) select id, unnest(array['Robert Beattie', 'Joan Beattie']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('David Case & Fran Case', null, null, '1614 Teakwood, Wylie, TX 75098', false) returning id)
-insert into guests (household_id, name) select id, unnest(array['David Case', 'Fran Case']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Jeanne Case', null, null, '1607 Shady Grove Ct, Wylie, TX 75098', false) returning id)
-insert into guests (household_id, name) select id, unnest(array['Jeanne Case']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Mark Case & Tatyana Case', null, null, '1609 Shady Grove Ct, Wylie, TX 75098', false) returning id)
-insert into guests (household_id, name) select id, unnest(array['Mark Case', 'Tatyana Case']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Chris Case & Jill Case', null, null, '1722 Teakwood, Wylie, TX 75098', false) returning id)
-insert into guests (household_id, name) select id, unnest(array['Chris Case', 'Jill Case']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Jeff Kendrick & Lisa Kendrick', null, null, '3537 Meadowside, Sachse, TX 75048', false) returning id)
-insert into guests (household_id, name) select id, unnest(array['Jeff Kendrick', 'Lisa Kendrick']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Craig Case', null, null, '1611 Thornberry Dr, Wylie, TX 75098', false) returning id)
-insert into guests (household_id, name) select id, unnest(array['Craig Case']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Eric Koch & Stephanie Koch', null, null, '2128 Highland Dr, Wylie, TX 75098', false) returning id)
-insert into guests (household_id, name) select id, unnest(array['Eric Koch', 'Stephanie Koch']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Jordan Stone & Haley Stone', null, null, '916 Community Way, Josephine, TX 75189', false) returning id)
-insert into guests (household_id, name) select id, unnest(array['Jordan Stone', 'Haley Stone']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Meg Christensen & Cecil Christensen', null, null, '3996 Lupine Dr, Unit A, Vail, CO 81657', false) returning id)
-insert into guests (household_id, name) select id, unnest(array['Meg Christensen', 'Cecil Christensen']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('John Pallante & Naomi Pallante', null, null, '4990 S. Elizabeth Ln, Evergreen, CO 80439', false) returning id)
-insert into guests (household_id, name) select id, unnest(array['John Pallante', 'Naomi Pallante']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Jamie Graham', null, null, '185 Prospect Place, Brooklyn, NY 11238', true) returning id)
-insert into guests (household_id, name) select id, unnest(array['Jamie Graham']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Christopher Graham & Lisa Graham', null, null, '10 Highfield Terrace, Caldwell, NJ 07006', false) returning id)
-insert into guests (household_id, name) select id, unnest(array['Christopher Graham', 'Lisa Graham']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Peter Graham', null, null, '24 Crafts Ave, Apt 1, Northampton, MA 01060', true) returning id)
-insert into guests (household_id, name) select id, unnest(array['Peter Graham']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Janet Lippert & Tony Lippert', null, null, '1000 Overhill Rd, Manhattan, KS 66503', false) returning id)
-insert into guests (household_id, name) select id, unnest(array['Janet Lippert', 'Tony Lippert']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Julie Johnson', null, null, '124 Fairway Ridge Dr, Chapin, SC 29036', true) returning id)
-insert into guests (household_id, name) select id, unnest(array['Julie Johnson']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Collette Siemrzuch & Rich Siemrzuch', null, null, null, false) returning id)
-insert into guests (household_id, name) select id, unnest(array['Collette Siemrzuch', 'Rich Siemrzuch']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Ted Henderson & Betty Henderson', null, null, '4622 225th Ave SE, Sammamish, WA 98075', false) returning id)
-insert into guests (household_id, name) select id, unnest(array['Ted Henderson', 'Betty Henderson']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Clay Holloway & Janet Holloway', null, null, '9674 East Shore Dr, Willis, TX 77318', false) returning id)
-insert into guests (household_id, name) select id, unnest(array['Clay Holloway', 'Janet Holloway']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Eric Green & Susan Green', null, null, '2902 Forest View, Richmond, TX 77406', false) returning id)
-insert into guests (household_id, name) select id, unnest(array['Eric Green', 'Susan Green']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Ed Katterhagen & Rhonda Katterhagen', null, null, '30 W Fairbranch Circle, The Woodlands, TX 77382', false) returning id)
-insert into guests (household_id, name) select id, unnest(array['Ed Katterhagen', 'Rhonda Katterhagen']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Lauren Katterhagen', null, null, '428 Gryffindor Dr, Phoenixville, PA 19460', true) returning id)
-insert into guests (household_id, name) select id, unnest(array['Lauren Katterhagen']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Spencer Katterhagen & Sophia Bullard', null, null, '2101 11th St NW, Apt 205, Washington, DC 20001', false) returning id)
-insert into guests (household_id, name) select id, unnest(array['Spencer Katterhagen', 'Sophia Bullard']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Scott Gustafson & Katie Gustafson', null, null, '38 N. Greenvine Circle, The Woodlands, TX 77382', false) returning id)
-insert into guests (household_id, name) select id, unnest(array['Scott Gustafson', 'Katie Gustafson']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Sandy McGinley & Ingrid McGinley', null, null, '50 N. Greenvine Circle, The Woodlands, TX 77382', false) returning id)
-insert into guests (household_id, name) select id, unnest(array['Sandy McGinley', 'Ingrid McGinley']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Jillian Katterhagen & Mark Denin', null, '+12816604178', '2216 11th St NW, #4, Washington, DC 20001', false) returning id)
-insert into guests (household_id, name) select id, unnest(array['Jillian Katterhagen', 'Mark Denin']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Claire Landsbaum & Laurel Landsbaum', null, null, null, false) returning id)
-insert into guests (household_id, name) select id, unnest(array['Claire Landsbaum', 'Laurel Landsbaum']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Lauren Russell & Taylor Russell', null, null, null, false) returning id)
-insert into guests (household_id, name) select id, unnest(array['Lauren Russell', 'Taylor Russell']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Justin Tarlton', null, '+17042423566', null, true) returning id)
-insert into guests (household_id, name) select id, unnest(array['Justin Tarlton']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Jenna Penticoff & Josie Falkum', null, null, null, false) returning id)
-insert into guests (household_id, name) select id, unnest(array['Jenna Penticoff', 'Josie Falkum']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Rachel Galey & Brennan Galey', null, null, null, false) returning id)
-insert into guests (household_id, name) select id, unnest(array['Rachel Galey', 'Brennan Galey']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Chelsie Liberati & Matt Liberati', null, null, null, false) returning id)
-insert into guests (household_id, name) select id, unnest(array['Chelsie Liberati', 'Matt Liberati']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Allie Schultz & Eric Ugland', null, null, null, false) returning id)
-insert into guests (household_id, name) select id, unnest(array['Allie Schultz', 'Eric Ugland']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Tayler Aitken', null, null, null, true) returning id)
-insert into guests (household_id, name) select id, unnest(array['Tayler Aitken']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Madi Speer & Jordan Ginzl', null, null, null, false) returning id)
-insert into guests (household_id, name) select id, unnest(array['Madi Speer', 'Jordan Ginzl']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Sandra Gonzalez', null, null, null, true) returning id)
-insert into guests (household_id, name) select id, unnest(array['Sandra Gonzalez']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Morgan Youskevetch & Pat Youskevetch', null, null, null, false) returning id)
-insert into guests (household_id, name) select id, unnest(array['Morgan Youskevetch', 'Pat Youskevetch']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Mike Essien & Nimi Essien', null, null, null, false) returning id)
-insert into guests (household_id, name) select id, unnest(array['Mike Essien', 'Nimi Essien']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Samantha Moreno', null, null, null, true) returning id)
-insert into guests (household_id, name) select id, unnest(array['Samantha Moreno']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Jessyka Ortega', null, null, null, true) returning id)
-insert into guests (household_id, name) select id, unnest(array['Jessyka Ortega']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Mary Delaware & Jamie Delaware', null, null, null, false) returning id)
-insert into guests (household_id, name) select id, unnest(array['Mary Delaware', 'Jamie Delaware']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Aubrey Thompson & Charlie Thompson', null, null, null, false) returning id)
-insert into guests (household_id, name) select id, unnest(array['Aubrey Thompson', 'Charlie Thompson']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Cleo Ledet & David Ledet', null, '+17206356611', null, false) returning id)
-insert into guests (household_id, name) select id, unnest(array['Cleo Ledet', 'David Ledet']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Laura Thompson & Ryan Thompson', null, null, null, false) returning id)
-insert into guests (household_id, name) select id, unnest(array['Laura Thompson', 'Ryan Thompson']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Hunter Coleman & Kenny Coleman', null, null, null, false) returning id)
-insert into guests (household_id, name) select id, unnest(array['Hunter Coleman', 'Kenny Coleman']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Amy Ackermann & Joey Ackermann', null, null, null, false) returning id)
-insert into guests (household_id, name) select id, unnest(array['Amy Ackermann', 'Joey Ackermann']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Sammy Smith', null, null, null, true) returning id)
-insert into guests (household_id, name) select id, unnest(array['Sammy Smith']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Parker Sheley & Ben Sheley', null, null, null, false) returning id)
-insert into guests (household_id, name) select id, unnest(array['Parker Sheley', 'Ben Sheley']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Liz Lovasco & Paul Lovasco', null, null, null, false) returning id)
-insert into guests (household_id, name) select id, unnest(array['Liz Lovasco', 'Paul Lovasco']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Susan Gell-Horton', 'gellhorton@gmail.com', null, null, true) returning id)
-insert into guests (household_id, name) select id, unnest(array['Susan Gell-Horton']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Matthew Horton', null, '(214) 557-5341', null, true) returning id)
-insert into guests (household_id, name) select id, unnest(array['Matthew Horton']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Caryl Horton & Dale Horton', null, '402-517-7507', null, false) returning id)
-insert into guests (household_id, name) select id, unnest(array['Caryl Horton', 'Dale Horton']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Tim Horton & Shelli Horton', null, null, null, false) returning id)
-insert into guests (household_id, name) select id, unnest(array['Tim Horton', 'Shelli Horton']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Grant Horton', null, '+14025369116', null, true) returning id)
-insert into guests (household_id, name) select id, unnest(array['Grant Horton']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Evan Horton', null, '(402) 889-1001', null, true) returning id)
-insert into guests (household_id, name) select id, unnest(array['Evan Horton']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Cathy Murphy', null, '6508672345', null, false) returning id)
-insert into guests (household_id, name) select id, unnest(array['Cathy Murphy']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Kaitlin Murphy', null, null, null, false) returning id)
-insert into guests (household_id, name) select id, unnest(array['Kaitlin Murphy']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Ryan Murphy', null, null, null, false) returning id)
-insert into guests (household_id, name) select id, unnest(array['Ryan Murphy']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Steve Evers & Susie Evers', null, null, null, false) returning id)
-insert into guests (household_id, name) select id, unnest(array['Steve Evers', 'Susie Evers']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Jamie Evers & Elizabeth Evers', null, null, null, false) returning id)
-insert into guests (household_id, name) select id, unnest(array['Jamie Evers', 'Elizabeth Evers']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Cassie Jetter', null, '+14022132277', null, false) returning id)
-insert into guests (household_id, name) select id, unnest(array['Cassie Jetter']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Jerry Evers', null, null, null, false) returning id)
-insert into guests (household_id, name) select id, unnest(array['Jerry Evers']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Larry Evers & Sheila Evers', null, '+14024172091', null, false) returning id)
-insert into guests (household_id, name) select id, unnest(array['Larry Evers', 'Sheila Evers']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Ashley Evers & Curtis', null, null, null, false) returning id)
-insert into guests (household_id, name) select id, unnest(array['Ashley Evers', 'Curtis']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Derek Evers', null, null, null, true) returning id)
-insert into guests (household_id, name) select id, unnest(array['Derek Evers']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('John Gell & Lisa Gell', null, '+1 (402) 850-6653', null, false) returning id)
-insert into guests (household_id, name) select id, unnest(array['John Gell', 'Lisa Gell']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Jack Gell', null, '+14027407810', null, true) returning id)
-insert into guests (household_id, name) select id, unnest(array['Jack Gell']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Maggie Goodhard & Jason Goodhard', null, '(402) 980-8607', null, false) returning id)
-insert into guests (household_id, name) select id, unnest(array['Maggie Goodhard', 'Jason Goodhard']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Patrick Gell', null, '+14027407961', null, true) returning id)
-insert into guests (household_id, name) select id, unnest(array['Patrick Gell']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Tom Gell & Karen Gell', null, '+19136260114', null, false) returning id)
-insert into guests (household_id, name) select id, unnest(array['Tom Gell', 'Karen Gell']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Bailey Gell & Kirill Gell', null, '+19136200820', null, false) returning id)
-insert into guests (household_id, name) select id, unnest(array['Bailey Gell', 'Kirill Gell']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Brady Gell & Jasmine Gell', null, '+1 (913) 620-2142', null, false) returning id)
-insert into guests (household_id, name) select id, unnest(array['Brady Gell', 'Jasmine Gell']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Brock Gell', null, null, null, true) returning id)
-insert into guests (household_id, name) select id, unnest(array['Brock Gell']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Anne Severes & Ian Severes', null, null, null, false) returning id)
-insert into guests (household_id, name) select id, unnest(array['Anne Severes', 'Ian Severes']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Sarah Severes & John Paul Severes', null, '+14029951458', null, false) returning id)
-insert into guests (household_id, name) select id, unnest(array['Sarah Severes', 'John Paul Severes']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Jennifer Roberts & Shane Roberts', null, '+14022103809', null, false) returning id)
-insert into guests (household_id, name) select id, unnest(array['Jennifer Roberts', 'Shane Roberts']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Patrick Roberts & Bailey Roberts', null, null, null, false) returning id)
-insert into guests (household_id, name) select id, unnest(array['Patrick Roberts', 'Bailey Roberts']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Mike Brown & Elizabeth Brown', 'miketbrown@verizon.net', '(972) 355-9989', null, false) returning id)
-insert into guests (household_id, name) select id, unnest(array['Mike Brown', 'Elizabeth Brown']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Pete Michalski & Kelley Michalski', null, '+14698676519', null, false) returning id)
-insert into guests (household_id, name) select id, unnest(array['Pete Michalski', 'Kelley Michalski']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Riley Michalski & Allie Michalski', null, '+19728040139', null, false) returning id)
-insert into guests (household_id, name) select id, unnest(array['Riley Michalski', 'Allie Michalski']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Cooper Michalski', null, null, null, true) returning id)
-insert into guests (household_id, name) select id, unnest(array['Cooper Michalski']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Reid Michalski', null, null, null, true) returning id)
-insert into guests (household_id, name) select id, unnest(array['Reid Michalski']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Steven Johnson & Stacie Johnson', null, null, null, false) returning id)
-insert into guests (household_id, name) select id, unnest(array['Steven Johnson', 'Stacie Johnson']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Jeff Rarick & Dana Rarick', null, null, null, false) returning id)
-insert into guests (household_id, name) select id, unnest(array['Jeff Rarick', 'Dana Rarick']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Anthony Bussanaich & Nikki Ann Bussanaich', null, null, null, false) returning id)
-insert into guests (household_id, name) select id, unnest(array['Anthony Bussanaich', 'Nikki Ann Bussanaich']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Suman Upreti & Conchita Upreti', null, null, null, false) returning id)
-insert into guests (household_id, name) select id, unnest(array['Suman Upreti', 'Conchita Upreti']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Jeff Arellano & Michelle Arellano', null, null, null, false) returning id)
-insert into guests (household_id, name) select id, unnest(array['Jeff Arellano', 'Michelle Arellano']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Martha Wikert', null, null, null, true) returning id)
-insert into guests (household_id, name) select id, unnest(array['Martha Wikert']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('William Lynch', null, null, null, false) returning id)
-insert into guests (household_id, name) select id, unnest(array['William Lynch']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Katie Lynch', null, null, null, false) returning id)
-insert into guests (household_id, name) select id, unnest(array['Katie Lynch']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Michael Lynch & Maria Lynch', null, null, null, false) returning id)
-insert into guests (household_id, name) select id, unnest(array['Michael Lynch', 'Maria Lynch']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Daniel Lynch & Kimberly Lynch', null, null, null, false) returning id)
-insert into guests (household_id, name) select id, unnest(array['Daniel Lynch', 'Kimberly Lynch']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Charles Lynch', null, null, null, false) returning id)
-insert into guests (household_id, name) select id, unnest(array['Charles Lynch']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Peter Lynch', null, null, null, false) returning id)
-insert into guests (household_id, name) select id, unnest(array['Peter Lynch']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Steve Lynch & Molly Lynch', null, null, null, false) returning id)
-insert into guests (household_id, name) select id, unnest(array['Steve Lynch', 'Molly Lynch']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Ryan Dockman & Abbey Dockman', null, '+12165443011', null, false) returning id)
-insert into guests (household_id, name) select id, unnest(array['Ryan Dockman', 'Abbey Dockman']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Noah Newman', null, '+18476243312', null, true) returning id)
-insert into guests (household_id, name) select id, unnest(array['Noah Newman']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Ally Goldsmith', null, '+18153424446', '3017 w Logan blvd unit 2', true) returning id)
-insert into guests (household_id, name) select id, unnest(array['Ally Goldsmith']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Alex Urrutia', null, '+12145770185', null, true) returning id)
-insert into guests (household_id, name) select id, unnest(array['Alex Urrutia']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Max Ary', null, '(214) 668-9638', null, true) returning id)
-insert into guests (household_id, name) select id, unnest(array['Max Ary']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Peter Mungigurra & Bailey Mungigurra', null, null, null, false) returning id)
-insert into guests (household_id, name) select id, unnest(array['Peter Mungigurra', 'Bailey Mungigurra']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Henrick Zetterstrom & Kamryn Zetterstrom', null, '+1 (806) 778-9388', null, false) returning id)
-insert into guests (household_id, name) select id, unnest(array['Henrick Zetterstrom', 'Kamryn Zetterstrom']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Nick Ramirez', null, null, null, true) returning id)
-insert into guests (household_id, name) select id, unnest(array['Nick Ramirez']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Nathan Houk', null, '+1 (469) 647-1491', null, true) returning id)
-insert into guests (household_id, name) select id, unnest(array['Nathan Houk']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Zach Ruther', null, '+1 (972) 953-5212', null, true) returning id)
-insert into guests (household_id, name) select id, unnest(array['Zach Ruther']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Stephanie Szlosek', null, null, null, true) returning id)
-insert into guests (household_id, name) select id, unnest(array['Stephanie Szlosek']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Riley Appleyard', 'riley.appleyard@icloud.com', '(405) 315-7311', null, true) returning id)
-insert into guests (household_id, name) select id, unnest(array['Riley Appleyard']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Thomas Borgman', null, null, '4545 Mission Ave, Frisco, Texas 75034', true) returning id)
-insert into guests (household_id, name) select id, unnest(array['Thomas Borgman']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Thomas Whittington', null, '(972) 922-8186', null, true) returning id)
-insert into guests (household_id, name) select id, unnest(array['Thomas Whittington']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Ali Lewis', null, '+1 (214) 557-4010', '10101 Metropolitan Dr, Apt 267, Austin, TX 78758', true) returning id)
-insert into guests (household_id, name) select id, unnest(array['Ali Lewis']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Claire Scribner & Austin Scribner', null, null, null, false) returning id)
-insert into guests (household_id, name) select id, unnest(array['Claire Scribner', 'Austin Scribner']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Miranda Raiford', null, '+1 (516) 424-7346', '714 W Buckingham PL APT 2E, Chicago, IL 60657', true) returning id)
-insert into guests (household_id, name) select id, unnest(array['Miranda Raiford']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Jaidan Cook', null, '+16142264748', null, true) returning id)
-insert into guests (household_id, name) select id, unnest(array['Jaidan Cook']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Danny Lesh & Amaya Lesh', null, '+18189149204', '6 S Laflin St, APT 714, Chicago IL, 60607', false) returning id)
-insert into guests (household_id, name) select id, unnest(array['Danny Lesh', 'Amaya Lesh']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Callie Cowart', null, '+12144998736', null, true) returning id)
-insert into guests (household_id, name) select id, unnest(array['Callie Cowart']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Karan Gupta & Maeve Gupta', 'guptak3@miamioh.edu', '+15135933430', null, false) returning id)
-insert into guests (household_id, name) select id, unnest(array['Karan Gupta', 'Maeve Gupta']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Douglas DuBois II', null, null, null, true) returning id)
-insert into guests (household_id, name) select id, unnest(array['Douglas DuBois II']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Sanchit Ram Arvind', null, null, null, true) returning id)
-insert into guests (household_id, name) select id, unnest(array['Sanchit Ram Arvind']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('Erika Potasky & Diego Potasky', null, null, null, false) returning id)
-insert into guests (household_id, name) select id, unnest(array['Erika Potasky', 'Diego Potasky']) from hh;
-with hh as (insert into households (name, email, phone, notes, plus_one_allowed) values ('JZ Zimbelman & Megan Zimbelman', null, null, null, false) returning id)
-insert into guests (household_id, name) select id, unnest(array['JZ Zimbelman', 'Megan Zimbelman']) from hh;
+begin;
+delete from public.households;
+with raw(hh,guest,email,phone,notes,plus_one,ho,go) as (values
+('Alex Urrutia','Alex Urrutia',null,'+12145770185','1620 S Folsom St #7, Lincoln, NE 68522',true,0,0),
+('Ali Lewis','Ali Lewis',null,'+1 (214) 557-4010','3838 S Detroit Ave, Tusla OK 74105 | friend''s address, check address before invites',true,1,0),
+('Allie Schultz & Eric Ugland','Allie Schultz',null,null,'1587 Grandola Ave, Los Angeles CA 90041',true,2,0),
+('Allie Schultz & Eric Ugland','Eric Ugland',null,null,'1587 Grandola Ave, Los Angeles CA 90041',true,2,1),
+('Ally Goldsmith','Ally Goldsmith',null,'+18153424446','515 W 10th St apt 329 Dallas, TX 75208',true,3,0),
+('Amy Ackermann & Joey Mack','Amy Ackermann',null,null,'2414 N Spaulding Ave Apt 2F, Chicago, IL 60647',false,4,0),
+('Amy Ackermann & Joey Mack','Joey Mack',null,null,'2414 N Spaulding Ave Apt 2F, Chicago, IL 60647',false,4,1),
+('Anne Severes & Ian Severes','Anne Severes',null,null,'13468 Oak Street Omaha NE 68144',false,5,0),
+('Anne Severes & Ian Severes','Ian Severes',null,null,'13468 Oak Street Omaha NE 68144',false,5,1),
+('Anthony Bussanaich & Nikki Ann Bussanaich','Anthony Bussanaich',null,null,'439 Sterling Place Ridgewood NJ 07450',false,6,0),
+('Anthony Bussanaich & Nikki Ann Bussanaich','Nikki Ann Bussanaich',null,null,'439 Sterling Place Ridgewood NJ 07450',false,6,1),
+('Ashley Johnson & Curtis Johnson','Ashley Johnson',null,null,'20832 102nd Pl SE Kent, WA 98031',false,7,0),
+('Ashley Johnson & Curtis Johnson','Curtis Johnson',null,null,'20832 102nd Pl SE Kent, WA 98031',false,7,1),
+('Aubrey Thompson & Charlie Thompson','Aubrey Thompson',null,null,'415 S Wille St Mt Prospect, IL 60056',false,8,0),
+('Aubrey Thompson & Charlie Thompson','Charlie Thompson',null,null,'415 S Wille St Mt Prospect, IL 60056',false,8,1),
+('Bailey Gell & Kirill Zhurauliou','Bailey Gell',null,'+19136200820','12027 Hayes Ln apt 43 Overland Park KS 66213',false,9,0),
+('Bailey Gell & Kirill Zhurauliou','Kirill Zhurauliou',null,'+19136200820','12027 Hayes Ln apt 43 Overland Park KS 66213',false,9,1),
+('Brady Gell & Jasmine White','Brady Gell',null,'+1 (913) 620-2142','777 W Chandler Bvd Apt 1312 Chandler AZ 85225',false,10,0),
+('Brady Gell & Jasmine White','Jasmine White',null,'+1 (913) 620-2142','777 W Chandler Bvd Apt 1312 Chandler AZ 85225',false,10,1),
+('Brock Gell','Brock Gell',null,null,'4130 W. 95th St, #110, Prairie Village KS 66207',true,11,0),
+('Callie Cowart','Callie Cowart',null,'+12144998736','1690 N Point St Apt 204, San Francisco CA 94123',true,12,0),
+('Carol Beattie & Mike Beattie','Carol Beattie',null,'+12813814708','326 Lagrange Dr., Fredericksburg, TX 78624',false,13,0),
+('Carol Beattie & Mike Beattie','Mike Beattie',null,'+12813814708','326 Lagrange Dr., Fredericksburg, TX 78624',false,13,1),
+('Caryl Horton & Dale Horton','Caryl Horton',null,'402-517-7507','425 E 5th Street Pappillion NE 68046',false,14,0),
+('Caryl Horton & Dale Horton','Dale Horton',null,'402-517-7507','425 E 5th Street Pappillion NE 68046',false,14,1),
+('Cassie Jetter','Cassie Jetter',null,'+14022132277','19715 L St Omaha NE 68135',true,15,0),
+('Cathleen Murphy','Cathleen Murphy',null,'6.508672345E9','430 Lovall Valley Road Sonoma CA 95476',true,16,0),
+('Chelsie Liberati & Matt Benedict','Chelsie Liberati',null,null,'419 Springdale Dr, Whiteland IN 46184',false,17,0),
+('Chelsie Liberati & Matt Benedict','Matt Benedict',null,null,'419 Springdale Dr, Whiteland IN 46184',false,17,1),
+('Chris Case & Jill Case','Chris Case',null,null,'1722 Teakwood, Wylie, TX 75098',false,18,0),
+('Chris Case & Jill Case','Jill Case',null,null,'1722 Teakwood, Wylie, TX 75098',false,18,1),
+('Christopher Graham & Lisa Graham','Christopher Graham',null,null,'10 Highfield Terrace, Caldwell, NJ 07006',false,19,0),
+('Christopher Graham & Lisa Graham','Lisa Graham',null,null,'10 Highfield Terrace, Caldwell, NJ 07006',false,19,1),
+('Claire Landsbaum & Laurel Golio','Claire Landsbaum',null,null,'515 Park Place, 3B, Brooklyn NY, 11238',false,20,0),
+('Claire Landsbaum & Laurel Golio','Laurel Golio',null,null,'515 Park Place, 3B, Brooklyn NY, 11238',false,20,1),
+('Claire Nelson Scribner & Austin Scribner','Claire Nelson Scribner',null,null,'703 Sabel Ridge Lane, Grapevine, TX 76051',false,21,0),
+('Claire Nelson Scribner & Austin Scribner','Austin Scribner',null,null,'703 Sabel Ridge Lane, Grapevine, TX 76051',false,21,1),
+('Clay Holloway & Janet Holloway','Clay Holloway',null,null,'9674 East Shore Dr, Willis, TX 77318',false,22,0),
+('Clay Holloway & Janet Holloway','Janet Holloway',null,null,'9674 East Shore Dr, Willis, TX 77318',false,22,1),
+('Cleo Ledet & David Roncskevitz','Cleo Ledet',null,'+17206356611','415 S Lincoln St Denver, CO 80209',false,23,0),
+('Cleo Ledet & David Roncskevitz','David Roncskevitz',null,'+17206356611','415 S Lincoln St Denver, CO 80209',false,23,1),
+('Collette Siemrzuch & Rich Siemrzuch','Collette Siemrzuch',null,null,'1504 Kimberly Ct Wylie TX 75098',false,24,0),
+('Collette Siemrzuch & Rich Siemrzuch','Rich Siemrzuch',null,null,'1504 Kimberly Ct Wylie TX 75098',false,24,1),
+('Cooper Michalski & Liddie Michalski','Cooper Michalski',null,null,'4203 spring meadow ln flower mound 75028',false,25,0),
+('Cooper Michalski & Liddie Michalski','Liddie Michalski',null,null,'4203 spring meadow ln flower mound 75028',false,25,1),
+('Craig Case','Craig Case',null,null,'1611 Thornberry Dr, Wylie, TX 75098',true,26,0),
+('Cynthia Stevenson','Cynthia Stevenson',null,null,'104 Bella Toscana Ave, Unit 2111, Lakeway, TX 78734',true,27,0),
+('David Case & Fran Case','David Case',null,null,'1614 Teakwood dr, Wylie, TX 75098',false,28,0),
+('David Case & Fran Case','Fran Case',null,null,'1614 Teakwood dr, Wylie, TX 75098',false,28,1),
+('Derrek Evers','Derrek Evers',null,null,'P.O. Box 391 Fort Calhoun, NE 68023',true,29,0),
+('Douglas DuBois II','Douglas DuBois II',null,null,'5733 Hauser Dr. Shawnee, KS 66216',true,30,0),
+('Ed Katterhagen & Rhonda Katterhagen','Ed Katterhagen',null,null,'100 Eaglescliffe, Williamsburg, Virginia 23188',false,31,0),
+('Ed Katterhagen & Rhonda Katterhagen','Rhonda Katterhagen',null,null,'100 Eaglescliffe, Williamsburg, Virginia 23188',false,31,1),
+('Eric Green & Susan Green','Eric Green',null,null,'2902 Forest View, Richmond, TX 77406',false,32,0),
+('Eric Green & Susan Green','Susan Green',null,null,'2902 Forest View, Richmond, TX 77406',false,32,1),
+('Eric Koch & Stefanie Koch','Eric Koch',null,null,'2128 Highland Dr, Wylie, TX 75098',false,33,0),
+('Eric Koch & Stefanie Koch','Stefanie Koch',null,null,'2128 Highland Dr, Wylie, TX 75098',false,33,1),
+('Erika Potasky & Diego Monserratte','Erika Potasky',null,null,'12806 Southwest 91st Court, Miami FL 33176',false,34,0),
+('Erika Potasky & Diego Monserratte','Diego Monserratte',null,null,'12806 Southwest 91st Court, Miami FL 33176',false,34,1),
+('Evan Horton & Megan Volz','Evan Horton',null,'(402) 889-1001','1000 N La Salle Dr, Apt 219, Chicago, IL 60610',false,35,0),
+('Evan Horton & Megan Volz','Megan Volz',null,'(402) 889-1001','1000 N La Salle Dr, Apt 219, Chicago, IL 60610',false,35,1),
+('Grant Horton & Alyssa Jelinket','Grant Horton',null,'+14025369116','14962 weir plaza Omaha, Ne 68137',false,36,0),
+('Grant Horton & Alyssa Jelinket','Alyssa Jelinket',null,'+14025369116','14962 weir plaza Omaha, Ne 68137',false,36,1),
+('Henrick Zetterstrom & Kamryn Zetterstrom','Henrick Zetterstrom',null,'+1 (806) 778-9388','31 Teakwood Pl, Conroe TX 77384',false,37,0),
+('Henrick Zetterstrom & Kamryn Zetterstrom','Kamryn Zetterstrom',null,'+1 (806) 778-9388','31 Teakwood Pl, Conroe TX 77384',false,37,1),
+('Hunter Coleman & Kenny Yang','Hunter Coleman',null,null,'4857 W 96th Pl Oak Lawn IL, 60453',false,38,0),
+('Hunter Coleman & Kenny Yang','Kenny Yang',null,null,'4857 W 96th Pl Oak Lawn IL, 60453',false,38,1),
+('Jack Gell','Jack Gell',null,'+14027407810','4545 S 217th Street, Elkhorn NE 68022 | after Sept 2026 15720 Capitol Ave, Omaha, NE 68118',true,39,0),
+('Jaidan Cook','Jaidan Cook',null,'+16142264748','534 W Stratford Place Apt 8W, Chicago, IL 60657',true,40,0),
+('Jake Beattie & Lyndsi Beattie','Jake Beattie',null,'+12816364281','372 Walnut Creek, New Braunfels, TX 78130',false,41,0),
+('Jake Beattie & Lyndsi Beattie','Lyndsi Beattie',null,'+12816364281','372 Walnut Creek, New Braunfels, TX 78130',false,41,1),
+('Jamie Evers & Elizabeth Evers','Jamie Evers',null,null,'6428 Centennial Rd Papillion 68157 | AFTER Sept 2026, their address will be 6428 Centennial Rd Papillion 68157',false,42,0),
+('Jamie Evers & Elizabeth Evers','Elizabeth Evers',null,null,'6428 Centennial Rd Papillion 68157 | AFTER Sept 2026, their address will be 6428 Centennial Rd Papillion 68157',false,42,1),
+('Jamie Graham','Jamie Graham',null,null,'185 Prospect Place, Brooklyn, NY 11238',true,43,0),
+('Janet Lippert & Tony Lippert','Janet Lippert',null,null,'1000 Overhill Rd, Manhattan, KS 66503',false,44,0),
+('Janet Lippert & Tony Lippert','Tony Lippert',null,null,'1000 Overhill Rd, Manhattan, KS 66503',false,44,1),
+('Jeanne Case','Jeanne Case',null,null,'1607 Shady Grove Ct, Wylie, TX 75098',true,45,0),
+('Jeff Arellano & Michelle Arellano','Jeff Arellano',null,null,'500 Waters Edge Drive #212 Lake Dallas Texas 75065',false,46,0),
+('Jeff Arellano & Michelle Arellano','Michelle Arellano',null,null,'500 Waters Edge Drive #212 Lake Dallas Texas 75065',false,46,1),
+('Jeff Kendrick & Lisa Kendrick','Jeff Kendrick',null,null,'3537 Meadowside Dr, Sachse, TX 75048',false,47,0),
+('Jeff Kendrick & Lisa Kendrick','Lisa Kendrick',null,null,'3537 Meadowside Dr, Sachse, TX 75048',false,47,1),
+('Jeff Rarick & Dana Rarick','Jeff Rarick',null,null,'1604 Trinidad Way Argyle, TX 76226',false,48,0),
+('Jeff Rarick & Dana Rarick','Dana Rarick',null,null,'1604 Trinidad Way Argyle, TX 76226',false,48,1),
+('Jenna Penticoff-Falkum & Josie Penticoff-Falkum','Jenna Penticoff-Falkum',null,null,'1802 E Henry St Savannah GA 31404',false,49,0),
+('Jenna Penticoff-Falkum & Josie Penticoff-Falkum','Josie Penticoff-Falkum',null,null,'1802 E Henry St Savannah GA 31404',false,49,1),
+('Jennifer Roberts & Shane Roberts','Jennifer Roberts',null,'+14022103809','15958 S Street Omaha NE 68135',false,50,0),
+('Jennifer Roberts & Shane Roberts','Shane Roberts',null,'+14022103809','15958 S Street Omaha NE 68135',false,50,1),
+('Jerry Evers','Jerry Evers',null,null,'412 E 5th Street Pappillion NE 68046',true,51,0),
+('Jessyka Orrala','Jessyka Orrala',null,null,'3509 W Cortland St, Chicago, IL 60647',true,52,0),
+('Jillian Katterhagen & Mark Denin','Jillian Katterhagen',null,'+12816604178','5419 7th Street NW, Washington DC 20011',false,53,0),
+('Jillian Katterhagen & Mark Denin','Mark Denin',null,'+12816604178','5419 7th Street NW, Washington DC 20011',false,53,1),
+('John Gell & Lisa Gell','John Gell',null,'+1 (402) 850-6653','4545 S. 217th Street Elkhorn NE 68022',false,54,0),
+('John Gell & Lisa Gell','Lisa Gell',null,'+1 (402) 850-6653','4545 S. 217th Street Elkhorn NE 68022',false,54,1),
+('John Pallante & Naomi Pallante','John Pallante',null,null,'4990 S. Elizabeth Ln, Evergreen, CO 80439',false,55,0),
+('John Pallante & Naomi Pallante','Naomi Pallante',null,null,'4990 S. Elizabeth Ln, Evergreen, CO 80439',false,55,1),
+('Jordan Stone & Haley Stone','Jordan Stone',null,null,'916 Community Way, Josephine, TX 75189',false,56,0),
+('Jordan Stone & Haley Stone','Haley Stone',null,null,'916 Community Way, Josephine, TX 75189',false,56,1),
+('Julie Johnson','Julie Johnson',null,null,'124 Fairway Ridge Dr, Chapin, SC 29036',true,57,0),
+('Justin Tarlton','Justin Tarlton',null,'+17042423566','3574 Adam Court Murrells Inlet SC 29578',true,58,0),
+('Jacob Zimbelman & Megan Zimbelman','Jacob Zimbelman',null,null,'17614 E 410 rd, Claremore, OK 74018',false,59,0),
+('Jacob Zimbelman & Megan Zimbelman','Megan Zimbelman',null,null,'17614 E 410 rd, Claremore, OK 74018',false,59,1),
+('Kaitlin Murphy','Kaitlin Murphy',null,null,'432 E Fifth St Papillion, NE 68046',true,60,0),
+('Karan Gupta & Maeve Gupta','Karan Gupta','guptak3@miamioh.edu','+15135933430','Check if Maeve took Karans last name, or if she is still (Proto-Newton?)',false,61,0),
+('Karan Gupta & Maeve Gupta','Maeve Gupta','guptak3@miamioh.edu','+15135933430','Check if Maeve took Karans last name, or if she is still (Proto-Newton?)',false,61,1),
+('Larry Evers & Sheila Evers','Larry Evers',null,'+14024172091','1131 County Road 5 Ashland NE 68003',false,62,0),
+('Larry Evers & Sheila Evers','Sheila Evers',null,'+14024172091','1131 County Road 5 Ashland NE 68003',false,62,1),
+('Laura Slabaugh & Ryan Thompson','Laura Slabaugh',null,null,'3743 N Wilton Apt 2, Chicago IL 60614',false,63,0),
+('Laura Slabaugh & Ryan Thompson','Ryan Thompson',null,null,'3743 N Wilton Apt 2, Chicago IL 60614',false,63,1),
+('Lauren Katterhagen','Lauren Katterhagen',null,null,'428 Gryffindor Dr, Phoenixville, PA 19460',true,64,0),
+('Lauren Lemm & Taylor Lemm','Lauren Lemm',null,null,'1379 Willivee Dr Decatur GA, 30033',false,65,0),
+('Lauren Lemm & Taylor Lemm','Taylor Lemm',null,null,'1379 Willivee Dr Decatur GA, 30033',false,65,1),
+('Liz Lovasco & Paul Lovasco','Liz Lovasco',null,null,'2042 W Irving Park Rd #302 Chicago, IL 60618',false,66,0),
+('Liz Lovasco & Paul Lovasco','Paul Lovasco',null,null,'2042 W Irving Park Rd #302 Chicago, IL 60618',false,66,1),
+('Madi Speer & Jordan Ginzl','Madi Speer',null,null,'1052 S Plymouth Court, Chicago IL 60605',false,67,0),
+('Madi Speer & Jordan Ginzl','Jordan Ginzl',null,null,'1052 S Plymouth Court, Chicago IL 60605',false,67,1),
+('Margret Goodhard & Jason Goodhard','Margret Goodhard',null,'(402) 980-8607','9228 Fowler Circle Omaha NE 68134',false,68,0),
+('Margret Goodhard & Jason Goodhard','Jason Goodhard',null,'(402) 980-8607','9228 Fowler Circle Omaha NE 68134',false,68,1),
+('Mark Case & Tatyana Case','Mark Case',null,null,'1609 Shady Grove Ct, Wylie, TX 75098',false,69,0),
+('Mark Case & Tatyana Case','Tatyana Case',null,null,'1609 Shady Grove Ct, Wylie, TX 75098',false,69,1),
+('Martha Graham & Larry Graham','Martha Graham',null,null,'185 Prospect Place, Brooklyn, NY 11238',false,70,0),
+('Martha Graham & Larry Graham','Larry Graham',null,null,'185 Prospect Place, Brooklyn, NY 11238',false,70,1),
+('Martha Wikert','Martha Wikert',null,null,'1415 N 132nd Avenue Circle Omaha, NE 68154',true,71,0),
+('Mary Delaware & Jamie Walsh','Mary Delaware',null,null,'423 Beech St, Rolindale, MA 02131',false,72,0),
+('Mary Delaware & Jamie Walsh','Jamie Walsh',null,null,'423 Beech St, Rolindale, MA 02131',false,72,1),
+('Matthew Horton','Matthew Horton',null,'(214) 557-5341','405 S. Clinton Ave Dallas TX 75208',true,73,0),
+('Max Ary','Max Ary',null,'(214) 668-9638','2671 24th Ave, San Francisco CA 94116',true,74,0),
+('Meg Christensen & Cecil Christensen','Meg Christensen',null,null,'4524 Peralta Ln Austin TX 78735',false,75,0),
+('Meg Christensen & Cecil Christensen','Cecil Christensen',null,null,'4524 Peralta Ln Austin TX 78735',false,75,1),
+('Michael Brown & Elizabeth Brown','Michael Brown','miketbrown@verizon.net','(972) 355-9989','601 Horizon Way Northlake TX 76247',false,76,0),
+('Michael Brown & Elizabeth Brown','Elizabeth Brown','miketbrown@verizon.net','(972) 355-9989','601 Horizon Way Northlake TX 76247',false,76,1),
+('Mike Essien & Nimi Oyeleye','Mike Essien',null,null,'1803 W Thomas St APT 6 Chicago, IL 60622',false,77,0),
+('Mike Essien & Nimi Oyeleye','Nimi Essien',null,null,'1803 W Thomas St APT 6 Chicago, IL 60622',false,77,1),
+('Miranda Raiford','Miranda Raiford',null,'+1 (516) 424-7346','10 Chestnut Ave, Floral Park, NY 11001',true,78,0),
+('Morgan Youskevetch & Pat Gira','Morgan Youskevetch',null,null,'4044 George St, Chicago, IL 60641',false,79,0),
+('Morgan Youskevetch & Pat Gira','Pat Gira',null,null,'4044 George St, Chicago, IL 60641',false,79,1),
+('Nathan Houk','Nathan Houk',null,'+1 (469) 647-1491','2707 Pismo Beach, Converse TX 78109',true,80,0),
+('Nick Ramirez','Nick Ramirez',null,null,'1823 W 24th St Houston, TX 77008',true,81,0),
+('Noah Newman','Noah Newman',null,'+18476243312','431 w Barry Ave, unit 222 Chicago Il, 60657',true,82,0),
+('Patrick Gell','Patrick Gell',null,'+14027407961','2453 N Mozart St #1 Chicago, IL 60647',true,83,0),
+('Patrick Roberts & Bailee Kirkner','Patrick Roberts',null,null,'4123 s 147th plz apt 202 omaha, ne 68137',false,84,0),
+('Patrick Roberts & Bailee Kirkner','Bailee Kirkner',null,null,'4123 s 147th plz apt 202 omaha, ne 68137',false,84,1),
+('Peter Michalski & Kelley Michalski','Peter Michalski',null,'+14698676519','2721 Princeton Dr, Flower Mound TX 75022',false,85,0),
+('Peter Michalski & Kelley Michalski','Kelley Michalski',null,'+14698676519','2721 Princeton Dr, Flower Mound TX 75022',false,85,1),
+('Peter Graham','Peter Graham',null,null,'24 Crafts Ave, Apt 1, Northampton, MA 01060',true,86,0),
+('Peter Mungigurra & Bailey Mungigurra','Peter Mungigurra',null,null,'1809 Buzzard Rd Denton TX 76205',false,87,0),
+('Peter Mungigurra & Bailey Mungigurra','Bailey Mungigurra',null,null,'1809 Buzzard Rd Denton TX 76205',false,87,1),
+('Rachel Galey & Brennan Galey','Rachel Galey',null,null,'3740 hickory ave, Baltimore md 21211',false,88,0),
+('Rachel Galey & Brennan Galey','Brennan Galey',null,null,'3740 hickory ave, Baltimore md 21211',false,88,1),
+('Reid Michalski & Katelyn Michalski','Reid Michalski',null,null,'10533 Aledo Drive Dallas TX 75228',false,89,0),
+('Reid Michalski & Katelyn Michalski','Katelyn Michalski',null,null,'10533 Aledo Drive Dallas TX 75228',false,89,1),
+('Riley Appleyard','Riley Appleyard','riley.appleyard@icloud.com','(405) 315-7311','3148 Lyon Blvd Oklahoma City, Oklahoma 73112',true,90,0),
+('Riley Michalski & Allie Michalski','Riley Michalski',null,'+19728040139','2401 Blackrail Ct. Argyle, TX 76226',false,91,0),
+('Riley Michalski & Allie Michalski','Allie Michalski',null,'+19728040139','2401 Blackrail Ct. Argyle, TX 76226',false,91,1),
+('Robert Beattie & Joan Beattie','Robert Beattie',null,null,'4577 Sperryville Pike, Woodville, VA 22746',false,92,0),
+('Robert Beattie & Joan Beattie','Joan Beattie',null,null,'4577 Sperryville Pike, Woodville, VA 22746',false,92,1),
+('Bride and Groom','Robin Beattie','robinb.0021@gmail.com','+1 (281) 731-6464','2083 N Stave St #2 Chicago, IL 60647 | This is Us',false,93,0),
+('Bride and Groom','Andrew Horton','robinb.0021@gmail.com','+1 (281) 731-6464','2083 N Stave St #2 Chicago, IL 60647 | This is Us',false,93,1),
+('Ryan Dockman & Abbey Wegner','Ryan Dockman',null,'+12165443011','2337 N Albany 2 Chicago IL 60647',false,94,0),
+('Ryan Dockman & Abbey Wegner','Abbey Wegner',null,'+12165443011','2337 N Albany 2 Chicago IL 60647',false,94,1),
+('Ryan Murphy & Maria Rodriguez','Ryan Murphy',null,null,'20800 Homestead Road, Apt 26A, Cupertino CA 95014',false,95,0),
+('Ryan Murphy & Maria Rodriguez','Maria Rodriguez',null,null,'20800 Homestead Road, Apt 26A, Cupertino CA 95014',false,95,1),
+('Samantha Maiorana','Samantha Maiorana',null,null,'515 W Wrightwood Ave Apt 506 Chicago, IL 60614',true,96,0),
+('Sammy Smith','Sammy Smith',null,null,'4242 N Sheridan Rd APT 207 Chicago IL, 60613',true,97,0),
+('Jenna Zelkowski','Jenna Zelkowski',null,null,'1422 west edgewater ave #3 Chicago, IL 60660',true,98,0),
+('Sanchit Ram Arvind','Sanchit Ram Arvind',null,null,'34628 Nettles Ct, Freemont, CA 36528',true,99,0),
+('Sandra Gonzalez','Sandra Gonzalez',null,null,'1003 W Oakdale Ave, Apt #2, Chicago, IL 60657',true,100,0),
+('Sarah Severes & John Policky','Sarah Severes',null,'+14029951458','11436 Gertrude plz # 307 La Vista NE 68128',false,101,0),
+('Sarah Severes & John Policky','John Policky',null,'+14029951458','11436 Gertrude plz # 307 La Vista NE 68128',false,101,1),
+('Scott Gustafson & Katie Gustafson','Scott Gustafson',null,null,'38 N. Greenvine Circle, The Woodlands, TX 77382',false,102,0),
+('Scott Gustafson & Katie Gustafson','Katie Gustafson',null,null,'38 N. Greenvine Circle, The Woodlands, TX 77382',false,102,1),
+('Sharon Bryden','Sharon Bryden',null,null,'50 Beethoven St, Binghamton, NY 13905',true,103,0),
+('Spencer Katterhagen & Sophia Bullard','Spencer Katterhagen',null,null,'2101 11th St NW, Apt 205, Washington, DC 20001',false,104,0),
+('Spencer Katterhagen & Sophia Bullard','Sophia Bullard',null,null,'2101 11th St NW, Apt 205, Washington, DC 20001',false,104,1),
+('Stanley Beattie','Stanley Beattie',null,null,'41120 Fox Run Rd, Apartment MG 507, Novi, MI 48337',true,105,0),
+('Stephanie Szlosek','Stephanie Szlosek',null,null,'714 Liberty St Apt 2631 Dallas, TX 75204',true,106,0),
+('Steve Evers & Susan Evers','Steve Evers',null,null,'6912 Beth Ave. Papillion NE 68133',false,107,0),
+('Steve Evers & Susan Evers','Susan Evers',null,null,'6912 Beth Ave. Papillion NE 68133',false,107,1),
+('Steven Johnson & Stacie Johnson','Steven Johnson',null,null,'2721 Stanford Dr Flower Mound TX 75022',false,108,0),
+('Steven Johnson & Stacie Johnson','Stacie Johnson',null,null,'2721 Stanford Dr Flower Mound TX 75022',false,108,1),
+('Suman Upreti & Conchita Upreti','Suman Upreti',null,null,'1033 Williams Ln Copper Canyon, TX 75077',false,109,0),
+('Suman Upreti & Conchita Upreti','Conchita Upreti',null,null,'1033 Williams Ln Copper Canyon, TX 75077',false,109,1),
+('Susan Gell-Horton','Susan Gell-Horton','gellhorton@gmail.com',null,'4529 S 217th Street Elkhorn NE 68022',true,110,0),
+('Ted Henderson & Betty Henderson','Ted Henderson',null,null,'4622 225th Ave SE, Sammamish, WA 98075',false,111,0),
+('Ted Henderson & Betty Henderson','Betty Henderson',null,null,'4622 225th Ave SE, Sammamish, WA 98075',false,111,1),
+('Thomas Borgman & Kathryn Codi','Thomas Borgman',null,null,'4545 Mission Ave, Frisco, Texas 75034',false,112,0),
+('Thomas Borgman & Kathryn Codi','Kathryn Cody',null,null,'4545 Mission Ave, Frisco, Texas 75034',false,112,1),
+('Thomas Whittington','Thomas Whittington',null,'(972) 922-8186','15735 Quorum Dr Apt 4324 Addison, TX 75001',true,113,0),
+('Timothy Horton & Michelle Horton','Timothy Horton',null,null,'1016 Bluebell Brook St Henderson NV 89052',false,114,0),
+('Timothy Horton & Michelle Horton','Michelle Horton',null,null,'1016 Bluebell Brook St Henderson NV 89052',false,114,1),
+('Thomas Gell & Karen Gell','Thomas Gell',null,'+19136260114','4130 W. 95th St, #110, Prairie Village KS 66207',false,115,0),
+('Thomas Gell & Karen Gell','Karen Gell',null,'+19136260114','4130 W. 95th St, #110, Prairie Village KS 66207',false,115,1),
+('Zach Ruther','Zach Ruther',null,'+1 (972) 953-5212','941 Bressler Lane Victor, ID 83455',true,116,0)
+),
+ins as (
+  insert into public.households (name,email,phone,notes,plus_one_allowed)
+  select distinct on (ho) hh, email, phone, notes, plus_one from raw order by ho
+  returning id, name
+)
+insert into public.guests (household_id,name)
+select ins.id, raw.guest from raw join ins on ins.name=raw.hh order by raw.ho, raw.go;
+commit;

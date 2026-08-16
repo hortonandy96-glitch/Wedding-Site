@@ -69,25 +69,35 @@ window.SITE_CONTENT = {
   ],
 
   /* ---- Registry links (Registry section) ----
-     PLACEHOLDERS: swap example.com URLs for your real registry pages. */
+     All three cards point at the real Zola registry (one page holds the
+     gifts, the honeymoon fund, and the naming-rights joke fund). To deep-link
+     a card to a specific fund later, replace its `url`. `cta` is the button
+     wording; `initials` accepts letters or an emoji. */
   registries: [
     {
-      store: "Bed + Bath",
-      initials: "BB",
-      url: "https://example.com/registry/bed-and-bath",
-      note: "For the home we're building together (mostly cookware, honestly).",
+      store: "Buy Us Something",
+      initials: "🎁",
+      url: "https://www.zola.com/registry/andyandrobin2027",
+      note: "Pick something off our registry — for the home we're building together.",
+      cta: "Shop our registry →",
     },
     {
       store: "Honeymoon Fund",
-      initials: "HF",
-      url: "https://example.com/registry/honeymoon",
-      note: "Help send us somewhere warm with questionable Wi-Fi.",
+      initials: "✈️",
+      url: "https://www.zola.com/registry/andyandrobin2027",
+      note: "Or chip in on the honeymoon and send us somewhere warm with questionable Wi-Fi.",
+      cta: "Contribute →",
     },
     {
-      store: "Charity: One Tail at a Time",
-      initials: "🐾",
-      url: "https://example.com/registry/charity",
-      note: "In lieu of gifts, support Chicago shelter dogs in our names.",
+      /* The joke item. Clicking it opens the "naming-rights agreement"
+         dialog (see index.html) before sending anyone to the payment link. */
+      store: "Naming Rights: Our Firstborn",
+      initials: "👶",
+      price: "$100,000",
+      url: "https://www.zola.com/registry/andyandrobin2027",
+      note: "One (1) opportunity to name our first child. Serious inquiries only. Agreement required.",
+      cta: "Inquire →",
+      joke: true,
     },
   ],
 

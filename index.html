@@ -237,7 +237,8 @@
     <section class="section section-green" id="registry" aria-labelledby="registry-heading">
       <h2 id="registry-heading">Registry</h2>
       <p class="section-intro">
-        Your company is the real gift. If you'd like to spoil us anyway, here's where we're registered.
+        Your company is the real gift. If you'd like to spoil us anyway, you can
+        pick something off our registry or chip in on the honeymoon.
       </p>
       <div class="registry-grid" id="registry-grid">
         <!-- Registry cards render here from js/content.js -->
@@ -279,6 +280,39 @@
     </div>
     <p class="footer-credit">Made with love (and a little code) in Chicago.</p>
   </footer>
+
+  <!-- ============ NAMING-RIGHTS "AGREEMENT" (joke registry item) ======== -->
+  <dialog id="naming-rights-dialog" aria-labelledby="nr-title">
+    <form id="naming-rights-form" method="dialog">
+      <h2 id="nr-title">Official* Naming-Rights Agreement</h2>
+      <p class="nr-sub">*Not official. Not a contract. Not anything, really.</p>
+      <p>You are inquiring about contributing <strong>$100,000</strong> toward
+        the naming rights of Robin &amp; Andy's firstborn child. Before
+        proceeding, the undersigned solemnly acknowledges:</p>
+      <label class="nr-check">
+        <input type="checkbox" id="nr-ack-joke" />
+        <span>This is <strong>a joke</strong>. I will receive <strong>no naming
+        rights</strong> — nor rights of any other kind — now or ever,
+        regardless of any amount given.</span>
+      </label>
+      <label class="nr-check">
+        <input type="checkbox" id="nr-ack-refund" />
+        <span>Anything I give is a <strong>gift</strong> and will
+        <strong>not be refunded</strong>. Not even a little.</span>
+      </label>
+      <p>I further acknowledge that I am nonetheless genuinely welcome —
+        encouraged, even — to give Robin &amp; Andy the money.</p>
+      <div class="form-row">
+        <label for="nr-signature">Signature (type your full name)</label>
+        <input type="text" id="nr-signature" autocomplete="name" placeholder="e.g. A. Very Generous Guest" />
+      </div>
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary" id="nr-agree" disabled>I agree — take my money →</button>
+        <button type="button" class="btn btn-ghost" id="nr-cancel">On second thought…</button>
+      </div>
+      <p class="nr-fine">This document is legally binding in zero (0) jurisdictions.</p>
+    </form>
+  </dialog>
 
   <!-- Plain scripts (no build step) loaded in dependency order -->
   <script src="js/content.js"></script>

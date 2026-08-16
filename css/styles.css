@@ -512,9 +512,57 @@ input[type="text"], input[type="email"], select, textarea {
 .registry-card p { color: var(--burgundy); }
 .registry-go { font-style: italic; color: var(--burgundy); }
 
-@media (min-width: 760px) {
-  .registry-grid { grid-template-columns: repeat(3, 1fr); }
+/* The joke card is a <button>; make it look identical to the link cards */
+.registry-joke {
+  font: inherit;
+  cursor: pointer;
+  width: 100%;
 }
+.registry-price {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  color: var(--burgundy);
+  letter-spacing: 0.04em;
+}
+
+@media (min-width: 760px) {
+  .registry-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+/* ---------- naming-rights "agreement" dialog ---------- */
+
+dialog {
+  border: 2px solid var(--ink);
+  border-radius: var(--radius);
+  background: #fffdf2;
+  color: var(--ink);
+  width: min(520px, 92vw);
+  padding: 1.4rem;
+}
+dialog::backdrop { background: rgba(17, 48, 31, 0.55); }
+
+#naming-rights-dialog h2 { margin-top: 0; font-size: 1.45rem; }
+.nr-sub { font-style: italic; margin-top: -0.4rem; opacity: 0.75; }
+.nr-check {
+  display: flex; gap: 0.6rem; align-items: flex-start;
+  margin: 0.7rem 0;
+  cursor: pointer;
+}
+.nr-check input {
+  width: 1.2rem; height: 1.2rem;
+  margin-top: 0.25rem; flex-shrink: 0;
+  accent-color: var(--burgundy);
+}
+#naming-rights-dialog .form-row { display: flex; flex-direction: column; margin: 1rem 0; }
+#naming-rights-dialog input[type="text"] {
+  font: inherit; font-style: italic;
+  color: var(--ink); background: var(--cream);
+  border: 2px solid var(--ink); border-radius: 6px;
+  padding: 0.55rem 0.75rem;
+}
+#naming-rights-dialog .form-actions { display: flex; flex-wrap: wrap; gap: 0.8rem; }
+#nr-agree:disabled { opacity: 0.45; cursor: not-allowed; transform: none; }
+.nr-fine { font-size: 0.85rem; font-style: italic; opacity: 0.7; margin-bottom: 0; }
 
 /* ---------- FAQ accordion ---------- */
 
