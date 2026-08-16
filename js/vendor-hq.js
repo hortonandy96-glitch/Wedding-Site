@@ -13,12 +13,12 @@
    ========================================================================= */
 
 window.VENDOR_HQ = {
-  updated: "August 2, 2026 — 3 photographers confirmed available; Palmer House hotel offer in hand (expires Aug 3); Engine proposals now flowing; Kimpton Gray declined",
+  updated: "August 16, 2026 — caterer signed & deposit paid; Engine room block fully executed; photographer decision due Friday Aug 21 (Afterglow quote expires Aug 17); after-party quote in hand",
   summary: [
-    { n: "2", label: "Vendors fully locked (signed + deposit paid)" },
-    { n: "3", label: "Photographers replied — all 3 confirmed available for your date" },
-    { n: "$2,000", label: "Caterer deposit on hold until the contract is signed (Matt back Mon)" },
-    { n: "Palmer House", label: "Hotel offer in hand — $329 rate expires Aug 3" },
+    { n: "3", label: "Vendors fully locked (signed + deposit paid)" },
+    { n: "20 rooms", label: "Room block signed — Engine LOI fully executed Aug 16" },
+    { n: "Aug 17", label: "Afterglow photography quote expires — tomorrow" },
+    { n: "Aug 21", label: "Your self-set deadline to pick a photographer" },
   ],
   vendors: [
     {
@@ -32,44 +32,44 @@ window.VENDOR_HQ = {
       flag: "",
     },
     {
-      status: "green",
+      status: "yellow",
       name: "Elegante Weddings & Events", who: "Lisa Jaroscak", category: "Coordinator",
       contract: "Signed", contractClass: "green",
       deposit: "Paid", depositClass: "green",
       balance: "Per agreement",
       last: "Jul 16, 2026", court: "You",
-      action: "Send Lisa your guest list + signed vendor contracts she's expecting",
+      action: "Send Lisa the guest list + the now-signed Catered by Design contract she's been waiting on",
+      flag: "You owe her",
+    },
+    {
+      status: "green",
+      name: "Catered by Design", who: "Matt Grosso", category: "Caterer — BOOKED",
+      contract: "Signed Aug 3", contractClass: "green",
+      deposit: "$2,000 paid Aug 2", depositClass: "green",
+      balance: "Full catering balance TBD",
+      last: "Aug 3, 2026", court: "—",
+      action: "Done for now — send a copy to Lisa, then ask Matt about tasting + menu timeline",
       flag: "",
     },
     {
-      status: "yellow",
-      name: "Catered by Design", who: "Matt / Nicole / Accounting", category: "Caterer (leading)",
-      contract: "Requested", contractClass: "yellow",
-      deposit: "$2,000 — hold until signed", depositClass: "yellow",
-      balance: "Full catering TBD",
-      last: "Jul 28, 2026 (auto-reply; Matt back Jul 27)", court: "Them",
-      action: "Waiting on the contract — follow up now that Matt's back, then sign & pay the deposit",
-      flag: "Awaiting contract",
-    },
-    {
       status: "red",
-      name: "Lula Cafe", who: "Anna Heerwagen", category: "Caterer (alternative)",
-      contract: "Not sent", contractClass: "grey",
-      deposit: "Not yet due", depositClass: "grey",
-      balance: "Proposal on file",
-      last: "Jul 1, 2026", court: "You",
-      action: "Reply to Anna — book a tasting or politely pass (silent 32 days)",
-      flag: "Going cold",
+      name: "Afterglow Studio", who: "Hanako", category: "Photographer",
+      contract: "Quote #1046 issued", contractClass: "yellow",
+      deposit: "—", depositClass: "grey",
+      balance: "Quote expires Aug 17, 2026",
+      last: "Aug 16, 2026 (you)", court: "You",
+      action: "Quote expires TOMORROW but you told her you'd decide Friday — ask her to extend the soft hold to Aug 21",
+      flag: "Expires tomorrow",
     },
     {
       status: "yellow",
-      name: "Afterglow Studio", who: "Hanako", category: "Photographer",
+      name: "Genuinely Jo Photography", who: "Jordan McDonnell", category: "Photographer",
       contract: "Not sent", contractClass: "grey",
       deposit: "—", depositClass: "grey",
-      balance: "Pricing guide sent",
-      last: "Jul 27, 2026", court: "You",
-      action: "Confirmed available 5/21/27 & loves Salvage One. Review her pricing guide + book the intro call she offered",
-      flag: "Available",
+      balance: "2027 Wedding Handbook sent",
+      last: "Aug 3, 2026", court: "Scheduled",
+      action: "Discovery call booked Wed Aug 19, 5:00pm CDT — this is the last of the three",
+      flag: "Call Aug 19",
     },
     {
       status: "yellow",
@@ -77,23 +77,23 @@ window.VENDOR_HQ = {
       contract: "Not sent", contractClass: "grey",
       deposit: "—", depositClass: "grey",
       balance: "Package guide sent",
-      last: "Jul 27, 2026", court: "You",
-      action: "Confirmed available & sent 2 sample galleries + package guide. Review and reply",
-      flag: "Available",
+      last: "Aug 2, 2026", court: "You",
+      action: "Call happened Wed Aug 5 — no follow-up since. Include her in Friday's decision and reply either way",
+      flag: "Silent 14 days",
     },
     {
       status: "yellow",
-      name: "Genuinely Jo Photography", who: "Jordan McDonnell", category: "Photographer",
+      name: "Friends of Friends", who: "Abe Vucekovich", category: "After-party bar",
       contract: "Not sent", contractClass: "grey",
       deposit: "—", depositClass: "grey",
-      balance: "2027 Wedding Handbook",
-      last: "Jul 29, 2026", court: "You",
-      action: "Confirmed available 5/21/27. Sent handbook + offers a free engagement session & discovery call. Review and book the call",
-      flag: "Available",
+      balance: "~$7,500 all-in (full buyout)",
+      last: "Aug 9, 2026", court: "You",
+      action: "Abe confirmed $6k + 25% gratuity ≈ $7,500 for 11pm–2am. You said you'd discuss with Robin — decide or ask to hold",
+      flag: "Silent 7 days",
     },
     {
       status: "yellow",
-      name: "Florist · DJ/Band · Hair & Makeup · Cake · Rentals", who: "", category: "Not started",
+      name: "Florist · Hair & Makeup · Cake · Rentals", who: "", category: "Not started",
       contract: "—", contractClass: "grey",
       deposit: "—", depositClass: "grey",
       balance: "—",
@@ -103,64 +103,73 @@ window.VENDOR_HQ = {
     },
   ],
   dormant:
-    "Dormant / closed catering bids on file: True Cuisine–SBR (quote expired Mar 12), " +
-    "Beyond Catering, J&L / JFOD, Maison Cuisine, Cocina Fusion, Blue Plate. " +
-    "Declined: The Wellsley (Boka). Alt venue closed: Ignite Glass Studios. " +
-    "Hotel declined: Kimpton Gray (citywide event on your dates — no reply planned).",
+    "Closed since the last refresh: Lula Cafe (you passed Aug 2, kindly), Palmer House Hilton " +
+    "(you declined Aug 2 in favour of the Engine block; Jordan acknowledged Aug 3), and Kimpton Gray " +
+    "(declined — citywide event on your dates). Older dormant catering bids: True Cuisine–SBR (quote expired Mar 12), " +
+    "Beyond Catering, J&L / JFOD, Maison Cuisine, Cocina Fusion, Blue Plate. Declined: The Wellsley (Boka). " +
+    "Alt venue closed: Ignite Glass Studios.",
   actions: [
     {
       level: "red",
-      title: "1 · Reply to Lula Cafe before the lead goes cold",
-      note: "Anna has been waiting since Jul 1. Decide: tasting, or a polite pass.",
+      title: "1 · Ask Afterglow to extend the quote past Friday",
+      note: "Hanako's Quote #1046 expires Aug 17 (tomorrow) and her soft hold on 5/21/27 goes with it. You told her on Aug 16 you'd decide by Friday Aug 21 — but you didn't ask her to extend the quote, so those two dates collide. One short email fixes it.",
       draft:
-        "Hi Anna, so sorry for the slow reply — planning caught up with us! We loved the " +
-        "proposal and would like to come in for a tasting. Are any of your Tuesday–Thursday " +
-        "slots open in the next couple of weeks? Also, roughly what would the all-in per-head " +
-        "land at for ~180 guests at Salvage One? Thanks so much! — Andy & Robin",
+        "Hi Hanako, thanks again for your patience! I realised your proposal expires tomorrow (Aug 17), " +
+        "but our last photographer call is Wednesday and we're deciding Friday the 21st. " +
+        "Would you be able to extend the quote and the soft hold through Friday? " +
+        "We don't want the date to slip just on timing. Thanks so much! — Andy & Robin",
     },
     {
       level: "yellow",
-      title: "2 · Decide on Palmer House before Aug 3",
-      note: "Palmer House Hilton replied with a real offer: 19 rooms at $329/night (+ 1 suite at $659) for Thu 5/20–Sun 5/23/27, as a courtesy block with no financial liability on you (3-night minimum). The rate is only held through Aug 3, so reply to Jordan Samson to accept, ask a question, or request an extension. Kimpton Gray declined (citywide event) and needs no reply.",
+      title: "2 · Genuinely Jo discovery call — Wed Aug 19, 5:00pm CDT",
+      note: "Your third and final photographer conversation. Worth having your questions ready: total coverage hours, second shooter, engagement session (she offered one free), delivery timeline, and what the all-in number actually is versus Afterglow and Allie.",
       draft: "",
     },
     {
       level: "yellow",
-      title: "3 · Compare your three available photographers",
-      note: "All three confirmed 5/21/27 is open and each has the ball in your court: Afterglow Studio (Hanako) sent a pricing guide + intro-call link, Allie Idrac sent a package guide + two sample galleries, and Genuinely Jo (Jordan McDonnell) sent her 2027 Wedding Handbook plus a free engagement session and discovery call offer. Compare against budget and book a call with your favorite.",
+      title: "3 · Decide the photographer by Friday Aug 21",
+      note: "All three are available and all three are now waiting on you: Afterglow (call done Aug 3, quote live), Allie Idrac (call done Aug 5, silent 14 days), Genuinely Jo (call Aug 19). Whoever you pick, send the other two a short no — they've all been quick and kind with you.",
       draft: "",
     },
     {
       level: "yellow",
-      title: "4 · Follow up with Catered by Design",
-      note: "You've asked for the full contract before paying the $2,000 deposit — good. Matt was out until Jul 27, so nudge him this week, then sign and pay.",
+      title: "4 · Send Lisa the guest list and the signed catering contract",
+      note: "This has been on the list since July 16 and is now easier: the Catered by Design contract was fully signed Aug 3, so you can send it along with the guest list. Clearing this lets your coordinator actually start coordinating.",
       draft: "",
     },
     {
       level: "yellow",
-      title: "5 · Send Elegante what Lisa is waiting on",
-      note: "You're booked with Lisa; she's expecting your guest list and copies of signed vendor contracts to start coordinating. Not urgent, but clears the ball out of your court.",
+      title: "5 · Two DJ decisions are sitting open",
+      note: "Hot Mix (Scott) quoted $3,500 + $1,295 booth + $550 ceremony on Jul 27 and has heard nothing for 20 days. Groove is in the Heart quoted $2,450 flat all-in on Aug 10 — cheaper, includes ceremony and mics, no photo booth (they recommend GlitterGuts) — and offered a call with DJ Clare. That quote is good for 30 days, so roughly Sep 9.",
+      draft: "",
+    },
+    {
+      level: "yellow",
+      title: "6 · Friends of Friends after-party — $7,500 confirmed",
+      note: "Abe confirmed on Aug 9 that $6k + tax + 25% auto-gratuity ≈ $7,500 buys the full bar 11pm–2am. He won't do a cash bar. You said you'd talk it over with Robin and haven't replied in 7 days; he also warned that late semi-private bookings are hard in patio season.",
       draft: "",
     },
   ],
   risks: [
-    { head: "Palmer House — the offer expires Aug 3.", body: "A no-liability courtesy block at $329/night is a strong result; if you like it, reply before the rate lapses or ask Jordan to extend it." },
-    { head: "Catered by Design — waiting on the contract.", body: "You've rightly held the $2,000 deposit until you can sign a full contract; Matt is back from leave, so keep this warm and close it out this week." },
-    { head: "Lula Cafe — your best alternative is cooling.", body: "They've waited 32 days for a reply; warm caterers move on and you lose both a great option and negotiating leverage." },
+    { head: "Afterglow's quote expires tomorrow — and with it the soft hold on your date.", body: "You've already told her you're deciding Friday, so this is purely an admin mismatch. Ask for the extension today rather than letting a photographer you like lapse on a technicality." },
+    { head: "Hot Mix has been waiting 20 days for a reply.", body: "Scott turned around a quote in under 48 hours and has heard nothing since Jul 27. He was your front-runner on skill; either re-engage or let him go, but don't leave him hanging while you weigh the cheaper Groove quote." },
+    { head: "Allie Idrac has gone quiet for 14 days after her call.", body: "The Aug 5 call happened and neither side followed up. If she's still a contender, say so before Friday; a silent fortnight after a good call reads as a no." },
   ],
   hotels: [
-    { name: "Palmer House Hilton", area: "The Loop", rate: "$329 (suite $659) + tax/fees", status: "Offer received", statusClass: "green", contact: "Jordan Samson · Jordan.Samson@hilton.com", note: "Courtesy block, no liability, 3-night min. Reply to accept — rate held through Aug 3" },
-    { name: "Hyatt House West Loop", area: "Fulton Mkt (closest to venue)", rate: "~$180–250", status: "Needs recipient", statusClass: "red", contact: "group sales 1-800-906-2871", note: "Draft ready; get sales email, then send (Engine hasn't sourced this one)" },
-    { name: "Westin River North", area: "River North", rate: "from $312 (via Engine)", status: "Engine proposal", statusClass: "yellow", contact: "Engine account HE-258133", note: "Engine already sourced this — review in Engine; manual draft likely redundant. Expires Aug 13" },
-    { name: "Crowne Plaza West Loop", area: "Greektown", rate: "from $259 (via Engine)", status: "Engine proposal", statusClass: "yellow", contact: "Engine account HE-258133", note: "Engine already sourced this — review in Engine; expires Aug 3" },
+    { name: "Hotel Chicago Downtown, Autograph Collection", area: "River North (via Engine)", rate: "Per executed LOI", status: "SIGNED Aug 16", statusClass: "green", contact: "Peter Fanous · Engine HE-261848", note: "LOI fully executed Aug 16 via Conga Sign — 20 rooms, Thu 5/20–Sun 5/23/27. Executed PDF is in your inbox; file it and send a copy to Lisa" },
+    { name: "Second block — sourcing", area: "Chicago", rate: "Max $291/night requested", status: "Request submitted Aug 16", statusClass: "yellow", contact: "Engine (new request)", note: "You submitted a fresh Engine request Aug 16 for 40 double rooms, 3 stars or above, 5/20–5/23/27. Proposals expected within 4–6 hours — review as they land" },
+    { name: "Palmer House Hilton", area: "The Loop", rate: "$329 (suite $659)", status: "You declined", statusClass: "grey", contact: "Jordan Samson · Hilton", note: "Declined Aug 2 in favour of the Engine block; Jordan acknowledged Aug 3. Closed — no action" },
+    { name: "Kimpton Gray", area: "The Loop", rate: "—", status: "They declined", statusClass: "grey", contact: "Corey Jones", note: "Citywide event on your dates. You closed the loop Aug 2. No action" },
   ],
   hotelsNote:
-    "Engine (Groups) — account is now finished and proposals are flowing (rep: Peter Fanous, account HE-258133). " +
-    "Received so far: Hotel Chicago Downtown/Autograph (from $199), Crowne Plaza West Loop ($259), Royal Sonesta River North ($269), " +
-    "Westin River North ($312), The Gwen ($339), Godfrey ($399). Several expire Aug 3–4 — review at engine.com. " +
-    "Kimpton Gray removed: declined due to a citywide event on your dates (offered sister properties voco Downtown / InterContinental Mag Mile); you're not replying.",
+    "Engine (Groups), rep Peter Fanous. The original account HE-258133 has been superseded by HE-261848. " +
+    "Note the date fix: the first request went in as 5/27–5/30/27 and was corrected to 5/20–5/23/27 on Aug 3 — worth double-checking " +
+    "the executed LOI shows the right dates. Accepting one Engine proposal closes the others, which is why the second block " +
+    "is a separate request. Proposals seen and now lapsed: Crowne Plaza West Loop ($259), Royal Sonesta River North ($269), " +
+    "Residence Inn Loop ($304), Westin River North ($312), Godfrey ($329), Marriott Mag Mile ($468), The Gwen ($748–763).",
   djs: [
-    { name: "Hot Mix Entertainment", frontrunner: true, skill: "Live mixing (Hot Mix 5 pedigree)", rate: "$3,500 DJ + $1,295 photo booth + $550 ceremony", status: "Quoted — your reply due", statusClass: "yellow", contact: "scott@hotmixentertainment.com", next: "Scott confirmed available & sent pricing 7/27. Decide on photo booth / ceremony add-ons and reply" },
+    { name: "Groove is in the Heart", frontrunner: true, skill: "DJ Clare — full service, ceremony included", rate: "$2,450 flat (6 hrs; +$200 per extra 30 min)", status: "Quoted Aug 10 — your reply due", statusClass: "yellow", contact: "info@grooveisintheheartdjs.com", next: "Best value: flat fee covers ceremony services, wireless mics and extra speakers. No photo booth (they recommend GlitterGuts). Offered a Zoom/phone meet with Clare — quote valid ~30 days, so about Sep 9" },
+    { name: "Hot Mix Entertainment", skill: "Live mixing (Hot Mix 5 pedigree)", rate: "$3,500 DJ + $1,295 photo booth + $550 ceremony", status: "Silent 20 days — you owe a reply", statusClass: "red", contact: "scott@hotmixentertainment.com", next: "Scott quoted Jul 27 and has heard nothing since. Comparable scope is $4,050 vs Groove's $2,450 — re-engage or send a polite pass" },
     { name: "Toast & Jam", skill: "Curator / seamless transitions", rate: "from ~$2,850", status: "Email bounced", statusClass: "red", contact: "info@toastandjamdjs.com (invalid)", next: "Address not found — find a working email or contact form on their site" },
     { name: "Love Ent by Milk Majer", skill: "Open-format touring artist", rate: "~$1,995+", status: "Needs recipient", statusClass: "red", contact: "773-206-8513 / loveentweddings.com", next: "Get email from site, then send" },
     { name: "DJ-Chicago", skill: "Seamless mixes + song edits", rate: "$$ (reasonable)", status: "Needs recipient", statusClass: "red", contact: "dj-chicago.com contact form", next: "Submit form; ask who's assigned + a mix demo" },
@@ -168,7 +177,9 @@ window.VENDOR_HQ = {
   ],
   djsNote:
     "Budget ~$3,500. Priority is real live mixing, not playlist DJs; an enclosed print photobooth is a nice-to-have, not required. " +
-    "Hot Mix (Scott) confirmed available and quoted 7/27. Toast & Jam's email bounced. Milk Majer, DJ-Chicago and Fig Media still need a recipient.",
+    "Two live quotes now: Groove is in the Heart at $2,450 all-in (ceremony included, no booth) and Hot Mix at $3,500 + add-ons. " +
+    "If the photo booth matters, GlitterGuts is the recommended standalone pairing with Groove. Toast & Jam's email bounced; " +
+    "Milk Majer, DJ-Chicago and Fig Media still need a recipient.",
 };
 
 (function () {
