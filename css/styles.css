@@ -340,29 +340,15 @@ address { font-style: normal; margin-bottom: 1rem; }
 .timeline li { padding: 0.25rem 0; border-bottom: 1px dotted var(--green); }
 
 .map-card { padding: 0.6rem; display: flex; flex-direction: column; gap: 0.6rem; }
+/* The venue map fills the card and grows with it. min-height keeps the card
+   from collapsing while the map is still loading; flex:1 lets it stretch to
+   match the taller "Our Day" card next to it on wide screens. */
 .map-card iframe {
-  width: 100%; min-height: 320px; border: 0; border-radius: calc(var(--radius) - 4px);
+  width: 100%; min-height: 380px; flex: 1;
+  border: 0; border-radius: calc(var(--radius) - 4px);
+  background: var(--cream);
 }
 .map-card .btn { align-self: center; }
-
-/* Click-to-load map placeholder — same footprint as the iframe it replaces */
-.map-placeholder {
-  width: 100%; min-height: 320px;
-  border: 2px dashed var(--green);
-  border-radius: calc(var(--radius) - 4px);
-  background: var(--cream);
-  color: var(--ink);
-  cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-}
-.map-placeholder:hover { background: #f3eccf; }
-.map-placeholder-inner { display: flex; flex-direction: column; align-items: center; gap: 0.3rem; }
-.map-pin { font-size: 2rem; }
-.map-placeholder-text {
-  font-family: var(--font-display);
-  font-size: 1.2rem; letter-spacing: 0.06em; text-transform: uppercase;
-}
-.map-placeholder-sub { font-style: italic; font-size: 0.95rem; opacity: 0.8; }
 
 @media (min-width: 760px) {
   .details-grid { grid-template-columns: 1.2fr 1fr; align-items: stretch; }
@@ -481,6 +467,15 @@ input[type="text"], input[type="email"], select, textarea {
   font-size: 1.6rem;
   margin-bottom: 0.2rem;
 }
+/* Small "Budget / Mid-range / Luxury" label above each hotel name. */
+.hotel-tier {
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--burgundy);
+  opacity: 0.8;
+}
+.hotel-card h4 { margin: 0; }
 .hotel-area { font-style: italic; }
 .hotel-rate {
   font-family: var(--font-display);

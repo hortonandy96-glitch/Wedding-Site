@@ -47,43 +47,53 @@ window.SITE_CONTENT = {
   ],
 
   /* ---- Hotels (Travel section) ----
-     One card per room block. These use the same card layout as the registry
-     cards below, so keep them to three.
-     Set `confirmed: true` to drop the "coming soon" badge. Paste the hotel's
-     booking link into `url` when it arrives — the card then shows a real
-     "Book a room" button instead of the `cta` text.
-     `initials` accepts letters or an emoji. */
+     One card per room block, ordered budget → mid → luxury. These use the same
+     card layout as the registry cards below, so keep them to three.
+
+     HOW TO UPDATE A CARD:
+     - `tier`      small label above the name ("Budget", "Mid-range", "Luxury").
+     - `confirmed` true removes the "details coming soon" badge.
+     - `url`       paste the hotel's booking link here when it arrives. The card
+                   then shows a real "Book a room" button instead of the `cta`
+                   text, so leave `url: ""` until you actually have the link.
+     - `cta`       the italic placeholder shown while `url` is empty.
+     - `rate`      nightly rate; leave "" to hide the line.
+     - `initials`  accepts letters or an emoji. */
   hotels: [
     {
+      tier: "Budget",
+      name: "Budget Block — Coming Soon",
+      initials: "🏨",
+      area: "Chicago — neighborhood TBC",
+      rate: "",
+      note: "We're working on a third block at a friendlier nightly rate for anyone who'd rather spend their money on the weekend than the room. Details will land here as soon as it's signed.",
+      url: "",
+      mapQuery: "Chicago, IL",
+      cta: "",
+      confirmed: false,
+    },
+    {
+      tier: "Mid-range",
       name: "Residence Inn Chicago Downtown/Loop",
       initials: "🏨",
       area: "Downtown / The Loop",
       rate: "From $304/night",
-      note: "Our main room block — 20 rooms held for Thursday, May 20 through Sunday, May 23, 2027. Suites come with kitchens, so it works well for families and longer stays.",
-      url: "",            // booking link goes here when the hotel issues it
+      note: "Our main room block — 20 rooms held for Thursday, May 20 through Sunday, May 23, 2027. Suites come with kitchens, so it works well for longer stays.",
+      // Marriott group booking link for our block (received Sept 2026).
+      url: "https://www.marriott.com/event-reservations/reservation-link.mi?id=1787156132238&key=GRP&app=resvlink",
       mapQuery: "Residence Inn Chicago Downtown Loop, Chicago, IL",
       cta: "Booking link coming soon",
       confirmed: true,
     },
     {
-      name: "Hotel Block #2 — Coming Soon",
+      tier: "Luxury",
+      name: "The Gwen — Coming Soon",
       initials: "🏨",
-      area: "West Loop",
+      area: "Streeterville / Michigan Avenue",
       rate: "",
-      note: "We're sourcing a second block closer to the venue, for guests who'd rather walk than ride. Details will appear here.",
+      note: "A smaller block of 10 rooms we're holding at a splurgier address just off the Magnificent Mile. Not confirmed yet — we'll post the rate and booking link the moment it is.",
       url: "",
-      mapQuery: "West Loop, Chicago, IL",
-      cta: "",
-      confirmed: false,
-    },
-    {
-      name: "Hotel Block #3 — Coming Soon",
-      initials: "🏨",
-      area: "River North",
-      rate: "",
-      note: "A third option near the restaurants and the river, for anyone making a proper weekend of it. Details will appear here.",
-      url: "",
-      mapQuery: "River North, Chicago, IL",
+      mapQuery: "The Gwen, a Luxury Collection Hotel, Chicago, IL",
       cta: "",
       confirmed: false,
     },

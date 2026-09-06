@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Suit Mood Board — Andy &amp; the Groomsmen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sorts+Mill+Goudy:ital@0;1&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#faf3da;
+    --pink:#f2c2cf;
+    --burgundy:#5a2434;
+    --green:#5b8c5a;
+    --forest:#11301f;
+    --ink:#1d3a28;
+    --charcoal:#36393d;
+    --font-display:'Sorts Mill Goudy', Georgia, serif;
+    --font-body:'Crimson Pro', Georgia, serif;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--cream); color:var(--ink);
+    font-family:var(--font-body); font-size:18px; line-height:1.55;
+  }
+  .wrap{max-width:1180px; margin:0 auto; padding:0 24px 90px}
+
+  /* ---------- header ---------- */
+  header{
+    background:var(--forest); color:var(--cream);
+    padding:64px 24px 56px; text-align:center;
+  }
+  header .kicker{
+    font-family:var(--font-body); text-transform:uppercase;
+    letter-spacing:.28em; font-size:.72rem; color:var(--pink); margin:0 0 18px;
+  }
+  header h1{
+    font-family:var(--font-display); font-weight:400;
+    font-size:clamp(2.2rem,5vw,3.4rem); margin:0 0 18px; line-height:1.1;
+  }
+  header p{
+    max-width:640px; margin:0 auto; font-size:1.15rem;
+    color:rgba(250,243,218,.86);
+  }
+  .rule{width:70px; height:1px; background:var(--pink); margin:26px auto}
+
+  /* ---------- sections ---------- */
+  section{margin-top:76px}
+  .sec-head{border-top:1px solid rgba(29,58,40,.22); padding-top:22px; margin-bottom:26px}
+  .num{
+    font-family:var(--font-body); letter-spacing:.28em; text-transform:uppercase;
+    font-size:.7rem; color:var(--burgundy); display:block; margin-bottom:8px;
+  }
+  h2{
+    font-family:var(--font-display); font-weight:400;
+    font-size:clamp(1.7rem,3.4vw,2.4rem); margin:0 0 10px; line-height:1.15;
+  }
+  .lede{max-width:680px; margin:0; color:rgba(29,58,40,.85)}
+
+  /* ---------- image grid ---------- */
+  .grid{display:grid; gap:18px; margin-top:30px}
+  .g4{grid-template-columns:repeat(4,1fr)}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .g2{grid-template-columns:repeat(2,1fr)}
+  @media (max-width:860px){ .g4{grid-template-columns:repeat(2,1fr)} .g3{grid-template-columns:repeat(2,1fr)} }
+  @media (max-width:540px){ .g4,.g3,.g2{grid-template-columns:1fr} }
+
+  figure{margin:0; background:#fff; border:1px solid rgba(29,58,40,.14);}
+  figure.tall .ph{aspect-ratio:5/7}
+  figure.wide .ph{aspect-ratio:4/3}
+  figure.sq   .ph{aspect-ratio:1/1}
+  .ph{
+    position:relative; overflow:hidden; background:#e9e3cd;
+    display:block;
+  }
+  .ph img{width:100%; height:100%; object-fit:cover; display:block; transition:transform .5s ease}
+  figure:hover .ph img{transform:scale(1.035)}
+  figcaption{
+    padding:11px 13px 13px; font-size:.9rem; line-height:1.4;
+    color:rgba(29,58,40,.9);
+  }
+  figcaption b{font-weight:600; display:block; font-size:.95rem}
+  figcaption span{color:rgba(29,58,40,.6); font-size:.82rem}
+
+  /* hero image (one big) */
+  .hero-pair{display:grid; grid-template-columns:1.25fr 1fr; gap:18px}
+  @media (max-width:760px){ .hero-pair{grid-template-columns:1fr} }
+
+  /* ---------- yes/no rules ---------- */
+  .rules{display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-top:30px}
+  @media (max-width:860px){ .rules{grid-template-columns:1fr} }
+  .rule-card{
+    background:#fff; border:1px solid rgba(29,58,40,.14); padding:20px 22px;
+  }
+  .rule-card h3{
+    font-family:var(--font-display); font-weight:400; font-size:1.25rem; margin:0 0 12px;
+  }
+  .yes,.no{display:flex; gap:10px; align-items:baseline; margin:8px 0}
+  .tag{
+    font-family:var(--font-body); font-size:.68rem; letter-spacing:.16em;
+    text-transform:uppercase; padding:2px 8px; border-radius:2px; flex:none;
+  }
+  .yes .tag{background:var(--green); color:#fff}
+  .no .tag{background:var(--burgundy); color:var(--pink)}
+  .no span:last-child{color:rgba(29,58,40,.6)}
+
+  /* ---------- palette ---------- */
+  .swatches{display:grid; grid-template-columns:repeat(5,1fr); gap:14px; margin-top:28px}
+  @media (max-width:640px){ .swatches{grid-template-columns:repeat(2,1fr)} }
+  .sw{border:1px solid rgba(29,58,40,.14); background:#fff}
+  .sw .chip{height:96px}
+  .sw p{margin:0; padding:10px 12px 12px; font-size:.85rem; line-height:1.35}
+  .sw p b{display:block; font-weight:600}
+  .sw p span{color:rgba(29,58,40,.6); font-size:.78rem}
+
+  /* ---------- ladder ---------- */
+  .ladder{
+    margin-top:30px; background:var(--forest); color:var(--cream);
+    padding:32px 30px;
+  }
+  .ladder h3{font-family:var(--font-display); font-weight:400; font-size:1.5rem; margin:0 0 6px}
+  .ladder p{margin:0 0 24px; color:rgba(250,243,218,.8); max-width:640px}
+  .steps{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:rgba(250,243,218,.25)}
+  @media (max-width:700px){ .steps{grid-template-columns:1fr} }
+  .step{background:var(--forest); padding:20px 18px}
+  .step em{
+    font-style:normal; font-size:.68rem; letter-spacing:.2em; text-transform:uppercase;
+    color:var(--pink); display:block; margin-bottom:8px;
+  }
+  .step b{font-family:var(--font-display); font-weight:400; font-size:1.15rem; display:block; margin-bottom:6px}
+  .step p{margin:0; font-size:.92rem; color:rgba(250,243,218,.75)}
+
+  footer{
+    margin-top:80px; padding-top:26px; border-top:1px solid rgba(29,58,40,.22);
+    font-size:.86rem; color:rgba(29,58,40,.62);
+  }
+  footer a{color:var(--burgundy)}
+</style>
+</head>
+<body>
+
+<header>
+  <p class="kicker">Robin &amp; Andy &middot; 21 May 2027 &middot; Salvage One</p>
+  <h1>The Suit Plan</h1>
+  <div class="rule"></div>
+  <p>An <em>evening suit</em> — not a full black-tie tuxedo. Inky dark green wool,
+  notch lapel, turndown collar, straight tie. The two groomsmen in charcoal with
+  notch lapels and dark green ties, so they read as a set without pretending to
+  match me.</p>
+</header>
+
+<div class="wrap">
+
+  <!-- 1 -->
+  <section>
+    <div class="sec-head">
+      <span class="num">One</span>
+      <h2>My suit — dark green, notch lapel, matte wool</h2>
+      <p class="lede">The colour I'm after is inky and almost-black in low light — hunter/forest
+      green rather than anything bright or olive. Matte wool, self-faced notch lapel. It reads as
+      formal because of the cut and the darkness, not because of satin.</p>
+    </div>
+
+    <div class="hero-pair">
+      <figure class="tall">
+        <div class="ph"><img loading="lazy" alt="Dark hunter green notch lapel wool suit, front"
+          src="https://gentux.imgix.net/1736461673_Retail2024CoreyGTHunterGreen4094.jpg?fm=jpg&fit=crop&w=900&ar=5:7&auto=format"></div>
+        <figcaption><b>This is the one.</b>
+          <span>Hunter green, 100% Super 130s merino, notch lapel, flat-front trousers. Matte — no shine.</span></figcaption>
+      </figure>
+      <div class="grid g2" style="margin-top:0; grid-template-columns:1fr; gap:18px">
+        <figure class="wide">
+          <div class="ph"><img loading="lazy" alt="Hunter green suit, three-quarter view"
+            src="https://gentux.imgix.net/1784927002_Retail2024CoreyGTHunterGreen40891.jpg?fm=jpg&fit=crop&w=900&ar=4:3&auto=format"></div>
+          <figcaption><b>How the colour behaves in daylight</b>
+            <span>Reads green, but deep. Never lime, never olive.</span></figcaption>
+        </figure>
+        <figure class="wide">
+          <div class="ph"><img loading="lazy" alt="Hunter green suit detail"
+            src="https://gentux.imgix.net/1736461706_Retail2024CoreyGTHunterGreen4112.jpg?fm=jpg&fit=crop&w=900&ar=4:3&auto=format"></div>
+          <figcaption><b>Lapel shape</b>
+            <span>Notch — the standard suit lapel. Not peak, not shawl.</span></figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <div class="grid g3">
+      <figure class="tall">
+        <div class="ph"><img loading="lazy" alt="Dark green notch lapel tuxedo, full front"
+          src="https://cdn.shopify.com/s/files/1/1025/3059/files/DarkGreenNotchLapelTuxedo_Full_Front_1500x2000_crop_center.jpg?v=1765056373"></div>
+        <figcaption><b>The dressier end of the idea</b>
+          <span>Same colour + notch lapel, but with satin facing. Sharper — and where "tux" creeps in.</span></figcaption>
+      </figure>
+      <figure class="tall">
+        <div class="ph"><img loading="lazy" alt="Dark green notch lapel tuxedo jacket close"
+          src="https://cdn.shopify.com/s/files/1/1025/3059/files/DarkGreenNotchLapelTuxedo_Jacket_Front_1500x2000_crop_center.jpg?v=1765056373"></div>
+        <figcaption><b>Satin notch lapel, close up</b>
+          <span>Nice, but the shine is the thing I'd rather skip. Matte wool keeps it "evening suit".</span></figcaption>
+      </figure>
+      <figure class="tall">
+        <div class="ph"><img loading="lazy" alt="Dark green suit worn at a real wedding"
+          src="https://cdn.shopify.com/s/files/1/1025/3059/files/Dark_Green_-_The_Knot_-_Real_Wedding_750x1000_crop_center.png?v=1781101538"></div>
+        <figcaption><b>In the wild</b>
+          <span>Dark green at an actual wedding — proof it photographs well and doesn't shout.</span></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section>
+    <div class="sec-head">
+      <span class="num">Two</span>
+      <h2>The three details that keep it a suit, not a tux</h2>
+      <p class="lede">These are the calls that matter. Each one dials the formality down
+      just enough that the groomsmen in charcoal suits stand next to me without looking underdressed.</p>
+    </div>
+
+    <div class="rules">
+      <div class="rule-card">
+        <h3>Collar</h3>
+        <div class="yes"><span class="tag">Yes</span><span><b>Turndown</b> — a normal point/spread dress-shirt collar.</span></div>
+        <div class="no"><span class="tag">No</span><span>Wing collar. It's black-tie-or-nothing and looks costumey in photos.</span></div>
+      </div>
+      <div class="rule-card">
+        <h3>Neckwear</h3>
+        <div class="yes"><span class="tag">Yes</span><span><b>Straight tie</b> in dark green silk.</span></div>
+        <div class="no"><span class="tag">No</span><span>Bow tie. It instantly re-classifies the whole outfit as black tie.</span></div>
+      </div>
+      <div class="rule-card">
+        <h3>Lapel</h3>
+        <div class="yes"><span class="tag">Yes</span><span><b>Notch lapel</b>, matching what the groomsmen wear.</span></div>
+        <div class="no"><span class="tag">No</span><span>Peak or shawl. Both are formalwear signals that break the set.</span></div>
+      </div>
+    </div>
+
+    <div class="grid g3">
+      <figure class="tall">
+        <div class="ph"><img loading="lazy" alt="Classic white dress shirt with turndown point collar"
+          src="https://cdn.shopify.com/s/files/1/1025/3059/files/ClassicWhiteShirt_Front_1500x2000_crop_center.jpg?v=1764904624"></div>
+        <figcaption><b>The shirt</b>
+          <span>Crisp white cotton, classic turndown point collar. Exactly this — nothing pleated, no wings, no studs.</span></figcaption>
+      </figure>
+      <figure class="tall">
+        <div class="ph"><img loading="lazy" alt="Green tie knotted at a turndown collar"
+          src="https://cdn2.propercloth.com/pic_sp/666_a496f7acc62817f1a116dadd0de83029_size6.jpg"></div>
+        <figcaption><b>Straight tie, knotted</b>
+          <span>This is the silhouette at my throat — a four-in-hand knot on a turndown collar.</span></figcaption>
+      </figure>
+      <figure class="tall">
+        <div class="ph"><img loading="lazy" alt="Dark green suit back and shoulder detail"
+          src="https://gentux.imgix.net/1736461721_Retail2024CoreyGTHunterGreen4131.jpg?fm=jpg&fit=crop&w=900&ar=5:7&auto=format"></div>
+        <figcaption><b>The overall line</b>
+          <span>Clean shoulder, single-breasted, trousers just breaking on the shoe.</span></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- 3 -->
+  <section>
+    <div class="sec-head">
+      <span class="num">Three</span>
+      <h2>The groomsmen — charcoal, notch lapel</h2>
+      <p class="lede">Charcoal is the right neighbour to dark green: it's dark enough to hold its own
+      in evening light, it isn't trying to be a second colour statement, and a charcoal suit next to a
+      green one reads as a deliberate pairing rather than a mismatch. Same lapel shape as mine, so the
+      shoulders line up in every photo.</p>
+    </div>
+
+    <div class="grid g4">
+      <figure class="tall">
+        <div class="ph"><img loading="lazy" alt="Charcoal notch lapel suit, three-quarter"
+          src="https://gentux.imgix.net/1642623064_GenerationTuxCharcoalSuitThreeQuatersShot.jpg?fm=jpg&fit=crop&w=800&ar=5:7&auto=format"></div>
+        <figcaption><b>Charcoal notch lapel suit</b>
+          <span>Super 130s merino, two-button, flat-front. The reference cut.</span></figcaption>
+      </figure>
+      <figure class="tall">
+        <div class="ph"><img loading="lazy" alt="Charcoal suit, right side view"
+          src="https://gentux.imgix.net/1642623064_GenerationTuxCharcoalSuitRightSideView.jpg?fm=jpg&fit=crop&w=800&ar=5:7&auto=format"></div>
+        <figcaption><b>Side profile</b>
+          <span>Clean, no vent drama, nothing shiny.</span></figcaption>
+      </figure>
+      <figure class="tall">
+        <div class="ph"><img loading="lazy" alt="Charcoal suit, left side view"
+          src="https://gentux.imgix.net/1642623063_GenerationTuxCharcoalSuitLeftSideView.jpg?fm=jpg&fit=crop&w=800&ar=5:7&auto=format"></div>
+        <figcaption><b>Depth of the grey</b>
+          <span>True charcoal — closer to black than to silver. Light grey would look too daytime.</span></figcaption>
+      </figure>
+      <figure class="tall">
+        <div class="ph"><img loading="lazy" alt="Charcoal suit worn, walking"
+          src="https://gentux.imgix.net/1642623063_GenerationTuxCharcoalSuitWalking.jpg?fm=jpg&fit=crop&w=800&ar=5:7&auto=format"></div>
+        <figcaption><b>How it moves</b>
+          <span>Wears like a suit, not formalwear — which is the point.</span></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- 4 -->
+  <section>
+    <div class="sec-head">
+      <span class="num">Four</span>
+      <h2>Dark green ties for the groomsmen</h2>
+      <p class="lede">The green tie is the thread that ties them to me. Same family as my suit, in
+      silk. Grenadine (an open, textured silk weave) is my preference — it's matte, has visible depth,
+      and photographs as texture instead of a flat block of colour.</p>
+    </div>
+
+    <div class="grid g3">
+      <figure class="tall">
+        <div class="ph"><img loading="lazy" alt="Solid hunter green grenadine silk tie"
+          src="https://cdn.shopify.com/s/files/1/0505/7019/9217/files/PDP_Q225_tie-5934-0185_main.jpg?v=1745934993"></div>
+        <figcaption><b>Hunter green grenadine</b>
+          <span>100% silk, crisp texture, deep and earthy. The front-runner.</span></figcaption>
+      </figure>
+      <figure class="tall">
+        <div class="ph"><img loading="lazy" alt="Forest green silk grenadine tie"
+          src="https://cdn2.propercloth.com/pic_sp/666_8c25aacb2c07fa327e31a3ac8c7ce5f3_size6.jpg"></div>
+        <figcaption><b>Forest grenadine, chunkier weave</b>
+          <span>More visible texture — reads almost like a subtle pattern up close.</span></figcaption>
+      </figure>
+      <figure class="tall">
+        <div class="ph"><img loading="lazy" alt="Forest green grenadine tie, texture detail"
+          src="https://cdn2.propercloth.com/pic_sp/666_6e6c5c7c3fd4c8d6dacdccdb337ad940_size6.jpg"></div>
+        <figcaption><b>Texture, close up</b>
+          <span>This is what stops a dark tie from turning into a black rectangle in photos.</span></figcaption>
+      </figure>
+    </div>
+
+    <div class="grid g4" style="margin-top:18px">
+      <figure class="sq">
+        <div class="ph"><img loading="lazy" alt="Hunter green silk swatch"
+          src="https://cdn.shopify.com/s/files/1/0505/7019/9217/files/PDP_Q225_tie-5934-0185_swatch.jpg?v=1768510843"></div>
+        <figcaption><b>The green, flat</b><span>Tie colour reference swatch.</span></figcaption>
+      </figure>
+      <figure class="sq">
+        <div class="ph"><img loading="lazy" alt="Forest green tie draped"
+          src="https://cdn2.propercloth.com/pic_sp/666_adf7482975ae62df526c4a48c5755b75_size6.jpg"></div>
+        <figcaption><b>Draped</b><span>How it falls and catches light.</span></figcaption>
+      </figure>
+      <figure class="sq">
+        <div class="ph"><img loading="lazy" alt="Green tie rolled"
+          src="https://cdn2.propercloth.com/pic_sp/666_5a6cb55ce83af9664db86271c64afb11_size6.jpg"></div>
+        <figcaption><b>Blade width</b><span>Roughly 3&#8531;&Prime; — classic, not skinny.</span></figcaption>
+      </figure>
+      <figure class="sq">
+        <div class="ph"><img loading="lazy" alt="Dark green suiting, satin lapel detail"
+          src="https://cdn.shopify.com/s/files/1/1025/3059/files/mPjhWqDJdtqYqJJTgxZBzLBsJ0sjJ_wHaANsr9UfJ10_1500x2000_crop_center.jpg?v=1765056373"></div>
+        <figcaption><b>Green against green</b><span>Tie and suit sit in the same family, different textures.</span></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- 5 -->
+  <section>
+    <div class="sec-head">
+      <span class="num">Five</span>
+      <h2>Why this works together</h2>
+      <p class="lede">The trick is that everyone sits on the same rung of the formality ladder,
+      and only the colour tells you who's who.</p>
+    </div>
+
+    <div class="ladder">
+      <h3>One step apart, not one world apart</h3>
+      <p>If I wore a proper tuxedo — peak or shawl lapel, wing collar, bow tie — the groomsmen in
+      suits would look like guests. Every choice below closes that gap.</p>
+      <div class="steps">
+        <div class="step">
+          <em>Me</em>
+          <b>Dark green evening suit</b>
+          <p>Notch lapel &middot; turndown collar &middot; straight green tie. Distinct by colour, identical in construction.</p>
+        </div>
+        <div class="step">
+          <em>Groomsmen</em>
+          <b>Charcoal suit</b>
+          <p>Same notch lapel &middot; same turndown collar &middot; dark green tie pulling my colour across.</p>
+        </div>
+        <div class="step">
+          <em>Shared</em>
+          <b>The green</b>
+          <p>My whole suit, their ties. One colour, two dose sizes — that's the wedding party.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="swatches">
+      <div class="sw"><div class="chip" style="background:#1c3226"></div><p><b>Dark green</b><span>My suit — inky, matte wool</span></p></div>
+      <div class="sw"><div class="chip" style="background:#36393d"></div><p><b>Charcoal</b><span>Groomsmen suits</span></p></div>
+      <div class="sw"><div class="chip" style="background:#2f5241"></div><p><b>Hunter green</b><span>Their ties</span></p></div>
+      <div class="sw"><div class="chip" style="background:#fdfdfb; border:1px solid rgba(29,58,40,.2)"></div><p><b>White</b><span>Shirts, turndown collar</span></p></div>
+      <div class="sw"><div class="chip" style="background:#f2c2cf"></div><p><b>Pink</b><span>Our wedding accent — florals, not fabric</span></p></div>
+    </div>
+  </section>
+
+  <footer>
+    <p>Reference images from
+      <a href="https://generationtux.com/collection/tuxedos-and-suits/hunter-green-notch-lapel-suit">Generation Tux</a>,
+      <a href="https://suitshop.com/collections/mens/green-suits-tuxedos/">SuitShop</a>,
+      <a href="https://www.thetiebar.com/product/tie-5934-0185">The Tie Bar</a> and
+      <a href="https://propercloth.com/products/forest-silk-grenadine-tie-666.html">Proper Cloth</a>.
+      Shown for styling reference only — nothing here is ordered.</p>
+  </footer>
+
+</div>
+
+<script>
+  // If any reference image fails to load (shops do change their URLs),
+  // replace it with a soft placeholder instead of a broken-image icon.
+  document.querySelectorAll('.ph img').forEach(function (img) {
+    img.addEventListener('error', function () {
+      var box = img.parentElement;
+      box.style.display = 'flex';
+      box.style.alignItems = 'center';
+      box.style.justifyContent = 'center';
+      box.style.background = '#e9e3cd';
+      box.innerHTML = '<span style="font-size:.85rem;color:rgba(29,58,40,.55);' +
+                      'padding:0 14px;text-align:center">' +
+                      (img.alt || 'Reference image') + '</span>';
+    });
+  });
+</script>
+</body>
+</html>

@@ -174,17 +174,16 @@
           </ul>
         </div>
         <div class="card map-card">
-          <!-- Privacy/perf: the real Google Maps iframe loads only on click
-               (see js/main.js). The src lives here; JS builds the iframe. -->
-          <button type="button" class="map-placeholder" id="map-loader"
-            data-map-src="https://www.google.com/maps?q=Salvage+One,+1840+W+Hubbard+St,+Chicago,+IL+60622&output=embed"
-            aria-label="Show the Google map of Salvage One, 1840 W Hubbard St, Chicago">
-            <span class="map-placeholder-inner">
-              <span class="map-pin" aria-hidden="true">📍</span>
-              <span class="map-placeholder-text">Show map</span>
-              <span class="map-placeholder-sub">Loads Google Maps</span>
-            </span>
-          </button>
+          <!-- The Google map of the venue shows straight away. `loading="lazy"`
+               means the browser still waits until the map is nearly on screen
+               before fetching it, so the top of the page stays fast.
+               To move the pin, change the address in the src below. -->
+          <iframe
+            src="https://www.google.com/maps?q=Salvage+One,+1840+W+Hubbard+St,+Chicago,+IL+60622&output=embed&z=16"
+            title="Map of Salvage One, 1840 W Hubbard St, Chicago"
+            loading="lazy"
+            allowfullscreen
+            referrerpolicy="no-referrer-when-downgrade"></iframe>
           <a class="btn btn-ghost" href="https://www.google.com/maps/search/?api=1&query=Salvage+One+1840+W+Hubbard+St+Chicago+IL" target="_blank" rel="noopener">Open in Google Maps</a>
         </div>
       </div>
@@ -224,9 +223,9 @@
       <h3 class="subheading">Where to stay</h3>
       <p class="section-intro">
         <!-- Edit the `hotels` list in js/content.js to update these cards. -->
-        Our first room block is confirmed at the Residence Inn Chicago Downtown/Loop,
-        and we're lining up a couple more — details below will update as soon as
-        each one is booked.
+        We're holding room blocks at three price points so you can pick what suits
+        you. The Residence Inn is confirmed; the other two are in the works, and
+        booking links will appear below as soon as each one is signed.
       </p>
       <div class="hotel-grid" id="hotel-grid">
         <!-- Hotel cards render here from js/content.js -->

@@ -53,22 +53,9 @@
     }
   });
 
-  /* ---------------- click-to-load Google Map ---------------------------- */
-  // The map placeholder is a real button; clicking it swaps in Google's
-  // iframe. Until then, no request to google.com is made (privacy + speed).
-
-  var mapLoader = document.getElementById("map-loader");
-  if (mapLoader) {
-    mapLoader.addEventListener("click", function () {
-      var iframe = document.createElement("iframe");
-      iframe.src = mapLoader.dataset.mapSrc;
-      iframe.title = "Map to Salvage One, 1840 W Hubbard St, Chicago";
-      iframe.loading = "lazy";
-      iframe.allowFullscreen = true;
-      iframe.referrerPolicy = "no-referrer-when-downgrade";
-      mapLoader.replaceWith(iframe);
-    });
-  }
+  /* ---------------- Google Map ------------------------------------------
+     The venue map is now a plain <iframe> written straight into index.html,
+     so it draws itself and there's no JavaScript to run here. */
 
   /* ---------------- itineraries ----------------------------------------- */
 
@@ -98,6 +85,7 @@
       : (h.cta ? '<span class="hotel-cta">' + escapeHtml(h.cta) + "</span>" : "");
     card.innerHTML =
       '<span class="hotel-logo" aria-hidden="true">' + escapeHtml(h.initials || "🏨") + "</span>" +
+      (h.tier ? '<span class="hotel-tier">' + escapeHtml(h.tier) + "</span>" : "") +
       "<h4>" + escapeHtml(h.name) + "</h4>" +
       '<span class="hotel-area">' + escapeHtml(h.area) + "</span>" +
       (h.rate ? '<span class="hotel-rate">' + escapeHtml(h.rate) + "</span>" : "") +
